@@ -1,71 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <title>Document</title>
+  <title>Sign up</title>
+  <link rel="stylesheet" href="signup.css">
 </head>
+
 <body>
-<?php 
-include 'header.php';
-?>
   <?php
-    $email= $_POST['email'];
-    $name= $_POST['user'];
-    $password = $_POST['password'];
-    $connexion = getConnexion();
-    $connexion -> query("Select * From Joueur where user = $user and password = $password");
-    $joueur['user'] == $user and ['password'] == $password;   
-    if(isset($_POST['submit'])) {
-      if(empty($_POST['user'])) {
-        $errName= 'Please enter your user name';
-      }
-      else if(empty($_POST['email'])) {
-        $errEmail = 'Please enter a valid email address';
-      }
-      else if(empty($_POST['password']) || (preg_match("/^.*(?=.{8,})(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).*$/", $_POST["password"]) === 0)) {
-        $errPass = '<p class="errText">Password must be at least 8 characters and must contain at least one lower case letter, one upper case letter and one digit</p>';
-      } else {
-        echo "The form has been submitted";
-      }
-    }
+  include 'header.php';
   ?>
-  <div class="container">
-    <form role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-      <div class="form-group row">
-        <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-        <div class="col-sm-10">
-          <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email">
-          <?php echo $errEmail; ?>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputUser" class="col-sm-2 col-form-label">User Name</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" id="inputUser" name="user" placeholder="Username">
-          <?php echo $errName; ?>
-        </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-        <div class="col-sm-10">
-          <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password">
-          <?php echo $errPass; ?>
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="offset-sm-2 col-sm-10">
-          <input type="submit" value="Sign in" name="submit" class="btn btn-primary"/>
-        </div>
-      </div>
-    </form>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <div class="signup-container">
+  <div class="fond-img">
+      <img src="img/signup.avif" alt="login">
+    </div>
+    <div class="titre-signup">
+        <h2 style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px"> <i class='bx bx-user'></i> &nbsp;Inscription <i class='bx bx-user'></i></h2>
+    
+        <form action="" method="POST" onsubmit="return validateForm()">
+            <label for="nom">Nom d'utilisateur :</label>
+            <input type="text" id="nom" name="nom" required>
+
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirm-password">Confirmer le mot de passe :</label>
+            <input type="password" id="confirm-password" name="confirm-password" required>
+
+            <input type="submit" value="S'inscrire">
+        </form>
+    </div>
+        <p id="error-msg"></p>
+    </div>
+
+    <script>  
+        function validateForm() {
+            var mdp = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm-password").value;
+            var errorMsg = document.getElementById("error-msg");
+
+            if (mdp !== confirmPassword) {
+                errorMsg.textContent = "Les mots de passe ne correspondent pas.";
+                errorMsg.style.color = "red";
+                return false; 
+            }
+            return true;
+        }
+    </script>
+
+<?php
+
+try {
+    require_once("connexion.php");
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $nom = htmlspecialchars(trim($_POST['nom'] ?? ''));
+        $email = htmlspecialchars(trim($_POST['email'] ?? ''));
+        $mdp = htmlspecialchars(trim($_POST['password'] ?? ''));
+        $confirmPassword = htmlspecialchars(trim($_POST['confirm-password'] ?? ''));
+
+        if (!$nom || !$email || !$mdp || !$confirmPassword) {
+            echo "<p style='color: red;'>Tous les champs doivent être remplis.</p>";
+            exit();
+        }
+
+        if ($mdp !== $confirmPassword) {
+            echo "<p style='color: red;'>Les mots de passe ne correspondent pas.</p>";
+            exit();
+        }
+
+        $connexion = getConnexion();
+
+        $stmt = $connexion->prepare("SELECT * FROM clients WHERE email = :email");
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            echo "<p style='color: red;'>Cet email est déjà utilisé.</p>";
+        } else {
+            $hashedmdp = password_hash($mdp, PASSWORD_DEFAULT);
+
+            $stmt = $connexion->prepare("INSERT INTO clients (nom, email, mdp) VALUES (:nom, :email, :mdp)");
+            $stmt->bindParam(':nom', $nom);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':mdp', $hashedmdp);
+
+            if ($stmt->execute()) {
+                $_SESSION['nom'] = $nom;
+                header("Location: accueil.php");
+                exit();
+            } else {
+                echo "<p style='color: red;'>Une erreur est survenue lors de l'inscription.</p>";
+            }
+        }
+    }
+} catch (PDOException $e) {
+    echo "<p style='color: red;'>Erreur : " . $e->getMessage() . "</p>";
+}
+?>
+</html>
 </body>
+
 </html>
-</body>  
-</html>
+<?php 
+  include 'footer.php';
+  ?>

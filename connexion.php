@@ -1,5 +1,5 @@
 <?php
 function getConnexion(){
-    $db = new PDO("mysql:host=localhost;dbname=jeux vidéos;charset=utf8", "root", "");
+    $db = new PDO("mysql:host=localhost;dbname=jeuxvideos;charset=utf8", "root", "");
     return $db;
 }

@@ -1,0 +1,25 @@
+.btn-default{
+  background-color: rgb(57, 56, 56);
+  height: 35px;
+  width: 60px;
+}
+.bx-search-alt-2{
+  color: white;
+}
+body {
+  font-size: 14px;
+}
+
+@media (max-width: 748px) {
+  /* Tablettes */
+  body {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Mobiles */
+  body {
+    font-size: 12px;
+  }
+}

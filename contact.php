@@ -1,54 +1,74 @@
-<!DOCTYPE html>  
-<html>  
+<!DOCTYPE html>
+<html>
 <meta charset="utf-8">
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<head>
-<title>Ceci est un titre</title>
-<link href="contact.css" rel="stylesheet"> 
-</head>
-<body>
-<?php 
-include 'header.php';
-?>
-<div class="container contact-form">
-            <div class="contact-image">
-                <img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact"/>
-            </div>
-            <form method="post">
-                <h3>Drop Us a Message</h3>
-               <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input type="text" name="txtName" class="form-control" placeholder="Votre nom *" value="" />
-                        </div>
-                        <br>
-                        <div class="form-group">
-                            <input type="text" name="txtfirstname" class="form-control" placeholder="Votre prénom *" value="" />
-                        </div>
-                        <br>
-                        <div class="form-group">
-                            <input type="text" name="txtEmail" class="form-control" placeholder="Votre email *" value="" />
-                        </div>
-                        <br>
-                        <div class="form-group">
-                            <input type="text" name="txtPhone" class="form-control" placeholder="Votre n° de téléphone *" value="" />
-                        </div>
-                        <br>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <textarea name="txtMsg" class="form-control" placeholder="Votre message *" style="width: 100%; height: 150px;"></textarea>
-                        </div>
-                        <br>
-                        <div class="form-group">
-                            <input type="submit" name="btnSubmit" class="btnContact" value="Envoyer" />
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </form>
-</div>
 
+<head>
+  <title>Contact</title>
+  <link href="contact.css" rel="stylesheet">
+</head>
+
+<body>
+  <?php include 'header.php'; ?>
+  <?php
+try {
+    require_once("connexion.php");
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $message = htmlspecialchars(trim($_POST['message'] ?? ''));
+        $email = htmlspecialchars(trim($_POST['email'] ?? ''));
+
+        // Vérification des champs vides
+        if (!$message || !$email) {
+            echo "<p style='color: red;'>Tous les champs doivent être remplis.</p>";
+            exit();
+        }
+
+        // Connexion à la base de données
+        $connexion = getConnexion();
+
+        // Vérifier si l'email existe déjà
+        $stmt = $connexion->prepare("SELECT * FROM contact WHERE email = :email");
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        // Insérer le message et l'email dans la base de données
+        $stmt = $connexion->prepare("INSERT INTO contact (message, email) VALUES (:message, :email)");
+        $stmt->bindParam(':message', $message);
+        $stmt->bindParam(':email', $email);
+
+        if ($stmt->execute()) {
+            echo "<p style='color: green; text-align: center; font-size: 30px;'>Votre message a été envoyé avec succès.</p>";
+        } else {
+            echo "<p style='color: red;'>Une erreur s'est produite lors de l'envoi de votre message.</p>";
+        }
+    }
+} catch (PDOException $e) {
+    echo "<p style='color: red;'>Erreur : " . $e->getMessage() . "</p>";
+}
+?>
+
+<div class="contact">
+<div class="fond-img">
+      <img src="img/DALL·E 2025-01-03 11.44.22 - A visually engaging 'Contact Us' image for a video game website. The design features a futuristic and vibrant theme with neon lighting, blending eleme.webp" alt="login">
+    </div>
+  <div class="formulaire">
+    <div class="titre">
+      <h2 style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px"> <i class='bx bxs-message-detail'></i> &nbsp;Nous contacter ! &nbsp;<i class='bx bxs-message-detail'></i></h2>
+    </div>
+    <form action="contact.php" method="post">
+      <label for="nom">Email: </label>
+      <input type="email" id="email" name="email" required>
+      <br>
+      <label for="message">Message: </label>
+      <textarea id="message" name="message" rows="10" cols="50" placeholder="Écrivez votre message ici..."></textarea><br>
+      <br>
+      <input type="submit" name="submit" value="Envoyer">
+    </form>
+  </div>
+</div>
+</div>
 </body>
 </html>
+<?php
+include 'footer.php';
+?>
