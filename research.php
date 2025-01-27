@@ -139,21 +139,19 @@ if (isset($_POST['add-to-favorites'])) {
             </form>
           </div>
         </div>
-      
-    <?php endforeach; ?>
+
+      <?php endforeach; ?>
   </div>
 <?php else: ?>
-  <div class="not_found">
-    <p><i class='bx bx-error'></i>&nbsp;Aucun résultat trouvé pour votre recherche.&nbsp;<i class='bx bx-error'></i></p>
+    <div class="not_found">
+      <p><i class='bx bx-error'></i>&nbsp;Aucun résultat trouvé pour votre recherche.&nbsp;<i class='bx bx-error'></i></p>
+    </div>
+  <?php endif; ?>
+
+  <a href="panier.php" class="see_cart"><i class='bx bxs-cart'></i>&nbsp;Voir le panier&nbsp;<i class='bx bxs-cart'></i></a>
+  <div class="retour-accueil">
+    <a href="accueil.php"><i class='bx bxs-invader'></i>&nbsp;Retour à la page d'accueil&nbsp;<i class='bx bxs-invader'></i></a>
   </div>
-<?php endif; ?>
-
-<a href="panier.php" class="see_cart"><i class='bx bxs-cart'></i>&nbsp;Voir le panier&nbsp;<i class='bx bxs-cart'></i></a>
-<div class="retour-accueil">
-  <a href="accueil.php"><i class='bx bxs-invader'></i>&nbsp;Retour à la page d'accueil&nbsp;<i class='bx bxs-invader'></i></a>
-</div>
-
-<?php include 'footer.php'; ?>
 </body>
-
 </html>
+<?php include 'footer.php'; ?>

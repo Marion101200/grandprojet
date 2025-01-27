@@ -49,14 +49,6 @@ body{
     background: linear-gradient(rgba(247, 244, 244, 0.733), rgba(242, 241, 241, 0.696)), no-repeat, fixed
                   url(img/DALL·E\ 2024-11-29\ 13.29.03\ -\ A\ vibrant\ and\ colorful\ image\ showcasing\ various\ video\ games\ integrated\ into\ a\ single\ scene.\ The\ image\ includes\ a\ retro\ arcade\ machine\ with\ a\ glowing\ s.webp);
 }
-strong{
-    color: black;
-    font-weight: bold;
-}
-.description{
-    color: black;
-    font-weight: bold;
-}
 .ajout-panier{
     color: #d2efa9;
     background-color: rgb(3, 194, 3);
@@ -101,64 +93,12 @@ form{
     display: flex;
     justify-content: space-around;
 }
-.retour-accueil a{
-    color: brown;
-    font-size: 30px;
-    display: flex;
-    justify-content: center;
-}
-
-.retour-accueil a:hover{
-    color: red;
-}
 .details{
     font-size: 15px;
     font-weight: bold;
     text-align: center;
 }
-.titre_jeux{
-    color: red;
-    text-align: center;
-}
-.jeux-listes{
-    display: flex;
-    flex-direction: row;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    /* justify-content: space-between; */
 
-}
-.jeux-item{
-    display: flex;
-    flex-direction: column  ;
-    max-width: 400px;
-    max-height: 800px;
-    border: rgb(176, 71, 71) solid 1px;
-    font-weight: bold;
-    margin-left: 12px;
-    margin-bottom: 12px;
-    border-radius: 4px;
-}
-.element_jeux{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    padding: 10px;
-}
-.jeux-item img{
-    max-height: 200px;
-    width: 100%;
-    min-height: 200px;
-}
-.produit_id a {
-    color: inherit;
-    color: rgb(168, 97, 16);
-    text-decoration: none;
-}
-.produit_id a:hover {
-    color: red;
-}
 strong{
     color: black;
     font-weight: bold;
@@ -174,26 +114,9 @@ strong{
     gap: 10px;
     align-items: center;
 }
-form{
-    display: flex;
-    justify-content: center;
-}
 .prix{
-    text-align: center;
-}
-.details{
-    font-size: 15px;
-    font-weight: bold;
     text-align: center;
 }
 h2{
     text-align: center;
-}
-.ajout-favori{
-    background-color:rgb(3, 194, 3) ;
-    font-size: 20px;
-}
-.favoris{
-    display: flex;
-    justify-content: space-around;
 }
