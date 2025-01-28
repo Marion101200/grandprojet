@@ -28,6 +28,7 @@
     $query = $connexion->prepare("SELECT * FROM clients WHERE  email = ? ");
     $query->execute([$login]);
     $clients = $query->fetch(PDO::FETCH_ASSOC);
+    $_SESSION['nom'] = $client['nom'];
 
     if ($clients === false) {
       echo "<p style='color: red;'>Erreur : aucun utilisateur trouvé ou problème de connexion à la base de données.</p>";
@@ -44,8 +45,9 @@ if (password_verify($mdp, $clients['mdp'])) {
                     // Connexion réussie
                     $_SESSION['loggedin'] = true;
                     $_SESSION['email'] = $clients['email'];
+                    $_SESSION['nom'] = $clients['nom'];
 
-                    // header("Location: accueil.php");
+                    header("Location: accueil.php");
                     exit();
                 } else {
                     echo "<p style='color: red;'>Le mot de passe est incorrect.</p>";

@@ -43,7 +43,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <ul class="nav navbar-nav navbar-right">
         <li><a href="panier.php">Panier &nbsp; <span class="glyphicon glyphicon-shopping-cart"></span></a></li>
         <?php
-        if(isset($_SESSION['nom'])){
+        if(isset($_SESSION['email'])){
           echo '<li><a href="favoris.php"><i class=\'bx bxs-heart\' ></i></a></li>';
           echo "<li><a href=\"compte.php\">Compte</li>";
           echo "<li><a href=\"logout.php\">Logout &nbsp; <span class=\"glyphicon glyphicon-log-in\"></span></a></li>";
