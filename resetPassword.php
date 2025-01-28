@@ -23,9 +23,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($stmt->rowCount() == 0) {
         echo "<p style='color: red;'>Cet email n'existe pas dans nos bases.</p>";
-        $token = bin2hex(random_bytes(16));
+        
         exit;
     }
+    $token = bin2hex(random_bytes(16));
+    $expires_at = date("Y-m-d H:i:s", strtotime("+1 hour"));
+    $etat_du_ticket = 1;
+
+// Insertion du token et de l'heure d'expiration dans la table
+$insertStmt = $connexion->prepare("INSERT INTO password_resets (email, token, expires_at, etat_du_ticket) VALUES (:email, :token, :expires_at, :etat_du_ticket)");
+$insertStmt->bindParam(':token', $token);
+$insertStmt->bindParam(':expires_at', $expires_at);
+$insertStmt->bindParam(':email', $email);
+$insertStmt->bindParam(':etat_du_ticket', $etat_du_ticket);
+
+// Exécution de la requête
+$insertStmt->execute();
 }
 try {
     // Connexion sécurisée à la base de données
