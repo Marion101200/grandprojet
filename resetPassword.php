@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->isHTML(true); // Format HTML
                     $mail->CharSet = 'UTF-8'; // Encodage UTF-8
                     $mail->Subject = 'Demande de changement de mot de passe';
-                    $mail->Body = "Demande de réinitialisation de mot de passe " . htmlspecialchars($nom) . " sur ecom INSTA. Voici le lien pour changer le mot de passe.";
+                    $mail->Body = "Demande de réinitialisation de mot de passe sur ecom INSTA. Voici le lien pour changer le mot de passe.";
 
                     $mail->SMTPDebug = SMTP::DEBUG_SERVER;
 
@@ -52,5 +52,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     error_log("Erreur lors de la configuration ou de l'envoi de l'e-mail : {$e->getMessage()}");
                 }
 
-
+header("Location:resetPassword.html");
 ?>
