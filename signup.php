@@ -11,7 +11,7 @@ use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
+    
     $nom= htmlspecialchars($_POST['nom']);
     $email = htmlspecialchars($_POST['email']);
     $mdp = htmlspecialchars($_POST['password']);
@@ -38,14 +38,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             // Hachage sécurisé du mot de passe
             $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
+            $token = bin2hex(random_bytes(16));
 
             // Insérer les données de l'utilisateur dans la base
-            $stmt = $connexion->prepare("INSERT INTO clients (nom, email, mdp) VALUES (:nom, :email, :mdp)");
+            $stmt = $connexion->prepare("INSERT INTO clients (nom, email, mdp, token) VALUES (:nom, :email, :mdp, :token)");
             $stmt->bindParam(':nom', $nom);
+            $stmt->bindParam(':token', $token);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':mdp', $hashedPassword);
+            
 
             if ($stmt->execute()) {
+
                 // Configuration et envoi de l'e-mail de confirmation
                 $mail = new PHPMailer(true);
                 try {
@@ -65,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $mail->isHTML(true); // Format HTML
                     $mail->CharSet = 'UTF-8'; // Encodage UTF-8
                     $mail->Subject = 'Inscription réussie';
-                    $mail->Body = "Bienvenue, " . htmlspecialchars($nom) . " sur ecom INSTA. Votre compte a été créé avec succès.";
+                    $mail->Body = "Bienvenue, " . htmlspecialchars($nom) . " sur ecom INSTA. Votre compte a été créé avec succès. <br><a href='http://localhost/grandprojet-main/grandprojet/confirm_email.php?token=" . urlencode($token) . "'>Confirmer votre adresse mail";
 
                     $mail->SMTPDebug = SMTP::DEBUG_SERVER;
 

@@ -25,17 +25,24 @@
 
     $connexion = getConnexion();
 
-    $query = $connexion->prepare("SELECT * FROM clients WHERE nom = ? OR email = ?");
-    $query->execute([$login, $login]);
+    $query = $connexion->prepare("SELECT * FROM clients WHERE  email = ? ");
+    $query->execute([$login]);
     $clients = $query->fetch(PDO::FETCH_ASSOC);
 
+    if ($clients === false) {
+      echo "<p style='color: red;'>Erreur : aucun utilisateur trouvé ou problème de connexion à la base de données.</p>";
+      exit();
+  }
+    if ($clients['etat_token'] == 0) {
+      echo "<p style='color: red;'>Votre compte n'est pas activé. Veuillez vérifier vos emails pour l'activer.</p>";
+      exit;
+}
   
     echo "<p>" . htmlspecialchars($clients['mdp']) . "</p>";
     echo "<p><strong>Mot de passe saisi :</strong> " . htmlspecialchars($mdp) . "</p>";
 if (password_verify($mdp, $clients['mdp'])) {
                     // Connexion réussie
                     $_SESSION['loggedin'] = true;
-                    $_SESSION['nom'] = $clients['nom'];
                     $_SESSION['email'] = $clients['email'];
 
                     // header("Location: accueil.php");
