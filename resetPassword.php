@@ -63,7 +63,7 @@ try {
     $mail->isHTML(true); // Format HTML
     $mail->CharSet = 'UTF-8'; // Encodage UTF-8
     $mail->Subject = 'Demande de changement de mot de passe';
-    $mail->Body = "Bonjour, <br>Vous avez demandé une réinitialisation de votre mot de passe sur ecom INSTA. Cliquez sur le lien ci-dessous pour réinitialiser votre mot de passe : <br><a href='https://localhost/grandprojet-main/grandprojet/resetPassword.php?token=" . urlencode($token) . "'>Réinitialiser mon mot de passe</a>";
+    $mail->Body = "Bonjour, <br>Vous avez demandé une réinitialisation de votre mot de passe sur ecom INSTA. Cliquez sur le lien ci-dessous pour réinitialiser votre mot de passe : <br><a href='https://localhost/grandprojet-main/grandprojet/newPassword.php?token=" . urlencode($token) . "'>Réinitialiser mon mot de passe</a>";
 
     $mail->SMTPDebug = SMTP::DEBUG_SERVER;
 
