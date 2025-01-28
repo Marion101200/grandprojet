@@ -2,6 +2,8 @@
 
 include "connexion.php";
 
+
+
 require 'vendor/phpmailer/phpmailer/src/PHPMailer.php';
 require 'vendor/phpmailer/phpmailer/src/SMTP.php';
 require 'vendor/phpmailer/phpmailer/src/Exception.php';
@@ -13,6 +15,17 @@ use PHPMailer\PHPMailer\SMTP;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $email = htmlspecialchars($_POST['email']);
+
+    $connexion = getConnexion();
+    $stmt = $connexion->prepare("SELECT * FROM clients WHERE email = :email");
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+
+    if ($stmt->rowCount() == 0) {
+        echo "<p style='color: red;'>Cet email n'existe pas dans nos bases.</p>";
+        exit;
+    }
+    
 }
     try {
         // Connexion sécurisée à la base de données
@@ -52,5 +65,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     error_log("Erreur lors de la configuration ou de l'envoi de l'e-mail : {$e->getMessage()}");
                 }
 
-header("Location:resetPassword.html");
+// header("Location:resetPassword.html");
 ?>
