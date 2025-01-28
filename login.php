@@ -29,17 +29,24 @@
     $query->execute([$login, $login]);
     $clients = $query->fetch(PDO::FETCH_ASSOC);
 
-    if ($clients && password_verify($mdp, $clients['mdp'])) {
-      $_SESSION['loggedin'] = true;
-      $_SESSION['nom'] = $clients['nom'];
-      $_SESSION['email'] = $clients['email'];
+  
+    echo "<p>" . htmlspecialchars($clients['mdp']) . "</p>";
+    echo "<p><strong>Mot de passe saisi :</strong> " . htmlspecialchars($mdp) . "</p>";
+if (password_verify($mdp, $clients['mdp'])) {
+                    // Connexion réussie
+                    $_SESSION['loggedin'] = true;
+                    $_SESSION['nom'] = $clients['nom'];
+                    $_SESSION['email'] = $clients['email'];
 
-      header("Location: accueil.php");
-      exit();
-    } else {
-      echo "<p style='color: red;'>Nom d'utilisateur ou mot de passe invalide.</p>";
-    }
-  }
+                    // header("Location: accueil.php");
+                    exit();
+                } else {
+                    echo "<p style='color: red;'>Le mot de passe est incorrect.</p>";
+                }
+            } else {
+                echo "<p style='color: red;'>Aucun utilisateur trouvé avec ce nom ou email.</p>";
+            }
+    
   ?>
   <div class="login">
     <div class="fond-img">
@@ -56,7 +63,7 @@
         <label for="password">Mot de passe:</label>
         <input type="password" id="password" name="password" required>
         <br>
-        <a href="signup.php"><i class='bx bx-user'></i>&nbsp;Inscrivez-vous ici&nbsp;<i class='bx bx-user'></i></a>
+        <a href="signup.html"><i class='bx bx-user'></i>&nbsp;Inscrivez-vous ici&nbsp;<i class='bx bx-user'></i></a>
         <br>
         <a href="reset_password_request.php" class="forgot"><i class='bx bx-game'></i>&nbsp;Oublie de mot de passe&nbsp;<i class='bx bx-game'></i></a>
         <input type="submit" name="submit" value="Se connecter">
