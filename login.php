@@ -41,6 +41,11 @@
   
     echo "<p>" . htmlspecialchars($clients['mdp']) . "</p>";
     echo "<p><strong>Mot de passe saisi :</strong> " . htmlspecialchars($mdp) . "</p>";
+
+
+
+    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if (password_verify($mdp, $clients['mdp'])) {
                     // Connexion réussie
                     $_SESSION['loggedin'] = true;
@@ -53,8 +58,9 @@ if (password_verify($mdp, $clients['mdp'])) {
                     echo "<p style='color: red;'>Le mot de passe est incorrect.</p>";
                 }
             } else {
-                echo "<p style='color: red;'>Aucun utilisateur trouvé avec ce nom ou email.</p>";
+                echo "<p style='color: red;'>Aucun utilisateur trouvé avec cet email.</p>";
             }
+          }
     
   ?>
   <div class="login">
@@ -66,7 +72,7 @@ if (password_verify($mdp, $clients['mdp'])) {
         <h2 style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px"> <i class='bx bx-user'></i> &nbsp;Login &nbsp;<i class='bx bx-user'></i></h2>
       </div>
       <form action="login.php" method="post">
-        <label for="nom">Nom ou Email: </label>
+        <label for="nom">Email: </label>
         <input type="text" id="login" name="login" required>
         <br>
         <label for="password">Mot de passe:</label>
