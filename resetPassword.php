@@ -65,5 +65,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     error_log("Erreur lors de la configuration ou de l'envoi de l'e-mail : {$e->getMessage()}");
                 }
 
-// header("Location:resetPassword.html");
+header("Location:resetPassword.html");
 ?>
