@@ -11,7 +11,7 @@
     $confirm_password = trim($_POST['confirm_password']);
 
     echo "Le token est : " . htmlspecialchars($token);
-    
+
     if($new_password !== $confirm_password){
         echo"<p style='color: red;'>Le mot de passe ne correspond pas.</p>";
         exit;
@@ -42,23 +42,7 @@
         }
 
 
-    //             $connexion->prepare("DELETE FROM password_resets WHERE token = :token ")
-//             ->execute(['token' => $token]);
-
-//             header('Location: login.php');
-//             exit;
-//         }else{
-//             echo"<p style='color: red;'>Le lien de réinitialisation est invalide ou expiré.</p>";
-//         }
-
-//     }catch(PDOException $e){
-//         echo "Erreur : " . $e->getMessage();
-//     }
-// }else if (isset($_GET['token'])){
-//     $token = htmlspecialchars($_GET['token']);
-// }
-// 
-
+header("Location: login.php");
 ?>
 
 
