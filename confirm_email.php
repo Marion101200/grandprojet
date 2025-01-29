@@ -17,6 +17,9 @@ $token_creation_time = new DateTime($clients['date_token']);
 $interval = $token_creation_time->diff($current_time);
 if ($interval->i >= 1 || $interval->h > 0){
     echo("<p style='color: red;'>Le lien a expiré..</p>");
+    $supprimer_clients= $connexion->prepare('DELETE clients FROM clients WHERE token = :token');
+    $supprimer_clients->execute(['token' => $token]);
+    echo '<p>Veuillez vous réinscrire</p>';
 }
 else {
 $update_token= $connexion->prepare('UPDATE clients SET etat_token = 1 WHERE token = :token');
