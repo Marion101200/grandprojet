@@ -13,12 +13,13 @@ try {
     $connexion = getConnexion();
     $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+    if (empty($_SESSION['cart'])) {
         echo "Votre panier est vide.";
         exit;
     }
 
-    $adresse = isset($_SESSION['adresse']) ? $_SESSION['adresse'] : 'Adresse non fournie';
+    $id_client = $_SESSION['id_client'];
+    $adresse = $_SESSION['adresse'] ?? 'Adresse non fournie';
     $total = 0;
 
     // Calcul du montant total de la commande
@@ -26,38 +27,43 @@ try {
         $query = $connexion->prepare("SELECT prix FROM jeux WHERE id = ?");
         $query->execute([$jeux_id]);
         $jeu = $query->fetch(PDO::FETCH_ASSOC);
+
         if ($jeu) {
             $total += $jeu['prix'] * $quantite;
         }
     }
 
-    // Insérer la commande
-    $stmt = $connexion->prepare("INSERT INTO commande (id_client, montant, adresse) VALUES (:id_client, :montant, :adresse)");
-    $stmt->bindParam(':id_client', $id_client);
-    $stmt->bindParam(':montant', $total);
-    $stmt->bindParam(':adresse', $adresse);
-    $stmt->execute();
-
-    // Récupérer l'ID de la commande insérée
-    $id_commande = $connexion->lastInsertId();
-
-    // Insérer les détails de la commande
-    $stmt_detail = $connexion->prepare("INSERT INTO details_commande (id_commande, id_jeux, quantite) VALUES (:id_commande, :id_jeux, :quantite)");
-
-    foreach ($_SESSION['cart'] as $jeux_id => $quantite) {
-        $stmt_detail->execute([
-            ':id_commande' => $id_commande,
-            ':id_jeux' => $jeux_id,
-            ':quantite' => $quantite,
+    try {
+        // Insérer la commande
+        $stmt = $connexion->prepare("INSERT INTO commande (id_client, montant, adresse) VALUES (:id_client, :montant, :adresse)");
+        $stmt->execute([
+            ':id_client' => $id_client,
+            ':montant' => $total,
+            ':adresse' => $adresse
         ]);
+
+        // Récupérer l'ID de la commande insérée
+        $id_commande = $connexion->lastInsertId();
+
+        // Insérer les détails de la commande
+        $stmt_detail = $connexion->prepare("INSERT INTO details_commande (id_commande, id_jeux, quantite) VALUES (:id_commande, :id_jeux, :quantite)");
+
+        foreach ($_SESSION['cart'] as $jeux_id => $quantite) {
+            $stmt_detail->execute([
+                ':id_commande' => $id_commande,
+                ':id_jeux' => $jeux_id,
+                ':quantite' => $quantite
+            ]);
+        }
+
+        unset($_SESSION['cart']);
+
+        echo "Commande validée avec succès !";
+        header("Location: confirmation.php");
+        exit;
+    } catch (PDOException $e) {
+        echo "Erreur lors de l'enregistrement de la commande : " . $e->getMessage();
     }
-
-    // Vider le panier après la commande
-    unset($_SESSION['cart']);
-
-    echo "Commande validée avec succès !";
-    header("Location: confirmation.php");
-    exit;
 } catch (PDOException $e) {
-    echo "Erreur lors de la validation de la commande : " . $e->getMessage();
+    echo "Erreur de connexion à la base de données : " . $e->getMessage();
 }
