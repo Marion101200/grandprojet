@@ -5,7 +5,6 @@ include 'header.php';
 
 if (!isset($_SESSION['id_client'])) {
     echo "Erreur : ID client non défini.";
-    exit();
 }
 
 try {
@@ -33,9 +32,9 @@ try {
 
     try {
         // Insérer la commande
-        $stmt = $connexion->prepare("INSERT INTO commande (id_client, montant) VALUES (:id_client, :montant)");
+        $stmt = $connexion->prepare("INSERT INTO commande (id_clients, montant) VALUES (:id_clients, :montant)");
         $stmt->execute([
-            ':id_client' => $_SESSION['id_client'],
+            ':id_clients' => $_SESSION['id_client'],
             ':montant' => $total,
         ]);
 
