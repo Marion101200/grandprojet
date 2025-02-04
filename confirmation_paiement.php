@@ -3,10 +3,6 @@ session_start();
 include 'pdo.php';
 include 'header.php';
 
-if (!isset($_SESSION['id_client'])) {
-    echo "Erreur : utilisateur non connecté.";
-    exit;
-}
 
 try {
     require_once("connexion.php");
@@ -56,7 +52,7 @@ try {
             ]);
         }
 
-        unset($_SESSION['cart']);
+        // unset($_SESSION['cart']);
 
         echo "Commande validée avec succès !";
         header("Location: confirmation.php");
