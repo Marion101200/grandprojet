@@ -1,34 +1,63 @@
 <?php
-include 'header.php';
+session_start();
 include 'pdo.php';
-?>
-
-<?php
+include 'header.php';
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 try {
     require_once("connexion.php");
     $connexion = getConnexion();
     $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+        echo "Votre panier est vide.";
+        exit;
+    }
+
     $stmt = $connexion->prepare("INSERT INTO commande (id_clients, montant, adresse) VALUES (:id_clients, :montant, :adresse)");
-    $stmt->bindParam(':id_clients', $id_clients);
-    $stmt->bindParam(':montant', $montant);
-    $stmt->bindParam(':adresse', $adresse);
-    $stmt->execute();
+    $total = 0;
 
-    $stmt = $connexion->prepare("INSERT INTO details_commande (id_commande, adresse) VALUES (:id_commande, :adresse)");
-    $stmt->bindParam(':id_commande', $id_commande);
-    $stmt->bindParam(':adresse', $adresse);
+
+    foreach ($_SESSION['cart'] as $jeux_id => $quantite) {
+        $query = $connexion->prepare("SELECT prix FROM jeux WHERE id = ?");
+        $query->execute([$jeux_id]);
+        $jeu = $query->fetch(PDO::FETCH_ASSOC);
+        if ($jeu) {
+            $total += $jeu['prix'] * $quantite;
+        }
+    }
+
+    $stmt->bindParam(':total', $total, ':id_clients', $client, ':montant', $montant, ':adresse', $adresse);
     $stmt->execute();
-}catch (PDOException $e) {
-    echo "Erreur de connexion : " . $e->getMessage();
+    $id_commande = $connexion->lastInsertId();
+
+
+    $stmt_detail = $connexion->prepare("INSERT INTO details_commande (id_commande, adresse) VALUES (:id_commande, :adresse)");
+
+    foreach ($_SESSION['cart'] as $jeux_id => $quantite) {
+        $query = $connexion->prepare("SELECT prix FROM jeux WHERE id = ?");
+        $query->execute([$jeux_id]);
+        $jeu = $query->fetch(PDO::FETCH_ASSOC);
+
+        if ($jeu) {
+            $stmt_detail->execute([
+                ':id_commande' => $id_commande,
+                ':adresse' => $adresse,
+            ]);
+        }
+    }
+
+
+    unset($_SESSION['cart']);
+    echo "Commande validée avec succès !";
+    header("Location: confirmation.php");
     exit;
-
+} catch (PDOException $e) {
+    echo "Erreur lors de la validation de la commande : " . $e->getMessage();
 }
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
