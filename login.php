@@ -51,6 +51,7 @@
         $_SESSION['loggedin'] = true;
         $_SESSION['email'] = $clients['email'];
         $_SESSION['nom'] = $clients['nom'];
+        $_SESSION['id_client'] = $clients['id'];
 
         header("Location: accueil.php");
         exit();

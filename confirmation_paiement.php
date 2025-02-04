@@ -15,7 +15,6 @@ try {
     }
 
     $id_client = $_SESSION['id_client'];
-    $adresse = $_SESSION['adresse'] ?? 'Adresse non fournie';
     $total = 0;
 
     // Calcul du montant total de la commande
@@ -31,11 +30,10 @@ try {
 
     try {
         // Insérer la commande
-        $stmt = $connexion->prepare("INSERT INTO commande (id_client, montant, adresse) VALUES (:id_client, :montant, :adresse)");
+        $stmt = $connexion->prepare("INSERT INTO commande (id_client, montant) VALUES (:id_client, :montant)");
         $stmt->execute([
             ':id_client' => $id_client,
             ':montant' => $total,
-            ':adresse' => $adresse
         ]);
 
         // Récupérer l'ID de la commande insérée
