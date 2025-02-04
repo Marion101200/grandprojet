@@ -1,0 +1,49 @@
+body{
+    background: linear-gradient(rgba(247, 244, 244, 0.733), rgba(242, 241, 241, 0.696)), no-repeat, fixed
+                  url(img/DALL·E\ 2024-11-29\ 13.29.03\ -\ A\ vibrant\ and\ colorful\ image\ showcasing\ various\ video\ games\ integrated\ into\ a\ single\ scene.\ The\ image\ includes\ a\ retro\ arcade\ machine\ with\ a\ glowing\ s.webp);
+}
+input[type="submit"] {
+    width: 50%;
+    padding: 10px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="month"] {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    padding: 3px;
+    margin: 0 auto;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 12px;
+}
+label {
+    margin-top: 5px;
+    color: #333;
+}
+.titre_paiement{
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    /* width: 40vw; */
+}
+table{
+    border-collapse: collapse;
+    width: 80%;
+}
+  
+  th, td{
+    border: 1px solid rgb(176, 71, 71);
+    padding: 10px;
+    font-weight: bold;
+  }
+  

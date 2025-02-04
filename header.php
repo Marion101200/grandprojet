@@ -45,6 +45,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <?php
         if(isset($_SESSION['email'])){
           echo '<li><a href="favoris.php"><i class=\'bx bxs-heart\' ></i></a></li>';
+          echo '<li><a href="historique_commandes.php">Historique</a></li>';
           echo "<li><a href=\"compte.php\">Compte</li>";
           echo "<li><a href=\"logout.php\">Logout &nbsp; <span class=\"glyphicon glyphicon-log-in\"></span></a></li>";
         } else{
@@ -54,7 +55,7 @@ if (session_status() == PHP_SESSION_NONE) {
     </ul>
     <form class="navbar-form navbar-left" action="research.php" method="get">
       <div class="form-group">
-        <input type="search" name="query" class="form-control" placeholder="rechercher..." required style="width: 440px">
+        <input type="search" name="query" class="form-control" placeholder="rechercher..." required style="width: 320px">
       </div>
       <button type="submit" class="btn btn-default"><i class='bx bx-search-alt-2' ></i>
       </button>

@@ -9,6 +9,20 @@
   include 'header.php';
   include 'pdo.php';
 
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['nom'])) {
+    echo "<script>
+        alert('Vous devez être connecté pour accéder à votre panier.');
+        window.location.href = 'login.php';
+    </script>";
+    exit;
+}
+
+
   $cart_items = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
   $total = 0;
 
