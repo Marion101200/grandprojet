@@ -1,6 +1,6 @@
 <?php include 'header.php';
-    include 'pdo.php';
-    ?>
+include 'pdo.php';
+?>
 <?php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -12,7 +12,8 @@ if (!isset($_SESSION['nom'])) {
     exit();
 }
 
-$nom = $_SESSION['nom']; // Récupération du nom de l'utilisateur connecté
+$nom = $_SESSION['nom'];
+$id_client = $_SESSION['id'];
 
 try {
     require_once("connexion.php");
@@ -83,9 +84,9 @@ $connexion = null; // Fermeture de la connexion
         <div class="profil-changement">
             <img src="img/DALL·E 2024-12-05 10.32.17 - A stylish and playful cartoon-style logo for a profile change feature on a website. The logo features a cheerful cartoon character's face inside a cir.webp" alt="logo-changement-profil">
         </div>
-            <div class="title">
-                <h2 class="title_compte" style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px"> <i class='bx bx-game'></i> &nbsp;Mon Profil &nbsp; <i class='bx bx-game'></i></h2>
-            
+        <div class="title">
+            <h2 class="title_compte" style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px"> <i class='bx bx-game'></i> &nbsp;Mon Profil &nbsp; <i class='bx bx-game'></i></h2>
+
             <form action="compte.php" method="POST">
                 <label for="nom">Nom d'utilisateur : </label>
                 <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($clients['nom']); ?>" required>
@@ -99,7 +100,7 @@ $connexion = null; // Fermeture de la connexion
                 <input type="submit" value="Mettre à jour">
             </form>
         </div>
-        
+
     </div>
 
 </body>

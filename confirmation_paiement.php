@@ -3,7 +3,7 @@ session_start();
 include 'pdo.php';
 include 'header.php';
 
-if (!isset($_SESSION['id_clients'])) {
+if (!isset($_SESSION['id_client'])) {
     echo "Erreur : utilisateur non connecté.";
     exit;
 }
@@ -18,7 +18,6 @@ try {
         exit;
     }
 
-    $id_clients = $_SESSION['id_clients'];
     $adresse = isset($_SESSION['adresse']) ? $_SESSION['adresse'] : 'Adresse non fournie';
     $total = 0;
 
@@ -33,8 +32,8 @@ try {
     }
 
     // Insérer la commande
-    $stmt = $connexion->prepare("INSERT INTO commande (id_clients, montant, adresse) VALUES (:id_clients, :montant, :adresse)");
-    $stmt->bindParam(':id_clients', $id_clients);
+    $stmt = $connexion->prepare("INSERT INTO commande (id_client, montant, adresse) VALUES (:id_client, :montant, :adresse)");
+    $stmt->bindParam(':id_client', $id_clients);
     $stmt->bindParam(':montant', $total);
     $stmt->bindParam(':adresse', $adresse);
     $stmt->execute();
