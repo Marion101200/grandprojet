@@ -2,8 +2,10 @@
 session_start();
 include 'pdo.php';
 include 'header.php';
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+
+if (!isset($_SESSION['id_clients'])) {
+    echo "Erreur : utilisateur non connecté.";
+    exit;
 }
 
 try {
@@ -16,10 +18,11 @@ try {
         exit;
     }
 
-    $stmt = $connexion->prepare("INSERT INTO commande (id_clients, montant, adresse) VALUES (:id_clients, :montant, :adresse)");
+    $id_clients = $_SESSION['id_clients'];
+    $adresse = isset($_SESSION['adresse']) ? $_SESSION['adresse'] : 'Adresse non fournie';
     $total = 0;
 
-
+    // Calcul du montant total de la commande
     foreach ($_SESSION['cart'] as $jeux_id => $quantite) {
         $query = $connexion->prepare("SELECT prix FROM jeux WHERE id = ?");
         $query->execute([$jeux_id]);
@@ -29,51 +32,33 @@ try {
         }
     }
 
-    $stmt->bindParam(':total', $total, ':id_clients', $client, ':montant', $montant, ':adresse', $adresse);
+    // Insérer la commande
+    $stmt = $connexion->prepare("INSERT INTO commande (id_clients, montant, adresse) VALUES (:id_clients, :montant, :adresse)");
+    $stmt->bindParam(':id_clients', $id_clients);
+    $stmt->bindParam(':montant', $total);
+    $stmt->bindParam(':adresse', $adresse);
     $stmt->execute();
+
+    // Récupérer l'ID de la commande insérée
     $id_commande = $connexion->lastInsertId();
 
-
-    $stmt_detail = $connexion->prepare("INSERT INTO details_commande (id_commande, adresse) VALUES (:id_commande, :adresse)");
+    // Insérer les détails de la commande
+    $stmt_detail = $connexion->prepare("INSERT INTO details_commande (id_commande, id_jeux, quantite) VALUES (:id_commande, :id_jeux, :quantite)");
 
     foreach ($_SESSION['cart'] as $jeux_id => $quantite) {
-        $query = $connexion->prepare("SELECT prix FROM jeux WHERE id = ?");
-        $query->execute([$jeux_id]);
-        $jeu = $query->fetch(PDO::FETCH_ASSOC);
-
-        if ($jeu) {
-            $stmt_detail->execute([
-                ':id_commande' => $id_commande,
-                ':adresse' => $adresse,
-            ]);
-        }
+        $stmt_detail->execute([
+            ':id_commande' => $id_commande,
+            ':id_jeux' => $jeux_id,
+            ':quantite' => $quantite,
+        ]);
     }
 
-
+    // Vider le panier après la commande
     unset($_SESSION['cart']);
+
     echo "Commande validée avec succès !";
     header("Location: confirmation.php");
     exit;
 } catch (PDOException $e) {
     echo "Erreur lors de la validation de la commande : " . $e->getMessage();
 }
-?>
-
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Confirmation de paiement</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="confirmation_paiement.css" rel="stylesheet">
-</head>
-<div class="confirmation_paiement">
-<p><i class='bx bxs-check-square'></i>&nbsp; Votre paiement à été validé vous serez livrez dans les plus bref délais&nbsp;<i class='bx bxs-check-square'></i></p>
-</div>
-<body>
-
-</body>
-
-</html>
-<?php include 'footer.php'; ?>
