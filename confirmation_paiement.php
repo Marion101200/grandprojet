@@ -42,20 +42,18 @@ try {
         $id_commande = $connexion->lastInsertId();
 
         // Insérer les détails de la commande
-        $stmt_detail = $connexion->prepare("INSERT INTO details_commande (id_commande, id_jeux, quantite) VALUES (:id_commande, :id_jeux, :quantite)");
+        $stmt_detail = $connexion->prepare("INSERT INTO details_commande (id_commande) VALUES (:id_commande)");
 
         foreach ($_SESSION['cart'] as $jeux_id => $quantite) {
             $stmt_detail->execute([
                 ':id_commande' => $id_commande,
-                ':id_jeux' => $jeux_id,
-                ':quantite' => $quantite
             ]);
         }
 
         // unset($_SESSION['cart']);
 
         echo "Commande validée avec succès !";
-        header("Location: confirmation.php");
+
         exit;
     } catch (PDOException $e) {
         echo "Erreur lors de l'enregistrement de la commande : " . $e->getMessage();
