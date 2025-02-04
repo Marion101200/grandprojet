@@ -1,7 +1,7 @@
-<?php include 'header.php';
-include 'pdo.php';
-?>
 <?php
+include 'header.php';
+include 'pdo.php';
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -13,14 +13,13 @@ if (!isset($_SESSION['nom'])) {
 }
 
 $nom = $_SESSION['nom'];
-$id_client = $_SESSION['id'];
 
 try {
     require_once("connexion.php");
     $connexion = getConnexion();
     $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Vérifier si l'utilisateur existe
+
     $stmt = $connexion->prepare("SELECT id, nom, prenom, email FROM clients WHERE nom = :nom");
     $stmt->bindParam(':nom', $nom);
     $stmt->execute();
@@ -31,7 +30,7 @@ try {
         exit();
     }
 
-    // Gestion du formulaire de mise à jour
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $newClientsNom = htmlspecialchars(trim($_POST['nom']));
         $newEmail = htmlspecialchars(trim($_POST['email']));
@@ -54,7 +53,7 @@ try {
             $stmt->bindParam(':id', $clients['id']);
             $stmt->execute();
 
-            // Mettre à jour la session avec les nouvelles informations
+
             $_SESSION['nom'] = $newClientsNom;
 
             echo "<p style='color: green;font-size: 50px; text-align: center;'>Informations mises à jour avec succès.</p>";
@@ -66,9 +65,8 @@ try {
     echo "Erreur de connexion à la base de données : " . $e->getMessage();
 }
 
-$connexion = null; // Fermeture de la connexion
+$connexion = null;
 ?>
-
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -82,10 +80,12 @@ $connexion = null; // Fermeture de la connexion
 <body style="background-color: rgb(179, 238, 248)">
     <div class="profile-container">
         <div class="profil-changement">
-            <img src="img/DALL·E 2024-12-05 10.32.17 - A stylish and playful cartoon-style logo for a profile change feature on a website. The logo features a cheerful cartoon character's face inside a cir.webp" alt="logo-changement-profil">
+            <img src="img/profile-change.webp" alt="logo-changement-profil">
         </div>
         <div class="title">
-            <h2 class="title_compte" style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px"> <i class='bx bx-game'></i> &nbsp;Mon Profil &nbsp; <i class='bx bx-game'></i></h2>
+            <h2 class="title_compte" style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px">
+                <i class='bx bx-game'></i> &nbsp;Mon Profil &nbsp; <i class='bx bx-game'></i>
+            </h2>
 
             <form action="compte.php" method="POST">
                 <label for="nom">Nom d'utilisateur : </label>
@@ -100,9 +100,7 @@ $connexion = null; // Fermeture de la connexion
                 <input type="submit" value="Mettre à jour">
             </form>
         </div>
-
     </div>
-
 </body>
 
 </html>

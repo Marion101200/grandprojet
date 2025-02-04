@@ -33,7 +33,7 @@ try {
 
     // Insérer la commande
     $stmt = $connexion->prepare("INSERT INTO commande (id_client, montant, adresse) VALUES (:id_client, :montant, :adresse)");
-    $stmt->bindParam(':id_client', $id_clients);
+    $stmt->bindParam(':id_client', $id_client);
     $stmt->bindParam(':montant', $total);
     $stmt->bindParam(':adresse', $adresse);
     $stmt->execute();
