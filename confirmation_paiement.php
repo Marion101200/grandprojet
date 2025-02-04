@@ -3,6 +3,10 @@ session_start();
 include 'pdo.php';
 include 'header.php';
 
+if (!isset($_SESSION['id_client'])) {
+    echo "Erreur : ID client non défini.";
+    exit();
+}
 
 try {
     require_once("connexion.php");

@@ -9,6 +9,7 @@
 
 <body>
   <?php
+  session_start();
   include 'header.php';
   ?>
   <?php
@@ -28,7 +29,7 @@
     $query = $connexion->prepare("SELECT * FROM clients WHERE  email = ? ");
     $query->execute([$login]);
     $clients = $query->fetch(PDO::FETCH_ASSOC);
-    $_SESSION['nom'] = $client['nom'];
+    $_SESSION['nom'] = $clients['nom'];
 
     if ($clients === false) {
       echo "<p style='color: red;'>Erreur : aucun utilisateur trouvé ou problème de connexion à la base de données.</p>";
@@ -41,9 +42,6 @@
 
     echo "<p>" . htmlspecialchars($clients['mdp']) . "</p>";
     echo "<p><strong>Mot de passe saisi :</strong> " . htmlspecialchars($mdp) . "</p>";
-
-
-
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       if (password_verify($mdp, $clients['mdp'])) {
