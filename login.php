@@ -38,9 +38,6 @@
       echo "<p style='color: red;'>Votre compte n'est pas activé. Veuillez vérifier vos emails pour l'activer.</p>";
       exit;
 }
-  
-    echo "<p>" . htmlspecialchars($clients['mdp']) . "</p>";
-    echo "<p><strong>Mot de passe saisi :</strong> " . htmlspecialchars($mdp) . "</p>";
 
 
 

@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
-            echo "<p style='color: red;'>Cet email est déjà utilisé</p>";
+            echo "<p style='color: red;'>Cet email est déjà utilisé.</p>";
         } else {
             // Hachage sécurisé du mot de passe
             $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
