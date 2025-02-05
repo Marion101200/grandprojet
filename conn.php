@@ -35,8 +35,10 @@ session_start();
 
                 <label for="confirm-password">Confirmer le mot de passe :</label>
                 <input type="password" id="confirm-password" name="confirm-password" required>
-                <label for="capchat">Veuillez remplir le Captcha:</label>
+                <label  for="capchat">Veuillez remplir le Captcha:</label>
+                <div class="captcha">
                 <?php echo $_SESSION ['captcha']?>
+                </div>
                 <label for="captcha">
                     <input type="text" id="captcha" name="captcha" required>
                 <input type="submit" value="S'inscrire">
