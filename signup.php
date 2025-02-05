@@ -27,7 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if($captchapost != $_SESSION['captcha']) {
         echo 'Le captcha ne correspond pas, veuillez recommencer.';
-    }exit;
+        exit;
+    }
 
     try {
         // Connexion sécurisée à la base de données
