@@ -51,8 +51,6 @@ cursor: pointer;
     font-family: 'Courier New', Courier, monospace;
     width: 250px;
     font-size: 40px;
-
-    text-transform: uppercase;
     letter-spacing: 4px;
     text-align: center;
     position: relative;

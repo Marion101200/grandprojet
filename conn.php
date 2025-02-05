@@ -1,8 +1,22 @@
 <?php
 session_start();
-$captcha = random_int(10000, 99999);
-$_SESSION['captcha'] = $captcha;
+function create_captcha($taille = 5){
+    $caractere = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!?/&$%";
+    $captcha_code = substr(str_shuffle($caractere), 0, $taille );
+    return $captcha_code;
+}
+
+$captcha_code = create_captcha();
+$_SESSION['captcha'] = $captcha_code;
 include 'header.php';
+
+
+if (isset($_SESSION['erreurmdp'])) {
+    echo $_SESSION['erreurmdp'];
+}
+if (isset($_SESSION['erreurcaptcha'])) {
+    echo $_SESSION['erreurcaptcha'];
+}
 ?>
 
 

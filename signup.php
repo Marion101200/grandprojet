@@ -21,12 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Vérification si les mots de passe correspondent
     if ($mdp != $confirmPassword) {
-        echo "<p style='color: red;'>Les mots de passe ne correspondent pas</p>";
+        $_SESSION['erreurmdp'] = "<p style='color: red;'>Les mots de passe ne correspondent pas</p>";
+        header("Location: " . $_SERVER['HTTP_REFERER']);
         exit;
     }
 
     if($captchapost != $_SESSION['captcha']) {
-        echo 'Le captcha ne correspond pas, veuillez recommencer.';
+        $_SESSION['erreurcaptcha'] = "<p style='color: red;'>Le captcha est ne corespond pas, veuillez recommencer.</p>";
+        header("Location: " . $_SERVER['HTTP_REFERER']);
         exit;
     }
 
@@ -105,5 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Fermeture de la connexion à la base
     $conn = null;
+    header("Location: " . $_SERVER['HTTP_REFERER']);
 }
 ?>
