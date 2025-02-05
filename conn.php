@@ -13,9 +13,11 @@ include 'header.php';
 
 if (isset($_SESSION['erreurmdp'])) {
     echo $_SESSION['erreurmdp'];
+    unset ($_SESSION['erreurmdp']);
 }
 if (isset($_SESSION['erreurcaptcha'])) {
     echo $_SESSION['erreurcaptcha'];
+    unset ($_SESSION['erreurcaptcha']);
 }
 ?>
 
