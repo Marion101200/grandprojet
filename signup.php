@@ -12,8 +12,8 @@ use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    
-    $nom= htmlspecialchars($_POST['nom']);
+
+    $nom = htmlspecialchars($_POST['nom']);
     $email = htmlspecialchars($_POST['email']);
     $mdp = htmlspecialchars($_POST['password']);
     $confirmPassword = htmlspecialchars($_POST['confirm-password']);
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
-    if($captchapost != $_SESSION['captcha']) {
+    if ($captchapost != $_SESSION['captcha']) {
         $_SESSION['erreurcaptcha'] = "<p style='color: red;'>Le captcha est ne corespond pas, veuillez recommencer.</p>";
         header("Location: " . $_SERVER['HTTP_REFERER']);
         exit;
@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bindParam(':token', $token);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':mdp', $hashedPassword);
-            
+
 
             if ($stmt->execute()) {
 
@@ -109,4 +109,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $conn = null;
     header("Location: " . $_SERVER['HTTP_REFERER']);
 }
-?>
