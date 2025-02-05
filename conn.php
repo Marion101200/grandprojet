@@ -37,7 +37,12 @@ session_start();
                 <input type="password" id="confirm-password" name="confirm-password" required>
                 <label  for="capchat">Veuillez remplir le Captcha:</label>
                 <div class="captcha">
-                <?php echo $_SESSION ['captcha']?>
+                    <?php 
+                    $catpcha_array = str_split($_SESSION['captcha']);
+                    foreach ($catpcha_array as $char){
+                        echo"<span>" . $char . "</span>";
+                    }
+                    ?>
                 </div>
                 <label for="captcha">
                     <input type="text" id="captcha" name="captcha" required>
@@ -61,9 +66,7 @@ session_start();
             return true;
         }
     </script>
-<!-- <?php
-include 'footer.php'
-?> -->
+
 
 </html>
 </body>

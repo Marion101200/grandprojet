@@ -18,10 +18,10 @@ body{
     width: 37vw;
 
 }
-label {
+/* label {
     margin-top: 5px;
     color: #333;
-}
+} */
 input[type="text"],
 input[type="email"],
 input[type="password"] {
@@ -59,4 +59,88 @@ input[type="submit"] {
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
             margin: 0 auto; /* Centre horizontalement */
             width: 50%;
+}
+.captcha span {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    /* Correction de la position verticale */
+    opacity: 0.6;
+    animation: rotateCaptcha 2s infinite linear;
+}
+
+.captcha span:nth-child(2) {
+    transform: translateY(-50%) rotate(-10deg);
+    animation: rotateCaptcha 2s infinite reverse linear;
+    color: #e74c3c;
+}
+
+.captcha span:nth-child(3) {
+    transform: translateY(-50%) rotate(15deg);
+    animation: rotateCaptcha 5s infinite linear;
+    color: #2ecc71;
+}
+
+.captcha span:nth-child(4) {
+    transform: translateY(-50%) rotate(-5deg);
+    animation: rotateCaptcha 8s infinite reverse linear;
+    color: #f39c12;
+}
+
+.captcha span:nth-child(5) {
+    transform: translateY(-50%) rotate(20deg);
+    animation: rotateCaptcha 2s infinite linear;
+    color: #9b59b6;
+}
+
+@keyframes rotateCaptcha {
+    0% {
+        transform: rotate(35deg);
+    }
+
+    50% {
+        transform: rotate(-30deg);
+    }
+
+    70% {
+        transform: rotate(-80deg);
+    }
+
+    100% {
+        transform: rotate(70deg);
+    }
+}
+
+/* Appliquer un espacement aléatoire pour chaque caractère */
+.captcha span {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    /* Centrer verticalement */
+}
+
+.captcha span:nth-child(1) {
+    left: 10%;
+    top: -5px;
+
+}
+
+.captcha span:nth-child(2) {
+    left: 25%;
+    top: -5px;
+}
+
+.captcha span:nth-child(3) {
+    left: 40%;
+    top: -5px;
+}
+
+.captcha span:nth-child(4) {
+    left: 55%;
+    top: -5px;
+}
+
+.captcha span:nth-child(5) {
+    left: 70%;
+    top: -5px;
 }
