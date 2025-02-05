@@ -56,10 +56,13 @@ cursor: pointer;
     letter-spacing: 4px;
     text-align: center;
     position: relative;
-    background: linear-gradient(45deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5));
+    background: rgb(142, 138, 137, 0.65) ;
     padding: 20px;
-    border: 2px solid #2c3e50;
+    border: 2px solid  rgb(142, 138, 137);
     border-radius: 10px;
+    margin: 0 auto; /* Centre horizontalement */
+    display: flex;
+    justify-content: center;
 }
 
 .captcha span {
@@ -80,19 +83,19 @@ cursor: pointer;
 .captcha span:nth-child(3) {
     transform: translateY(-50%) rotate(15deg);
     animation: rotateCaptcha 5s infinite linear;
-    color: #2ecc71;
+    color: blue;
 }
 
 .captcha span:nth-child(4) {
     transform: translateY(-50%) rotate(-5deg);
     animation: rotateCaptcha 8s infinite reverse linear;
-    color: #f39c12;
+    color: yellow;
 }
 
 .captcha span:nth-child(5) {
     transform: translateY(-50%) rotate(20deg);
     animation: rotateCaptcha 2s infinite linear;
-    color: #9b59b6;
+    color: rebeccapurple;
 }
 
 @keyframes rotateCaptcha {

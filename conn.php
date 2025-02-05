@@ -2,6 +2,7 @@
 session_start();
 $captcha = random_int(10000, 99999);
 $_SESSION['captcha'] = $captcha;
+include 'header.php';
 ?>
 
 
@@ -44,7 +45,6 @@ $_SESSION['captcha'] = $captcha;
                     }
                     ?>
                 </div>
-                <label for="captcha">
                     <input type="text" id="captcha" name="captcha" required>
                     <input type="submit" value="S'inscrire">
             </form>
@@ -67,8 +67,7 @@ $_SESSION['captcha'] = $captcha;
         }
     </script>
 
-
-</html>
 </body>
 
 </html>
+<?php include 'footer.php'; ?>
