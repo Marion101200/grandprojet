@@ -77,7 +77,7 @@
         <label for="password">Mot de passe:</label>
         <input type="password" id="password" name="password" required>
         <br>
-        <a href="signup.html"><i class='bx bx-user'></i>&nbsp;Inscrivez-vous ici&nbsp;<i class='bx bx-user'></i></a>
+        <a href="conn.php"><i class='bx bx-user'></i>&nbsp;Inscrivez-vous ici&nbsp;<i class='bx bx-user'></i></a>
         <br>
         <a href="resetPassword.html" class="forgot"><i class='bx bx-game'></i>&nbsp;Oublie de mot de passe&nbsp;<i class='bx bx-game'></i></a>
         <input type="submit" name="submit" value="Se connecter">

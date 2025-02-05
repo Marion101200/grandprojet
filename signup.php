@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 include "connexion.php";
 
@@ -16,12 +17,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = htmlspecialchars($_POST['email']);
     $mdp = htmlspecialchars($_POST['password']);
     $confirmPassword = htmlspecialchars($_POST['confirm-password']);
+    $captchapost = htmlspecialchars($_POST['captcha']);
 
     // Vérification si les mots de passe correspondent
     if ($mdp != $confirmPassword) {
         echo "<p style='color: red;'>Les mots de passe ne correspondent pas</p>";
         exit;
     }
+
+    if($captchapost != $_SESSION['captcha']) {
+        echo 'Le captcha ne correspond pas, veuillez recommencer.';
+    }exit;
 
     try {
         // Connexion sécurisée à la base de données
