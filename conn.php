@@ -1,7 +1,7 @@
 <?php
 session_start();
-  $captcha = random_int(10000,99999);
-  $_SESSION['captcha'] = $captcha;
+$captcha = random_int(10000, 99999);
+$_SESSION['captcha'] = $captcha;
 ?>
 
 
@@ -35,18 +35,18 @@ session_start();
 
                 <label for="confirm-password">Confirmer le mot de passe :</label>
                 <input type="password" id="confirm-password" name="confirm-password" required>
-                <label  for="capchat">Veuillez remplir le Captcha:</label>
+                <label for="capchat">Veuillez remplir le Captcha:</label>
                 <div class="captcha">
-                    <?php 
+                    <?php
                     $catpcha_array = str_split($_SESSION['captcha']);
-                    foreach ($catpcha_array as $char){
-                        echo"<span>" . $char . "</span>";
+                    foreach ($catpcha_array as $char) {
+                        echo "<span>" . $char . "</span>";
                     }
                     ?>
                 </div>
                 <label for="captcha">
                     <input type="text" id="captcha" name="captcha" required>
-                <input type="submit" value="S'inscrire">
+                    <input type="submit" value="S'inscrire">
             </form>
         </div>
         <p id="error-msg"></p>

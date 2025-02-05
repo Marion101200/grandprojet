@@ -1,65 +1,67 @@
 .signup-container{
-        display: flex;
-        justify-content: space-around;
-        flex-direction: row;
-        align-items: center;
-        height: 100vh;
-    
-    
-}
-body{
-    background: linear-gradient(rgba(247, 244, 244, 0.733), rgba(242, 241, 241, 0.696)), no-repeat, fixed
-                  url(img/DALL·E\ 2024-11-29\ 13.29.03\ -\ A\ vibrant\ and\ colorful\ image\ showcasing\ various\ video\ games\ integrated\ into\ a\ single\ scene.\ The\ image\ includes\ a\ retro\ arcade\ machine\ with\ a\ glowing\ s.webp);
-}
-.titre-signup{
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-    width: 37vw;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+    height: 100vh;
+
 
 }
-/* label {
-    margin-top: 5px;
-    color: #333;
-} */
+body{
+background: linear-gradient(rgba(247, 244, 244, 0.733), rgba(242, 241, 241, 0.696)), no-repeat, fixed
+              url(img/DALL·E\ 2024-11-29\ 13.29.03\ -\ A\ vibrant\ and\ colorful\ image\ showcasing\ various\ video\ games\ integrated\ into\ a\ single\ scene.\ The\ image\ includes\ a\ retro\ arcade\ machine\ with\ a\ glowing\ s.webp);
+}
+.titre-signup{
+text-align: center;
+margin-bottom: 20px;
+color: #333;
+width: 37vw;
+
+}
+label {
+margin-top: 5px;
+color: #333;
+} 
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-    display: flex;
-    justify-content: center;
-    width: 50%;
-    padding: 3px;
-    margin: 0 auto;
-    margin-top: 5px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 12px;
+display: flex;
+justify-content: center;
+width: 50%;
+padding: 3px;
+margin: 0 auto;
+margin-top: 5px;
+border: 1px solid #ddd;
+border-radius: 5px;
+margin-bottom: 12px;
 }
 input[type="submit"] {
-    width: 50%;
-    padding: 10px;
-    background-color: #5cb85c;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin-top: 20px;
-    cursor: pointer;
+width: 50%;
+padding: 10px;
+background-color: #5cb85c;
+color: white;
+border: none;
+border-radius: 5px;
+margin-top: 20px;
+cursor: pointer;
 }
-.captcha{
-    font-family: 'Impact', sans-serif;
 
-            font-size: 30px;
-            /* Taille de la police */
-            color: #333;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background-color: #f3f3f3;
-            padding: 5px;
-            border-radius: 5px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            margin: 0 auto; /* Centre horizontalement */
-            width: 50%;
+
+.captcha {
+    font-family: 'Courier New', Courier, monospace;
+    width: 250px;
+    font-size: 40px;
+
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5));
+    padding: 20px;
+    border: 2px solid #2c3e50;
+    border-radius: 10px;
 }
+
 .captcha span {
     position: absolute;
     top: 50%;
