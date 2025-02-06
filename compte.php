@@ -80,7 +80,7 @@ $connexion = null;
 <body style="background-color: rgb(179, 238, 248)">
     <div class="profile-container">
         <div class="profil-changement">
-            <img src="img/profile-change.webp" alt="logo-changement-profil">
+            <img src="img/DALL·E 2024-12-05 10.32.17 - A stylish and playful cartoon-style logo for a profile change feature on a website. The logo features a cheerful cartoon character's face inside a cir.webp" alt="logo-changement-profil">
         </div>
         <div class="title">
             <h2 class="title_compte" style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px">
