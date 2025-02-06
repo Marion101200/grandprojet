@@ -10,9 +10,7 @@
 <body>
   <?php
   session_start();
-  include 'header.php';
-  ?>
-  <?php
+
   require_once("connexion.php");
 
   if (isset($_POST['submit'])) {
@@ -26,7 +24,7 @@
 
     $connexion = getConnexion();
 
-    $query = $connexion->prepare("SELECT * FROM clients WHERE  email = ? ");
+    $query = $connexion->prepare("SELECT * FROM clients WHERE email = ? ");
     $query->execute([$login]);
     $clients = $query->fetch(PDO::FETCH_ASSOC);
     $_SESSION['nom'] = $clients['nom'];
@@ -35,9 +33,10 @@
       echo "<p style='color: red;'>Erreur : aucun utilisateur trouvé ou problème de connexion à la base de données.</p>";
       exit();
     }
+
     if ($clients['etat_token'] == 0) {
       echo "<p style='color: red;'>Votre compte n'est pas activé. Veuillez vérifier vos emails pour l'activer.</p>";
-      exit;
+      exit();
     }
 
     echo "<p>" . htmlspecialchars($clients['mdp']) . "</p>";
@@ -60,8 +59,9 @@
       echo "<p style='color: red;'>Aucun utilisateur trouvé avec cet email.</p>";
     }
   }
-
+  include 'header.php';
   ?>
+  
   <div class="login">
     <div class="fond-img">
       <img src="img/login1.png" alt="login">
