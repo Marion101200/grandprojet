@@ -12,7 +12,7 @@
   <?php
   include 'header.php';
   include 'pdo.php';
-
+  include 'ajouter_avis.php';
   try {
     require_once("connexion.php");
     $connexion = getConnexion();
@@ -66,6 +66,7 @@
     echo "Erreur de connexion : " . $e->getMessage();
     exit;
   }
+
 
   // Vérification et ajout au panier
   if (isset($_POST['add-to-cart'])) {
@@ -211,7 +212,19 @@
 
     <!-- Liste des jeux -->
     <div class="jeux-listes">
-      <?php foreach ($jeu as $jeux): ?>
+      <?php foreach ($jeu as $jeux):{
+          $moyenneStmt = $connexion->prepare("SELECT AVG(note) as moyenne FROM avis WHERE jeux_titre = ?");
+          $moyenneStmt->execute([$jeux['titre']]);
+          $moyenne = $moyenneStmt->fetch(PDO::FETCH_ASSOC)['moyenne'];
+          $moyenne = round($moyenne, 1); // Arrondir à 1 chiffre après la virgule
+        
+        
+        
+        $testStmt = $connexion->prepare("SELECT note FROM avis WHERE jeux_titre = ?");
+        $testStmt->execute([$jeux['titre']]);
+        $allNotes = $testStmt->fetchAll(PDO::FETCH_COLUMN);
+
+      } ?>
         <div class="jeux-item">
           <img class="images_jeux"
             src="<?php echo htmlspecialchars($jeux['images']); ?>"
@@ -233,6 +246,23 @@
             </p>
             <div class="prix_ajout">
               <h3 class="prix"><?php echo htmlspecialchars($jeux['prix']); ?> €</h3>
+
+
+              
+<div class="moyenne-avis">
+    <strong>Note moyenne : <?= $moyenne; ?>/5</strong><br>
+    <span>
+        <?php
+        $fullStars = floor($moyenne); // Étoiles pleines
+        $halfStar = ($moyenne - $fullStars) >= 0.5 ? 1 : 0; // Étoile demi pleine
+        $emptyStars = 5 - ($fullStars + $halfStar); // Étoiles vides
+
+        echo str_repeat('⭐', $fullStars); // Affichage des étoiles pleines
+        if ($halfStar) echo '⭐️'; // Affichage de l'étoile demi pleine
+        echo str_repeat('☆', $emptyStars); // Affichage des étoiles vides
+        ?>
+    </span>
+</div>
 
               <form class="favoris" method="post">
                 <input type="hidden" name="jeux_id" value="<?php echo htmlspecialchars($jeux['id']); ?>">
@@ -288,6 +318,25 @@
       timer = setTimeout(() => filterForm.submit(), 300);
     }
   </script>
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll(".star");
+            const noteInput = document.getElementById("note");
+
+            stars.forEach(star => {
+                star.addEventListener("click", function() {
+                    let value = this.getAttribute("data-value");
+                    noteInput.value = value;
+
+
+                    stars.forEach(s => s.classList.remove("selected"));
+                    for (let i = 0; i < value; i++) {
+                        stars[i].classList.add("selected");
+                    }
+                })
+            })
+        });
+    </script>
 </body>
 
 </html>

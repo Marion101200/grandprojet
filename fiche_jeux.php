@@ -68,7 +68,10 @@ if(isset($_SESSION['email'])){
 $stmt->execute([$email]);
 $clients = $stmt->fetch(PDO::FETCH_ASSOC);   
 }
-
+$moyenneStmt = $connexion->prepare("SELECT AVG(note) as moyenne FROM avis WHERE jeux_titre = ?");
+$moyenneStmt->execute([$jeux['titre']]);
+$moyenne = $moyenneStmt->fetch(PDO::FETCH_ASSOC)['moyenne'];
+$moyenne = round($moyenne, 1);
 include 'header.php';
 ?>
 
@@ -110,6 +113,23 @@ include 'header.php';
         </div>
     </div>
     <a href="panier.php" class="see_cart"><i class='bx bxs-cart'></i>&nbsp;Voir le panier&nbsp;<i class='bx bxs-cart'></i></a>
+
+    <h2><i class='bx bxs-star'></i>&nbsp;Avis des utilisateurs &nbsp;<i class='bx bxs-star'></i></h2>
+
+<div class="moyenne-avis">
+    <strong>Note moyenne : <?= $moyenne; ?>/5</strong><br>
+    <span>
+        <?php
+        $fullStars = floor($moyenne); // Étoiles pleines
+        $halfStar = ($moyenne - $fullStars) >= 0.5 ? 1 : 0; // Étoile demi pleine
+        $emptyStars = 5 - ($fullStars + $halfStar); // Étoiles vides
+
+        echo str_repeat('⭐', $fullStars); // Affichage des étoiles pleines
+        if ($halfStar) echo '⭐️'; // Affichage de l'étoile demi pleine
+        echo str_repeat('☆', $emptyStars); // Affichage des étoiles vides
+        ?>
+    </span>
+</div>
 
     <h2 class="donner_avis"><i class='bx bxs-message-dots'></i>&nbsp;Donnez votre avis&nbsp;<i class='bx bxs-message-dots'></i></h2>
     <?php if (isset($_SESSION['nom'])): ?>
