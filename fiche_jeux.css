@@ -53,7 +53,7 @@ strong{
     font-weight: bold;
     font-size: 18px;
     text-align: center;
-    text-decoration: underline;
+    text-decoration: none;
 }
 .description{
     color: black;
@@ -107,6 +107,7 @@ h1{
     font-size: 30px;
     display: flex;
     justify-content: center;
+    margin-top: 30px;
 }
 
 .retour-accueil a:hover{
@@ -117,7 +118,14 @@ h1{
     justify-content: center;
     gap: 5px;
     cursor: pointer;
-    margin: 10px 0;
+    background: rgb(142, 138, 137, 0.8) ;
+    width: 250px;
+    font-size: 40px;
+    padding: 20px;
+    border: 2px solid  rgb(142, 138, 137);
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-top: 10px;
 }
 .star{
     font-size: 24px;
@@ -130,29 +138,31 @@ h1{
 
 }
 .avis{
-    background-color: white;
+    background-color: rgb(228, 225, 225) ;
    padding: 15px;
    margin-top: 15px;
    border-radius: 8px;
    box-shadow: 0 2px 3px black;
    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+   margin: 0 auto;
+   width: 50%;
+   margin-top: 15px;
+
 }
 .avis:hover{
     transform: translateY(-5px);
     box-shadow: 0 4px 6px black;
 }
-.avis strong{
-    font-size: 16px;
-    color: #333;
-}
+
 .avis span{
     font-size: 14px;
     color: #f39c12;
+
 }
 .avis p{
     margin-top: 10px;
     line-height: 1.6;
-    font-size: 14px;
+    font-size: 16px;
     color: #555;
 }
 .avis small{
@@ -162,8 +172,8 @@ h1{
     margin-top: 10px;
 }
 textarea{
-    width: 90%;
-    min-height: 80px;
+    width: 100%;
+    min-height: 100px;
     margin-top: 5px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -171,7 +181,32 @@ textarea{
     resize: none;
     font-size: 14px;
 }
-button{
+#button_avis{
     color: white;
     background-color: rgb(3, 194, 3);
+    margin-top: 15px;
+    font-size: 20px;
+    width: 150px;
+}
+#commentaire{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    margin: 0 auto;
+}
+label{
+    font-size: 25px;
+}
+.donner_avis{
+    font-size: 40px;
+    margin-bottom: 30px;
+    color: red;
+}
+.avis_connexion{
+    text-decoration: none;
+    font-size: 50px;
+    text-align: center;
+    color: rgb(65, 0, 186);
 }
