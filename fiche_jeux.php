@@ -4,11 +4,18 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-include 'header.php';
 include 'pdo.php';
+include 'ajouter_avis.php';
+require_once("connexion.php");
+  $connexion = getConnexion();
+  $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+date_default_timezone_set('Europe/Paris');
+
+// Initialisation de la variable avis
+$avis = [];
 
 // Récupération des détails du jeu
 if (isset($_GET['id'])) {
@@ -19,87 +26,48 @@ if (isset($_GET['id'])) {
     $stmt = $connexion->prepare("SELECT * FROM jeux WHERE id = :id");
     $stmt->execute(['id' => $jeux_id]);
     $jeux = $stmt->fetch(PDO::FETCH_ASSOC);
-}
 
-// Vérification et ajout au panier
-if (isset($_POST['add-to-cart'])) {
-    $jeux_id = $_POST['jeux_id'];
-
-    // Initialiser le panier si nécessaire
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
-    }
-
-    // Ajout du jeu au panier
-    if (isset($_SESSION['cart'][$jeux_id])) {
-        $_SESSION['cart'][$jeux_id]++;
-    } else {
-        $_SESSION['cart'][$jeux_id] = 1;
-    }
-
-    echo "<script>
-        if (confirm('Le jeu a été ajouté au panier. Voulez-vous aller sur votre panier ?')) {
-            window.location.href = 'panier.php';
-        } else {
-            window.location.href = 'jeux.php';
-        }
-    </script>";
-    exit;
-}
-
-// Vérification et ajout aux favoris
-if (isset($_POST['add-to-favorites'])) {
-    if (!isset($_SESSION['nom'])) {
-        echo "<script>
-            alert('Vous devez être connecté pour ajouter des jeux à vos favoris.');
-            window.location.href = 'login.php';
-        </script>";
+    if (!$jeux) {
+        echo "<p>Erreur : Jeu introuvable.</p>";
         exit;
     }
+}
 
-    $favori_id = (int)$_POST['favori_id'];
+// Enregistrement des avis
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['nom']) && !empty($_POST['commentaire']) && isset($_POST['note'])) {
+    $nom = $_SESSION['nom'];
+    $jeux_titre = $jeux['titre'];
+    $commentaire = trim($_POST['commentaire']);
+    $note = (int) $_POST['note'];
+    $date_ajout = date("Y-m-d H:i:s");
 
-    // Connexion à la base de données
-    try {
-        require_once("connexion.php");
-        $connexion = getConnexion();
-
-        // Récupérer l'ID du client en fonction du nom
-        $stmt = $connexion->prepare("SELECT id FROM clients WHERE nom = :nom");
-        $stmt->execute(['nom' => $_SESSION['nom']]);
-        $client = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$client) {
-            echo "<script>alert('Utilisateur non trouvé.');</script>";
-            exit;
+    if ($note >= 1 && $note <= 5) {
+        try {
+            $stmt = $connexion->prepare("INSERT INTO avis (jeux_titre, nom, commentaire, note, date_ajout) VALUES (:jeux_titre, :nom, :commentaire, :note, :date_ajout)");
+            $stmt->execute([
+                'jeux_titre' => $jeux_titre,
+                'nom' => $nom,
+                'commentaire' => $commentaire,
+                'note' => $note,
+                'date_ajout' => $date_ajout
+            ]);
+        } catch (PDOException $e) {
+            echo "<p>Erreur lors de l'ajout de l'avis : " . $e->getMessage() . "</p>";
         }
-
-        $clients_id = $client['id'];
-
-        // Vérifier si le jeu est déjà dans les favoris
-        $stmt = $connexion->prepare("SELECT * FROM user_favorites WHERE clients_id = :clients_id AND jeux_id = :jeux_id");
-        $stmt->execute(['clients_id' => $clients_id, 'jeux_id' => $favori_id]);
-
-        if ($stmt->rowCount() == 0) {
-            // Ajouter le jeu aux favoris
-            $stmt = $connexion->prepare("INSERT INTO user_favorites (clients_id, jeux_id) VALUES (:clients_id, :jeux_id)");
-            $stmt->execute(['clients_id' => $clients_id, 'jeux_id' => $favori_id]);
-
-            echo "<script>
-                if (confirm('Le jeu a été ajouté à vos favoris ! Voulez-vous aller sur vos favoris ?')) {
-                    window.location.href = 'favoris.php';
-                } else {
-                    window.location.href = 'jeux.php';
-                }
-            </script>";
-            exit;
-        } else {
-            echo "<script>alert('Ce jeu est déjà dans vos favoris.');</script>";
-        }
-    } catch (PDOException $e) {
-        echo "Erreur : " . $e->getMessage();
     }
 }
+
+// Récupération des avis
+$avisStmt = $connexion->prepare("SELECT * FROM avis WHERE jeux_titre = ? ORDER BY date_ajout DESC");
+$avisStmt->execute([$jeux['titre']]);
+$avis = $avisStmt->fetchAll();
+
+$email = $_SESSION['email'];
+$stmt = $connexion->prepare("SELECT * FROM clients WHERE email = ?");
+$stmt->execute([$email]);
+$clients = $stmt->fetch(PDO::FETCH_ASSOC);
+
+include 'header.php';
 ?>
 
 <!DOCTYPE html>
@@ -140,9 +108,63 @@ if (isset($_POST['add-to-favorites'])) {
     </div>
   </div>
   <a href="panier.php" class="see_cart"><i class='bx bxs-cart'></i>&nbsp;Voir le panier&nbsp;<i class='bx bxs-cart'></i></a>
+
+  <h2>Donnez votre avis</h2>
+  <?php if(isset($_SESSION['nom'])): ?>
+    <form action="" method="post">
+        <input type="hidden" name="jeux_titre" value="<?php echo $jeux['titre']; ?>">
+        <input type="hidden" name="nom" value="<?php echo $clients['nom']; ?>">
+      <input type="hidden"  name="note" id="note" value="0">
+
+      <label>Commentaire: </label>
+      <textarea name="commentaire" required></textarea>
+      <button type="submit">Envoyer</button>
+    </form>
+    <?php else: ?>
+      <p><a href="login.php">Connectez-vous</a> pour laisser un avis. </p>
+      <?php endif; ?>
+
+      <div class="star-rating">
+<?php for($i = 1; $i <= 5; $i++): ?>
+  <span class="star" data-value="<?= $i; ?>">★</span>
+
+  <?php endfor; ?>
+
+      </div>
+    
+      <h2>Avis des utilisateurs</h2>
+      <?php foreach($avis as $a): ?>
+        <div class="avis">
+          <strong><?= htmlspecialchars($a['nom']); ?></strong>
+          <span><?= str_repeat('⭐', $a['note']); ?></span>
+          <p><?= nl2br(htmlspecialchars($a['commentaire'])); ?></p>
+          <small>Posté le <?= $a['date_ajout']; ?></small>
+        </div>
+        <?php endforeach; ?>
   <div class="retour-accueil">
   <a href="accueil.php"><i class='bx bxs-invader'></i>&nbsp;Retour à la liste de jeux&nbsp;<i class='bx bxs-invader'></i></a>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function (){
+const stars = document.querySelectorAll(".star");
+const noteInput = document.getElementById("note");
+
+stars.forEach(star => {
+    star.addEventListener("click", function (){
+        let value = this.getAttribute("data-value");
+        noteInput.value = value;
+
+
+        stars.forEach(s => s.classList.remove("selected"));
+        for(let i = 0; i < value; i++){
+            stars[i].classList.add("selected");
+        }
+    })
+})
+    }
+    );
+    </script>
 </body>
 
 </html>
