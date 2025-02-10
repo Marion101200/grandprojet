@@ -43,13 +43,13 @@ try {
         $id_commande = $connexion->lastInsertId();
 
         // Insérer les détails de la commande
-        $stmt_detail = $connexion->prepare("INSERT INTO details_commande (id_commande, id_jeux, quantite) VALUES (:id_commande, :id_jeux, :quantite)");
+        $stmt_detail = $connexion->prepare("INSERT INTO details_commande (id_commande, id_jeu, quantite) VALUES (:id_commande, :id_jeu, :quantite)");
 
         // Insertion de chaque détail de commande
         foreach ($_SESSION['cart'] as $jeux_id => $quantite) {
             $stmt_detail->execute([
                 ':id_commande' => $id_commande,
-                ':id_jeux' => $jeux_id,
+                ':id_jeu' => $jeux_id,
                 ':quantite' => $quantite
             ]);
         }
