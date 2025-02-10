@@ -55,6 +55,7 @@ form a {
     color: blue;
     display: flex;
     justify-content: center;
+    margin-top: 15px;
 }
 form a:hover{
     color: red;

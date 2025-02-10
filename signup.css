@@ -50,12 +50,12 @@ cursor: pointer;
 .captcha {
     font-family: 'Courier New', Courier, monospace;
     width: 250px;
-    font-size: 40px;
+    font-size: 38px;
     letter-spacing: 4px;
     text-align: center;
     position: relative;
     background: rgb(142, 138, 137, 0.65) ;
-    padding: 20px;
+    padding: 30px;
     border: 2px solid  rgb(142, 138, 137);
     border-radius: 10px;
     margin: 0 auto; /* Centre horizontalement */
@@ -125,6 +125,7 @@ cursor: pointer;
 .captcha span:nth-child(1) {
     left: 10%;
     top: -5px;
+    font-size: 50px;
 
 }
 
@@ -141,9 +142,11 @@ cursor: pointer;
 .captcha span:nth-child(4) {
     left: 55%;
     top: -5px;
+    font-size: 60px;
 }
 
 .captcha span:nth-child(5) {
     left: 70%;
     top: -5px;
+    font-size: 30px;
 }
