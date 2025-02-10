@@ -243,10 +243,9 @@
             <h6 class="details"><?php echo htmlspecialchars($jeux['description']); ?></h6>
             <strong>Date de sortie : </strong>
             <h6 class="details"><?php echo htmlspecialchars($jeux['date']); ?></h6>
-            </p>
             <div class="prix_ajout">
               <h3 class="prix"><?php echo htmlspecialchars($jeux['prix']); ?> €</h3>
-
+              </p>
 
               
 <div class="moyenne-avis">
