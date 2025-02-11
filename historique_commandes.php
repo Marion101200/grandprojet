@@ -27,43 +27,43 @@ include 'pdo.php';
             exit;
         }
 
-        try {
-            require_once("connexion.php");
-            $connexion = getConnexion();
-            $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        require_once("connexion.php");
+        $connexion = getConnexion();
+        $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            // Récupérer les commandes du client connecté
-            $stmt = $connexion->prepare("SELECT id, montant, date_commande FROM commande WHERE id_clients = :id_client ORDER BY date_commande DESC");
-            $stmt->execute([':id_client' => $_SESSION['id_client']]);
-            $commandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Récupérer uniquement les commandes du client connecté
+        $sql = "SELECT c.id_commande, cl.nom, cl.email,c.adresse, c.montant 
+                FROM commande c
+                JOIN clients cl ON c.id_clients = cl.id
+                WHERE c.id_clients = :id_client";
+        $stmt = $connexion->prepare($sql);
+        $stmt->bindParam(':id_client', $_SESSION['id_client'], PDO::PARAM_INT);
+        $stmt->execute();
+        $commandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        ?> 
 
-            if ($commandes && count($commandes) > 0) {
-                echo "<table>";
-                echo "<tr>
-                        <th>ID Commande</th>
-                        <th>Date</th>
-                        <th>Montant</th>
-                        <th>Détails</th>
-                      </tr>";
-
-                // Affichage de chaque commande
-                foreach ($commandes as $commande) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($commande['id']) . "</td>";
-                    echo "<td>" . htmlspecialchars($commande['date_commande']) . "</td>";
-                    echo "<td>" . htmlspecialchars($commande['montant']) . " €</td>";
-                    // Lien vers une page qui affichera les détails de la commande
-                    echo "<td><a href='details_commande.php?id=" . urlencode($commande['id']) . "'>Voir détails</a></td>";
-                    echo "</tr>";
-                }
-                echo "</table>";
-            } else {
-                echo "<p>Aucune commande trouvée.</p>";
-            }
-        } catch (PDOException $e) {
-            echo "<p>Erreur lors de la récupération des commandes : " . $e->getMessage() . "</p>";
-        }
-        ?>
+        <table>
+            <tr>
+                <th>Nom pour la commande</th>
+                <th>Email</th>
+                <th>Adresse</th>
+                <th>Montant</th>
+            </tr>
+            <?php if (count($commandes) > 0): ?>
+                <?php foreach ($commandes as $commande) : ?>
+                    <tr>
+                        <td><?= htmlspecialchars($commande['nom']) ?></td>
+                        <td><?= htmlspecialchars($commande['email']) ?></td>
+                        <td><?= htmlspecialchars($commande['adresse'])?></td>
+                        <td><?= htmlspecialchars($commande['montant']) ?> €</td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="4" style="text-align: center;">Aucune commande trouvée.</td>
+                </tr>
+            <?php endif; ?>
+        </table>
     </div>
 </body>
 
