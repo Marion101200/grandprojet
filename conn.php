@@ -40,7 +40,7 @@ if (isset($_SESSION['erreurcaptcha'])) {
         <div class="titre-signup">
             <h2 style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px"> <i class='bx bx-user'></i> &nbsp;Inscription <i class='bx bx-user'></i></h2>
 
-            <form action="signup.php" method="POST" >
+            <form action="signup.php" method="POST" id="validateForm" >
                 <label for="nom">Nom d'utilisateur :</label>
                 <input type="text" id="nom" name="nom" required>
 
@@ -54,6 +54,7 @@ if (isset($_SESSION['erreurcaptcha'])) {
 
                 <label for="confirm-password">Confirmer le mot de passe :</label>
                 <input type="password" id="confirm-password" name="confirm-password" required>
+                <div id="confirmermdp"></div>
                 <label for="capchat">Veuillez remplir le Captcha:</label>
                 <div class="captcha">
                     <?php
