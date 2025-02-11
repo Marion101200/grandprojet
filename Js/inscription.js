@@ -5,6 +5,8 @@ const mdp = document.getElementById("password");
         const validateForm = document.getElementById('validateForm');
         const nom = document.getElementById('nom');
 
+
+
         const checks = [
             [/.{8,}/, "caracteres"],
             [/[a-z]/, "min"],
@@ -34,8 +36,16 @@ const mdp = document.getElementById("password");
         });
 
         validateForm.addEventListener("submit", function(event) {
+     
+
             let isValid = true;
             const value = mdp.value;
+
+            if (nom.value.length < 2) { 
+                isValid = false;
+                alert("Le nom doit comporter au moins 2 caractères.");
+            }
+    
 
             if (!(value.length >= 8 && /[A-Z]/.test(value) && /[a-z]/.test(value) && /\d/.test(value) && /[\W_]/.test(value))) {
                 isValid = false;
