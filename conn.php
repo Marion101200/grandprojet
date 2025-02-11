@@ -33,6 +33,34 @@ if (isset($_SESSION['erreurcaptcha'])) {
 </head>
 
 <body>
+<style>
+        #caracteres.invalid,
+    #maj.invalid,
+    #min.invalid,
+    #chiffre.invalid,
+    #special.invalid,
+    #password-match.invalid {
+        color: red;
+        font-weight: bold;
+    }
+
+
+    
+    #caracteres.valid,
+    #maj.valid,
+    #min.valid,
+    #chiffre.valid,
+    #special.valid,
+    #password-match.valid {
+        color: green;
+        font-weight: bold;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    </style>
     <div class="signup-container">
         <div class="fond-img">
             <img src="img/signup.avif" alt="login">
@@ -51,6 +79,13 @@ if (isset($_SESSION['erreurcaptcha'])) {
                 <input type="password" id="password" name="password" required>
 
                 <div id="force_mdp"></div>
+                <ul id="password-criteria">
+            <li id="caracteres" class="invalid">Au moins 8 caractères</li>
+            <li id="maj" class="invalid"> Une majuscule</li>
+            <li id="min" class="invalid">Une minuscule</li>
+            <li id="chiffre" class="invalid">Un chiffre</li>
+            <li id="special" class="invalid">Un caractère spécial</li>
+        </ul>
 
                 <label for="confirm-password">Confirmer le mot de passe :</label>
                 <input type="password" id="confirm-password" name="confirm-password" required>
