@@ -40,7 +40,7 @@ if (isset($_SESSION['erreurcaptcha'])) {
         <div class="titre-signup">
             <h2 style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px"> <i class='bx bx-user'></i> &nbsp;Inscription <i class='bx bx-user'></i></h2>
 
-            <form action="signup.php" method="POST" onsubmit="return validateForm()">
+            <form action="signup.php" method="POST" >
                 <label for="nom">Nom d'utilisateur :</label>
                 <input type="text" id="nom" name="nom" required>
 
@@ -49,6 +49,8 @@ if (isset($_SESSION['erreurcaptcha'])) {
 
                 <label for="password">Mot de passe :</label>
                 <input type="password" id="password" name="password" required>
+
+                <div id="force_mdp"></div>
 
                 <label for="confirm-password">Confirmer le mot de passe :</label>
                 <input type="password" id="confirm-password" name="confirm-password" required>
@@ -67,22 +69,7 @@ if (isset($_SESSION['erreurcaptcha'])) {
         </div>
         <p id="error-msg"></p>
     </div>
-
-    <script>
-        function validateForm() {
-            var mdp = document.getElementById("password").value;
-            var confirmPassword = document.getElementById("confirm-password").value;
-            var errorMsg = document.getElementById("error-msg");
-
-            if (mdp !== confirmPassword) {
-                errorMsg.textContent = "Les mots de passe ne correspondent pas.";
-                errorMsg.style.color = "red";
-                return false;
-            }
-            return true;
-        }
-    </script>
-
+    <script src="Js/inscription.js"></script>
 </body>
 
 </html>
