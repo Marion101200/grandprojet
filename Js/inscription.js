@@ -8,13 +8,25 @@
 
 mdp.addEventListener("input", function () {
 const value = mdp.value;
+const valuedeux = confirmPassword.value;
 let force = "faible";
 let color = "red";
 
-if(value.length === 0){
+if (value.length === 0 && valuedeux.length === 0) {
     forceMdp.textContent = '';
+    confirmermdp.textContent = '';
     return;
-}
+  }
+
+  if (value.length === 0) {
+    forceMdp.textContent = '';
+  }
+
+  if (valuedeux.length === 0) {
+    confirmermdp.textContent = '';
+  }
+
+
 if (value.length >= 8 && /[\W_]/.test(value) && /[A-Z]/.test(value) && /[a-z]/.test(value) && /\d/.test(value)){
     force = "Mot de passe valider";
     color = "green";
