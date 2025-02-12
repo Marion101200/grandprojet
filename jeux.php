@@ -9,10 +9,13 @@
 </head>
 
 <body>
+<?php
+session_start();
+?>
+
   <?php
-  include 'header.php';
   include 'pdo.php';
-  include 'ajouter_avis.php';
+  // include 'ajouter_avis.php';
   try {
     require_once("connexion.php");
     $connexion = getConnexion();
@@ -146,6 +149,7 @@
       }
     }
   }
+  include 'header.php';
   ?>
 
   <h1 class="titre_jeux" style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px">
