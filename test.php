@@ -1,5 +1,5 @@
-<?php
-$images = imagecreate(height:300,width:300);
-$background_color = imagecolorallocate($images, 255, 255, 255);
-imagefill($images, 0, 0, $background_color);
-?>
+<form id="payment-form">
+    <div id="card-element"></div>
+    <div id="payment-result"></div>
+    <button type="submit">Payer</button>
+</form>

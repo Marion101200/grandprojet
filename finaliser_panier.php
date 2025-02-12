@@ -11,27 +11,27 @@
 
 
 <body>
-<?php
-include 'header.php';
-include 'pdo.php';
-?>
-<h2 style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px;text-align:center;"> <i class='bx bxs-credit-card-alt'></i> &nbsp;Paiement &nbsp; <i class='bx bxs-credit-card-alt'></i></h2>
+    <?php
+    include 'header.php';
+    include 'pdo.php';
+    ?>
+    <h2 style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px;text-align:center;"> <i class='bx bxs-credit-card-alt'></i> &nbsp;Paiement &nbsp; <i class='bx bxs-credit-card-alt'></i></h2>
 
-<form id="payment-form">
+    <form id="payment-form">
         <div id="card-element"></div>
-        <button type="submit">Payer</button>
         <div id="payment-result"></div>
+        <button type="submit">Payer</button>
     </form>
 
     <script>
-const stripe = Stripe('pk_test_51QDpTaFohOKPT3SHLePEYKmV0KmSSEwZCJUhHg52iHHXaD2Wtd1m7lGVdNpOKaMSJa15MPw8lUXz1Q8SaekWgcHM00HDPO8Fic');
-const elements = stripe.elements();
-const card = elements.create('card');
-card.mount('#card-element');
+        const stripe = Stripe('pk_test_51QDpTaFohOKPT3SHLePEYKmV0KmSSEwZCJUhHg52iHHXaD2Wtd1m7lGVdNpOKaMSJa15MPw8lUXz1Q8SaekWgcHM00HDPO8Fic');
+        const elements = stripe.elements();
+        const card = elements.create('card');
+        card.mount('#card-element');
 
-document.getElementById('payment-form').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const response = await fetch('payement.php', {
+        document.getElementById('payment-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const response = await fetch('payement.php', {
                 method: 'POST'
             });
             const {
@@ -43,13 +43,10 @@ document.getElementById('payment-form').addEventListener('submit', async (event)
                 },
             });
             document.getElementById('payment-result').innerText = result.error ? 'Erreur : ' + result.error.message : 'Paiement réussi!';
-});
-
-
-</script>
+        });
+    </script>
 
 </body>
 
 </html>
 <?php include 'footer.php'; ?>
-
