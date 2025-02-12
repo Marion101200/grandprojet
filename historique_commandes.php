@@ -8,7 +8,7 @@ include 'pdo.php';
 <html>
 
 <head>
-    <title>Historique de commande</title>
+    <title>Historique de commandes</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="historique_commandes.css" rel="stylesheet">
