@@ -14,6 +14,7 @@
     <?php
     include 'header.php';
     include 'pdo.php';
+    
     ?>
     <h2 style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px;text-align:center;"> <i class='bx bxs-credit-card-alt'></i> &nbsp;Paiement &nbsp; <i class='bx bxs-credit-card-alt'></i></h2>
 

@@ -1,12 +1,12 @@
 <?php
 require 'vendor/autoload.php';
-
+$totalprix = $_SESSION['total_prix'];
 
 \Stripe\Stripe::setApiKey('sk_test_51QDpTaFohOKPT3SHP25LuNE9IlSaLTUWYlNEYppRQVWdaDZyQ3QTmOvAqSYjgnrkE9izsHLUhw9dpnQH0FWSbACw00lzBF8qwn');
 
 $paymentIntent = \Stripe\PaymentIntent::create([
-    'amount' =>  1000,
-    'currency' => 'usd',
+    'amount' => $totalprix  * 100,
+    'currency' => 'eur',
 ]);
 
 try {

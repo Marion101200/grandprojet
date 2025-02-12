@@ -155,9 +155,6 @@
                 </td>
               </tr>
               <?php $total += floatval($jeux['prix']) * intval($cart_items[$jeux['id']]); 
-$_SESSION['total'] = $total;
-$_SESSION['total_price'] = $total;
-var_dump($_SESSION['total_price']);
               ?>
 
             <?php endforeach; ?>
@@ -165,6 +162,11 @@ var_dump($_SESSION['total_price']);
         </table>
         <div class="total">
           <p id="prix">Total:<?php echo number_format($total, 2); ?> €</p>
+          <?php var_dump($total);
+          $_SESSION['total_prix'] = $total;
+          var_dump(['total_prix']);
+          ?>
+
           <form method="post" action="finaliser_panier.php">
             <button type="submit" name="finaliser_cart">Finaliser le Panier</button>
           </form>
