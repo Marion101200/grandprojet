@@ -1,3 +1,10 @@
+<?php
+include 'header.php';
+include 'pdo.php';
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 
@@ -9,54 +16,47 @@
     <script src="https://js.stripe.com/v3/"></script>
 </head>
 
-
 <body>
-<?php
-session_start();
+    <div class="titre_paiement">
+        <h2 style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px;"> <i class='bx bxs-credit-card-alt'></i> &nbsp;Paiement &nbsp; <i class='bx bxs-credit-card-alt'></i></h2>
 
-$cart_items = $_SESSION['cart'];
-?> 
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Titre</th>
+                    <th>Prix Unitaire</th>
+                    <th>Quantité</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
 
-<?php
-include 'header.php';
-include 'pdo.php';
-?>
-<h2 style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px;text-align:center;"> <i class='bx bxs-credit-card-alt'></i> &nbsp;Paiement &nbsp; <i class='bx bxs-credit-card-alt'></i></h2>
-<?php if (!empty($cart_items)): ?>
 
 
-<p>Vous avez <?php echo count($cart_items); ?> articles dans votre panier.</p>
-<?php else: ?>
-<p>Votre panier est vide.</p>
-<?php endif; ?>
-<form id="payment-form">
-        <div id="card-element"></div>
-        <div id="payment-result"></div>
-        <button id="bouttonpayer" type="submit">Payer</button>
-    </form>
+                <form action="confirmation_paiement.php" method="POST">
+                    <label for="nom">Email:</label>
+                    <input type="email" id="email" name="email" required>
 
-    <script>
-        const stripe = Stripe('pk_test_51QDpTaFohOKPT3SHLePEYKmV0KmSSEwZCJUhHg52iHHXaD2Wtd1m7lGVdNpOKaMSJa15MPw8lUXz1Q8SaekWgcHM00HDPO8Fic');
-        const elements = stripe.elements();
-        const card = elements.create('card');
-        card.mount('#card-element');
+                    <label for="adresse">Adresse de livraison:</label>
+                    <input type="text" id="adresse" name="adresse" required>
 
-        document.getElementById('payment-form').addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const response = await fetch('payement.php', {
-                method: 'POST'
-            });
-            const {
-                clientSecret
-            } = await response.json();
-            const result = await stripe.confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card: card
-                },
-            });
-            document.getElementById('payment-result').innerText = result.error ? 'Erreur : ' + result.error.message : 'Paiement réussi!';
-        });
-    </script>
+                    <label for="numéro_de_carte bancaire">Numéro de carte bancaire:</label>
+                    <input type="number" id="bancaire" name="bancaire" required>
+
+                    <label for="date_expiration_carte_bancaire">Dâte expiration de la carte bancaire:</label>
+                    <input type="month" id="date_bancaire" name="date_bancaire" required>
+
+                    <label for="cryptogramme">Cryptogramme:</label>
+                    <input type="number" id="cryptograme" name="cryptogramme" required>
+
+                    <label for="nom_carte_bancaire">Titulaire de la carte:</label>
+                    <input type="text" id="nom_carte_bancaire" name="nom_carte_bancaire" required>
+
+                    <input type="submit" value="PAYER">
+                </form>
+    </div>
 
 </body>
 

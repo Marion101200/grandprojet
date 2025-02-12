@@ -1,52 +1,49 @@
- body{
+body{
     background: linear-gradient(rgba(247, 244, 244, 0.733), rgba(242, 241, 241, 0.696)), no-repeat, fixed
                   url(img/DALL·E\ 2024-11-29\ 13.29.03\ -\ A\ vibrant\ and\ colorful\ image\ showcasing\ various\ video\ games\ integrated\ into\ a\ single\ scene.\ The\ image\ includes\ a\ retro\ arcade\ machine\ with\ a\ glowing\ s.webp);
 }
-
-
-h1, h2, h3 {
-    color: #343a40;
-    text-align: center;
-    margin: 20px 0;
-}
-
-/* Formulaire de paiement */
-form#payment-form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px; /* Espace entre les éléments */
-    margin: 30px auto;
-    flex-wrap: wrap; /* Permet de passer à la ligne sur petit écran */
-    max-width: 500px; /* Limite la largeur maximale du formulaire */
-}
-
-/* Réduction de la taille du champ */
-#card-element {
-    flex: 1; /* Prend l'espace disponible */
-    border: 1px solid grey;
+input[type="submit"] {
+    width: 50%;
     padding: 10px;
-    margin: 10px;
-    border-radius: 5px;
-}
-
-button#bouttonpayer {
     background-color: #5cb85c;
-    color: #ffffff;
+    color: white;
     border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    position: relative;
-    top: 40px;
-    left: -270px;
-}
-
-#payment-result {
+    border-radius: 5px;
     margin-top: 20px;
-    font-size: 16px;
-    text-align: center;
+    cursor: pointer;
 }
-
-
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="month"] {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    padding: 3px;
+    margin: 0 auto;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 12px;
+}
+label {
+    margin-top: 5px;
+    color: #333;
+}
+.titre_paiement{
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    /* width: 40vw; */
+}
+table{
+    border-collapse: collapse;
+    width: 80%;
+}
+  
+  th, td{
+    border: 1px solid rgb(176, 71, 71);
+    padding: 10px;
+    font-weight: bold;
+  }
+  
