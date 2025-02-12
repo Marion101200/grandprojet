@@ -159,7 +159,7 @@
         </table>
         <div class="total">
           <p id="prix">Total:<?php echo number_format($total, 2); ?> €</p>
-          <form method="post" action="paiement.php">
+          <form method="post" action="finaliser_panier.php">
             <button type="submit" name="finaliser_cart">Finaliser le Panier</button>
           </form>
           <form method="post">
