@@ -49,6 +49,7 @@ if (session_status() == PHP_SESSION_NONE) {
         <?php
         if (isset($_SESSION['email'])) {
           echo '<li><a href="favoris.php"><i class=\'bx bxs-heart\' ></i></a></li>';
+          echo '<li><a href="historique_commandes.php">Historique</a></li>';
           echo "<li><a href=\"compte.php\">Compte</li>";
           echo "<li><a href=\"logout.php\">Logout &nbsp; <span class=\"glyphicon glyphicon-log-in\"></span></a></li>";
         } else {
