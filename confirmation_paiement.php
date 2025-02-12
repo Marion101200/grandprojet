@@ -2,7 +2,6 @@
 
 session_start();
 include 'pdo.php';
-include 'header.php';
 
 if (!isset($_SESSION['id_client'])) {
     echo "Erreur : ID client non défini.";
@@ -68,4 +67,5 @@ try {
 } catch (PDOException $e) {
     echo "Erreur de connexion à la base de données : " . $e->getMessage();
 }
+include 'header.php';
 ?>
