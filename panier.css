@@ -3,12 +3,11 @@
     font-size: 40px;
 }
 
-
 table{
     border-collapse: collapse;
     width: 80%;
 }
-  
+
   th, td{
     border: 1px solid rgb(176, 71, 71);
     padding: 10px;
@@ -19,33 +18,40 @@ table{
     text-align: center;
     font-weight: bold;
   }
+
 button[name="add_to_cart"]{
     background-color: green;
     width: 60%;
 }
+
 button[name="remove_item"]{
     background-color: red;
     width: 60%;
 }
+
 .total{
 text-align: center;
 margin: 3px;
 
 }
+
 button{
     margin: 5px;
     text-align: center;
 }
+
 h2{
     font-size: 20px;
     font-weight: bold;
 }
+
 button[name="clear_cart"]{
     width: 70%;
     background-color: red;
     font-weight: bold;
     font-size: 20px;
 }
+
 button[name="finaliser_cart"]{
     width: 70%;
     background-color: orange;
@@ -58,22 +64,24 @@ button[name="finaliser_cart"]{
     text-decoration: none;
     color: blue;
 }
+
 body{
     background: linear-gradient(rgba(247, 244, 244, 0.733), rgba(242, 241, 241, 0.696)), no-repeat, fixed
                   url(img/DALL·E\ 2024-11-29\ 13.29.03\ -\ A\ vibrant\ and\ colorful\ image\ showcasing\ various\ video\ games\ integrated\ into\ a\ single\ scene.\ The\ image\ includes\ a\ retro\ arcade\ machine\ with\ a\ glowing\ s.webp);
 }
+
 .panier-content{
     display: flex;
     justify-content: space-between;
     margin: 10px;
     text-align: center;
 }
- 
 
   .panier-vide{
     font-size: 40px;
     color: green;
   }
+  
 #actions{
   width: 170px;
 }
