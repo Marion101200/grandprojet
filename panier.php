@@ -162,9 +162,8 @@
         </table>
         <div class="total">
           <p id="prix">Total:<?php echo number_format($total, 2); ?> €</p>
-          <?php var_dump($total);
+          <?php
           $_SESSION['total_prix'] = $total;
-          var_dump(['total_prix']);
           ?>
 
           <form method="post" action="finaliser_panier.php">
