@@ -30,7 +30,7 @@ form#payment-form {
     border-radius: 5px;
 }
 
-button {
+button#bouttonpayer {
     background-color: #5cb85c;
     color: #ffffff;
     border: none;
@@ -38,8 +38,10 @@ button {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    position: relative;
+    top: 40px;
+    left: -270px;
 }
-
 
 #payment-result {
     margin-top: 20px;
