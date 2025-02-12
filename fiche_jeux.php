@@ -163,7 +163,7 @@ include 'header.php';
         </div>
     <?php endforeach; ?>
     <div class="retour-accueil">
-        <a href="accueil.php"><i class='bx bxs-invader'></i>&nbsp;Retour à la liste de jeux&nbsp;<i class='bx bxs-invader'></i></a>
+        <a href="jeux.php"><i class='bx bxs-invader'></i>&nbsp;Retour à la liste de jeux&nbsp;<i class='bx bxs-invader'></i></a>
     </div>
 
     <script>
