@@ -1,6 +1,8 @@
 <?php
 require 'vendor/autoload.php';
+session_start();
 $totalprix = $_SESSION['total_prix'];
+var_dump($totalprix);
 
 \Stripe\Stripe::setApiKey('sk_test_51QDpTaFohOKPT3SHP25LuNE9IlSaLTUWYlNEYppRQVWdaDZyQ3QTmOvAqSYjgnrkE9izsHLUhw9dpnQH0FWSbACw00lzBF8qwn');
 
@@ -16,5 +18,3 @@ try {
 
     echo json_encode(['error' => $e->getMessage()]);
 }
-
-?>
