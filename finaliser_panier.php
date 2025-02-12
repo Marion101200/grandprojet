@@ -13,7 +13,14 @@
     <script src="https://js.stripe.com/v3/"></script>
 </head>
 
+
 <body>
+<?php
+include 'header.php';
+include 'pdo.php';
+?>
+<h2 style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px;text-align:center;"> <i class='bx bxs-credit-card-alt'></i> &nbsp;Paiement &nbsp; <i class='bx bxs-credit-card-alt'></i></h2>
+
 <form id="payment-form">
         <div id="card-element"></div>
         <button type="submit">Payer</button>
@@ -48,4 +55,5 @@ document.getElementById('payment-form').addEventListener('submit', async (event)
 </body>
 
 </html>
+<?php include 'footer.php'; ?>
 
