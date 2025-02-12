@@ -4,6 +4,7 @@ const mdp = document.getElementById("password");
         const confirmermdp = document.getElementById('confirmermdp');
         const validateForm = document.getElementById('validateForm');
         const nom = document.getElementById('nom');
+        const nomErreur = document.getElementById("nomErreur");
 
 
 
@@ -26,7 +27,9 @@ const mdp = document.getElementById("password");
         });
 
         confirmPassword.addEventListener("input", function () {
-            if (confirmPassword.value === mdp.value) {
+            if (mdp.value === "" || confirmPassword.value === "") {
+                confirmermdp.textContent = ""; // Efface le message si l'un des champs est vide
+            } else if (confirmPassword.value === mdp.value) {
                 confirmermdp.textContent = "Les mots de passe correspondent.";
                 confirmermdp.style.color = "green";
             } else {
@@ -35,32 +38,33 @@ const mdp = document.getElementById("password");
             }
         });
 
-        validateForm.addEventListener("submit", function(event) {
-     
-
-            let isValid = true;
-            const value = mdp.value;
-
-            if (nom.value.length < 2) { 
-                isValid = false;
-                alert("Le nom doit comporter au moins 2 caractères.");
-            }
-    
-
-            if (!(value.length >= 8 && /[A-Z]/.test(value) && /[a-z]/.test(value) && /\d/.test(value) && /[\W_]/.test(value))) {
-                isValid = false;
-                alert("Le mot de passe doit respecter tous les critères.");
-            }
-
-            if (mdp.value !== confirmPassword.value) {
-                isValid = false;
-                alert("Les mots de passe ne correspondent pas.");
-            }
-
-            if (!isValid) {
-                event.preventDefault();
+        nom.addEventListener("input", function () {
+            if (nom.value.length < 2) {
+                nomErreur.textContent = "Le nom doit comporter au moins 2 caractères.";
+            } else {
+                nomErreur.textContent = ""; // Efface le message si c'est valide
             }
         });
+        // validateForm.addEventListener("submit", function(event) {
+     
+
+        //     let isValid = true;
+        //     const value = mdp.value;
+
+        //     if (!(value.length >= 8 && /[A-Z]/.test(value) && /[a-z]/.test(value) && /\d/.test(value) && /[\W_]/.test(value))) {
+        //         isValid = false;
+        //         alert("Le mot de passe doit respecter tous les critères.");
+        //     }
+
+        //     if (mdp.value !== confirmPassword.value) {
+        //         isValid = false;
+        //         alert("Les mots de passe ne correspondent pas.");
+        //     }
+
+        //     if (!isValid) {
+        //         event.preventDefault();
+        //     }
+        // });
 
 
 

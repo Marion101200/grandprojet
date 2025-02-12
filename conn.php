@@ -71,6 +71,7 @@ if (isset($_SESSION['erreurcaptcha'])) {
             <form action="signup.php" method="POST" id="validateForm" >
                 <label for="nom">Nom d'utilisateur :</label>
                 <input type="text" id="nom" name="nom" required>
+                <span id="nomErreur" style="color: red; font-size: 14px; font-weight: bold;"></span><br>
 
                 <label for="email">Email :</label>
                 <input type="email" id="email" name="email" required>
