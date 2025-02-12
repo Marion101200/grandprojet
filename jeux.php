@@ -9,9 +9,9 @@
 </head>
 
 <body>
-<?php
-session_start();
-?>
+  <?php
+  session_start();
+  ?>
 
   <?php
   include 'pdo.php';
@@ -20,6 +20,8 @@ session_start();
     require_once("connexion.php");
     $connexion = getConnexion();
     $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $minNote = $_GET['note_min'] ?? 0;
+
 
     // Récupérer les valeurs min et max de prix
     $prixQuery = $connexion->query("SELECT MIN(prix) AS min_prix, MAX(prix) AS max_prix FROM jeux");
@@ -31,9 +33,20 @@ session_start();
     $minPrix = $_GET['prix_min'] ?? $minPrixGlobal;
     $maxPrix = $_GET['prix_max'] ?? $maxPrixGlobal;
 
-    // Construction de la requête SQL
-    $sql = "SELECT id, titre, categorie, prix, images, description, date FROM jeux WHERE 1=1";
-    $params = [':minPrix' => $minPrix, ':maxPrix' => $maxPrix];
+    $sql = "SELECT j.id, j.titre, j.categorie, j.prix, j.images, j.description, j.date, 
+    COALESCE(AVG(a.note), 0) AS moyenne_note
+FROM jeux j 
+LEFT JOIN avis a ON j.titre = a.jeux_titre
+WHERE j.prix BETWEEN :minPrix AND :maxPrix
+GROUP BY j.id, j.titre, j.categorie, j.prix, j.images, j.description, j.date
+HAVING moyenne_note >= :minNote";
+
+// Ajouter le paramètre de note minimale
+$params = [
+    ':minPrix' => $minPrix,
+    ':maxPrix' => $maxPrix,
+    ':minNote' => $minNote // Assurez-vous que 'minNote' est bien défini en PHP
+];
 
     // Filtres des catégories
     $categories = [
@@ -211,24 +224,36 @@ session_start();
           <div class="euro"><span id="prix_max"><?php echo htmlspecialchars($maxPrix); ?></span> €</div>
           </p>
         </div>
+
+        <div class="note_game">
+  <h1 class="note_item">⭐ Note minimale :</h1>
+  <div class="star-rating">
+    <span class="star" data-value="1">⭐</span>
+    <span class="star" data-value="2">⭐</span>
+    <span class="star" data-value="3">⭐</span>
+    <span class="star" data-value="4">⭐</span>
+    <span class="star" data-value="5">⭐</span>
+  </div>
+  <input type="hidden" name="note_min" id="note_min_input" value="<?php echo htmlspecialchars($minNote); ?>">
+  <p>Note minimale : <span id="note_min"><?php echo htmlspecialchars($minNote); ?></span>/5</p>
+</div>
       </div>
     </form>
 
     <!-- Liste des jeux -->
     <div class="jeux-listes">
-      <?php foreach ($jeu as $jeux):{
+      <?php foreach ($jeu as $jeux): {
           $moyenneStmt = $connexion->prepare("SELECT AVG(note) as moyenne FROM avis WHERE jeux_titre = ?");
           $moyenneStmt->execute([$jeux['titre']]);
           $moyenne = $moyenneStmt->fetch(PDO::FETCH_ASSOC)['moyenne'];
           $moyenne = round($moyenne, 1); // Arrondir à 1 chiffre après la virgule
-        
-        
-        
-        $testStmt = $connexion->prepare("SELECT note FROM avis WHERE jeux_titre = ?");
-        $testStmt->execute([$jeux['titre']]);
-        $allNotes = $testStmt->fetchAll(PDO::FETCH_COLUMN);
 
-      } ?>
+
+
+          $testStmt = $connexion->prepare("SELECT note FROM avis WHERE jeux_titre = ?");
+          $testStmt->execute([$jeux['titre']]);
+          $allNotes = $testStmt->fetchAll(PDO::FETCH_COLUMN);
+        } ?>
         <div class="jeux-item">
           <img class="images_jeux"
             src="<?php echo htmlspecialchars($jeux['images']); ?>"
@@ -251,21 +276,21 @@ session_start();
               <h3 class="prix"><?php echo htmlspecialchars($jeux['prix']); ?> €</h3>
               </p>
 
-              
-<div class="moyenne-avis">
-    <strong>Note moyenne : <?= $moyenne; ?>/5</strong><br>
-    <span>
-        <?php
-        $fullStars = floor($moyenne); // Étoiles pleines
-        $halfStar = ($moyenne - $fullStars) >= 0.5 ? 1 : 0; // Étoile demi pleine
-        $emptyStars = 5 - ($fullStars + $halfStar); // Étoiles vides
 
-        echo str_repeat('⭐', $fullStars); // Affichage des étoiles pleines
-        if ($halfStar) echo '⭐️'; // Affichage de l'étoile demi pleine
-        echo str_repeat('☆', $emptyStars); // Affichage des étoiles vides
-        ?>
-    </span>
-</div>
+              <div class="moyenne-avis">
+                <strong>Note moyenne : <?= $moyenne; ?>/5</strong><br>
+                <span>
+                  <?php
+                  $fullStars = floor($moyenne); // Étoiles pleines
+                  $halfStar = ($moyenne - $fullStars) >= 0.5 ? 1 : 0; // Étoile demi pleine
+                  $emptyStars = 5 - ($fullStars + $halfStar); // Étoiles vides
+
+                  echo str_repeat('⭐', $fullStars); // Affichage des étoiles pleines
+                  if ($halfStar) echo '⭐️'; // Affichage de l'étoile demi pleine
+                  echo str_repeat('☆', $emptyStars); // Affichage des étoiles vides
+                  ?>
+                </span>
+              </div>
 
               <form class="favoris" method="post">
                 <input type="hidden" name="jeux_id" value="<?php echo htmlspecialchars($jeux['id']); ?>">
@@ -300,7 +325,27 @@ session_start();
         minPrixLabel.textContent = minSlider.value;
         debounceSubmit();
       });
+      document.addEventListener('DOMContentLoaded', function() {
+  const stars = document.querySelectorAll(".star");
+  const noteInput = document.getElementById("note_min_input");
+  const noteDisplay = document.getElementById("note_min");
 
+  stars.forEach(star => {
+    star.addEventListener("click", function() {
+      let value = this.getAttribute("data-value");
+      noteInput.value = value;
+      noteDisplay.textContent = value;
+
+      stars.forEach(s => s.classList.remove("selected"));
+      for (let i = 0; i < value; i++) {
+        stars[i].classList.add("selected");
+      }
+
+      // Soumettre automatiquement le formulaire après sélection
+      debounceSubmit();
+    });
+  });
+});
       maxSlider.addEventListener('input', function() {
         maxPrixLabel.textContent = maxSlider.value;
         debounceSubmit();
@@ -321,25 +366,25 @@ session_start();
       timer = setTimeout(() => filterForm.submit(), 300);
     }
   </script>
-     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const stars = document.querySelectorAll(".star");
-            const noteInput = document.getElementById("note");
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const stars = document.querySelectorAll(".star");
+      const noteInput = document.getElementById("note");
 
-            stars.forEach(star => {
-                star.addEventListener("click", function() {
-                    let value = this.getAttribute("data-value");
-                    noteInput.value = value;
+      stars.forEach(star => {
+        star.addEventListener("click", function() {
+          let value = this.getAttribute("data-value");
+          noteInput.value = value;
 
 
-                    stars.forEach(s => s.classList.remove("selected"));
-                    for (let i = 0; i < value; i++) {
-                        stars[i].classList.add("selected");
-                    }
-                })
-            })
-        });
-    </script>
+          stars.forEach(s => s.classList.remove("selected"));
+          for (let i = 0; i < value; i++) {
+            stars[i].classList.add("selected");
+          }
+        })
+      })
+    });
+  </script>
 </body>
 
 </html>
