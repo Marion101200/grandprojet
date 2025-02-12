@@ -156,7 +156,8 @@
               </tr>
               <?php $total += floatval($jeux['prix']) * intval($cart_items[$jeux['id']]); 
 $_SESSION['total'] = $total;
-// var_dump($_SESSION);
+$_SESSION['total_price'] = $total;
+var_dump($_SESSION['total_price']);
               ?>
 
             <?php endforeach; ?>
