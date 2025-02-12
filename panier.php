@@ -153,7 +153,11 @@
                   </form>
                 </td>
               </tr>
-              <?php $total += floatval($jeux['prix']) * intval($cart_items[$jeux['id']]); ?>
+              <?php $total += floatval($jeux['prix']) * intval($cart_items[$jeux['id']]); 
+$_SESSION['total'] = $total;
+var_dump($_SESSION['total']);
+              ?>
+
             <?php endforeach; ?>
           </tbody>
         </table>
