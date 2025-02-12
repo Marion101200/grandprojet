@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'a002007b855998729ce34b6fd2f3e55d4d2eaa2e',
+        'reference' => 'e8dc881ebbb7447a692365cf737b13802db4dd96',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'a002007b855998729ce34b6fd2f3e55d4d2eaa2e',
+            'reference' => 'e8dc881ebbb7447a692365cf737b13802db4dd96',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -240,6 +240,15 @@
             'replaced' => array(
                 0 => '4.7.6',
             ),
+        ),
+        'stripe/stripe-php' => array(
+            'pretty_version' => 'v16.5.1',
+            'version' => '16.5.1.0',
+            'reference' => '05c7c3a8a15b1bc396f09d17c88539c0db3d3255',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../stripe/stripe-php',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'symfony/deprecation-contracts' => array(
             'pretty_version' => 'v3.5.1',
