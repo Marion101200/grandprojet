@@ -77,6 +77,7 @@
         <br>
         <label for="password">Mot de passe:</label>
         <input type="password" id="password" name="password" required>
+        <button type="button" id="togglePassword">👁️</button>
         <br>
         <a href="conn.php"><i class='bx bx-user'></i>&nbsp;Inscrivez-vous ici&nbsp;<i class='bx bx-user'></i></a>
         <br>
@@ -86,6 +87,19 @@
     </div>
   </div>
 
+
+  <script>
+  document.getElementById("togglePassword").addEventListener("click", function() {
+    let passwordField = document.getElementById("password");
+    if (passwordField.type === "password") {
+      passwordField.type = "text";
+      this.textContent = "🙈"; // Icône pour cacher le mot de passe
+    } else {
+      passwordField.type = "password";
+      this.textContent = "👁️"; // Icône pour afficher le mot de passe
+    }
+  });
+</script>
 </body>
 
 </html>
