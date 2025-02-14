@@ -66,13 +66,13 @@ $sql .= " AND (" . implode(" OR ", $filterConditions) . ")";
 
 $sql .= " GROUP BY j.id, j.titre, j.categorie, j.prix, j.images, j.description, j.date";
 
-if ($minNote) {
+if ($minNote !== null) {
   $sql .= " HAVING moyenne_note >= :minNote";
+  $params[':minNote'] = $minNote;
 } 
-if ($noteSelectionnee) {
-  // Ajouter un filtre pour une note exacte dans la requête SQL
-  $sql .= " WHERE moyenne_note = :noteSelectionnee";
-  $params[':noteSelectionnee'] = $noteSelectionnee; // Remplacer par la note exacte
+if ($noteSelectionnee !== null) {
+  $sql .= " AND moyenne_note = :noteSelectionnee";
+  $params[':noteSelectionnee'] = $noteSelectionnee;
 } 
 
 
