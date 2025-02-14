@@ -52,7 +52,32 @@ try {
     echo "Erreur : " . $e->getMessage();
     exit;
 }
+if (isset($_POST['add-to-cart'])) {
+    $jeux_id = $_POST['jeux_id'];
 
+    // Initialiser le panier si nécessaire
+    if (!isset($_SESSION['cart'])) {
+      $_SESSION['cart'] = [];
+    }
+
+    // Ajout du jeu au panier
+    if (isset($_SESSION['cart'][$jeux_id])) {
+      $_SESSION['cart'][$jeux_id]++; // Incrémenter la quantité si le jeu est déjà dans le panier
+    } else {
+      $_SESSION['cart'][$jeux_id] = 1; // Ajouter le jeu avec une quantité de 1
+    }
+
+    // Rediriger vers la page du panier après ajout
+    // Ajouter un script JavaScript pour afficher un message de confirmation
+    echo "<script>
+      if (confirm('Le jeu a été ajouté au panier. Voulez-vous aller sur votre panier ?')) {
+        window.location.href = 'panier.php';
+      } else {
+        window.location.href = 'jeux.php';
+      }
+    </script>";
+    exit;
+  }
 // Ajouter un jeu aux favoris
 if (isset($_POST['add-to-favorites'])) {
     $jeux_id = $_POST['jeux_id'];
