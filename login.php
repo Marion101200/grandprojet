@@ -9,7 +9,9 @@
 
 <body>
   <?php
-  session_start();
+   if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
   require_once("connexion.php");
 
@@ -30,7 +32,7 @@
     $_SESSION['nom'] = $clients['nom'];
 
     if ($clients === false) {
-      echo "<p style='color: red;'>Erreur : aucun utilisateur trouvé ou problème de connexion à la base de données.</p>";
+      echo "<p style='color: red;'>Erreur : aucun utilisateur trouvé.</p>";
       exit();
     }
 
@@ -39,8 +41,7 @@
       exit();
     }
 
-    echo "<p>" . htmlspecialchars($clients['mdp']) . "</p>";
-    echo "<p><strong>Mot de passe saisi :</strong> " . htmlspecialchars($mdp) . "</p>";
+
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       if (password_verify($mdp, $clients['mdp'])) {
@@ -53,7 +54,7 @@
         header("Location: accueil.php");
         exit();
       } else {
-        echo "<p style='color: red;'>Le mot de passe est incorrect.</p>";
+        echo "<p style='color: red; font-size: 25px; display: flex; justify-content: center;'>Le mot de passe est incorrect.</p>";
       }
     } else {
       echo "<p style='color: red;'>Aucun utilisateur trouvé avec cet email.</p>";
