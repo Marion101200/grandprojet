@@ -19,7 +19,7 @@
     <?php
     // Vérifier si l'utilisateur est connecté
     if (isset($_SESSION['nom'])) {
-      echo " <h2 class='bienvenue'> <i class='bx bx-game' ></i>Bon retour parmis nous," . $_SESSION['nom'] . "!<i class='bx bx-game' ></i> </h2>";
+      echo " <h2 class='bienvenue'> <i class='bx bx-game' ></i>Bon retour parmis nous, " . $_SESSION['nom'] . "!<i class='bx bx-game' ></i> </h2>";
     }
 
     // Si l'utilisateur clique sur "Se déconnecter"
