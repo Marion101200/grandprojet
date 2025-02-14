@@ -34,22 +34,46 @@
     $minPrix = $_GET['prix_min'] ?? $minPrixGlobal;
     $maxPrix = $_GET['prix_max'] ?? $maxPrixGlobal;
 
+    $noteSelectionnee = isset($_GET['note']) ? (int)$_GET['note'] : null;
     $sql = "SELECT j.id, j.titre, j.categorie, j.prix, j.images, j.description, j.date, 
     COALESCE(AVG(a.note), 0) AS moyenne_note
-FROM jeux j 
-LEFT JOIN avis a ON j.titre = a.jeux_titre
-WHERE j.prix BETWEEN :minPrix AND :maxPrix
-GROUP BY j.id, j.titre, j.categorie, j.prix, j.images, j.description, j.date";
+    FROM jeux j 
+    LEFT JOIN avis a ON j.titre = a.jeux_titre
+    WHERE j.prix BETWEEN :minPrix AND :maxPrix";
+    
 
-$params = [
-    ':minPrix' => $minPrix,
-    ':maxPrix' => $maxPrix
+// Ajout des filtres de catégories dynamiquement
+$filterConditions = [];
+$categories = [
+  'RPG',
+  'Aventure',
+  'Horreur',
+  'Survie',
+  'Soulslike',
+  'Action',
+  'Historique'
 ];
-
-// Appliquer le filtre de note uniquement si une valeur est définie et l'égaliser à la note exacte
-if ($minNote > 0) {
-  $sql .= " HAVING ROUND(moyenne_note, 0) = :minNote";
+foreach ($categories as $category) {
+if (isset($_GET["filter_$category"])) {
+    $filterConditions[] = "categorie = :cat_$category";
+    $params[":cat_$category"] = $category;
 }
+}
+
+if (!empty($filterConditions)) {
+$sql .= " AND (" . implode(" OR ", $filterConditions) . ")";
+}
+
+$sql .= " GROUP BY j.id, j.titre, j.categorie, j.prix, j.images, j.description, j.date";
+
+if ($minNote) {
+  $sql .= " HAVING moyenne_note >= :minNote";
+} 
+if ($noteSelectionnee) {
+  // Ajouter un filtre pour une note exacte dans la requête SQL
+  $sql .= " WHERE moyenne_note = :noteSelectionnee";
+  $params[':noteSelectionnee'] = $noteSelectionnee; // Remplacer par la note exacte
+} 
 
 
 
@@ -57,7 +81,8 @@ if ($minNote > 0) {
 $params = [
     ':minPrix' => $minPrix,
     ':maxPrix' => $maxPrix,
-    ':minNote' => $minNote // Assurez-vous que 'minNote' est bien défini en PHP
+    ':minNote' => $minNote,
+    ':noteSelectionnee' => $noteSelectionnee  // Assurez-vous que 'minNote' est bien défini en PHP
 ];
 
     // Filtres des catégories
@@ -79,9 +104,15 @@ $params = [
     }
 
     // Ajout des conditions des catégories
-    if (!empty($filterConditions)) {
-      $sql .= " AND (" . implode(" OR ", $filterConditions) . ")";
-    }
+// Ajouter les conditions des catégories
+// Ajouter les conditions des catégories
+if (!empty($filterConditions)) {
+  $sql .= " AND (" . implode(" OR ", $filterConditions) . ")";
+} else {
+  // Assurez-vous que si aucun filtre n'est sélectionné, tous les jeux sont affichés
+  $sql .= "";
+} // Affiche tous les paramètres GET pour vérifier les filtres
+
 
     // Ajout des conditions de prix
     $sql .= " AND prix BETWEEN :minPrix AND :maxPrix";
@@ -385,28 +416,30 @@ $params = [
   </script>
   <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const stars = document.querySelectorAll(".star");
-  const noteInput = document.getElementById("note_min_input");
-  const noteDisplay = document.getElementById("note_min");
+    const stars = document.querySelectorAll(".star"); // Sélectionner les étoiles
+    const noteInput = document.getElementById("note_min_input"); // Le champ caché pour la note
+    const noteDisplay = document.getElementById("note_min"); // Afficher la note sélectionnée
 
-  stars.forEach(star => {
-    star.addEventListener("click", function() {
-      let value = this.getAttribute("data-value");
-      noteInput.value = value;
-      noteDisplay.textContent = value;
+    stars.forEach(star => {
+        star.addEventListener("click", function() {
+            let value = this.getAttribute("data-value"); // Obtenir la valeur de la note (1-5)
+            noteInput.value = value;  // Mettre la valeur dans le champ caché
+            noteDisplay.textContent = `Note sélectionnée : ${value} étoiles`;  // Afficher la note
 
-      stars.forEach(s => s.classList.remove("selected"));
-      for (let i = 0; i < value; i++) {
-        stars[i].classList.add("selected");
-      }
+            // Ajoutez ou supprimez la classe 'selected' sur les étoiles
+            stars.forEach(s => s.classList.remove("selected"));
+            for (let i = 0; i < value; i++) {
+                stars[i].classList.add("selected");
+            }
 
-      // Soumettre automatiquement le formulaire après sélection d'une note exacte
-      if (value > 0) {
-        document.getElementById('filterForm').submit();
-      }
+            // Soumettre automatiquement le formulaire après sélection de la note exacte
+            document.getElementById('filterForm').submit();
+        });
     });
-  });
 });
+
+
+
 
 
 
