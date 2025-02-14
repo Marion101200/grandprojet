@@ -7,8 +7,8 @@
     }
 
     $token = htmlspecialchars(trim($_GET['token']));
-    $new_password = trim($_POST['new_password']);
-    $confirm_password = trim($_POST['confirm_password']);
+    $new_password = trim($_POST['password']);
+    $confirm_password = trim($_POST['confirm-password']);
 
     echo "Le token est : " . htmlspecialchars($token);
 

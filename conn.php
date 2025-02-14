@@ -9,7 +9,7 @@ function create_captcha($taille = 5){
 $captcha_code = create_captcha();
 $_SESSION['captcha'] = $captcha_code;
 include 'header.php';
-
+    
 
 if (isset($_SESSION['erreurmdp'])) {
     echo $_SESSION['erreurmdp'];
