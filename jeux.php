@@ -236,7 +236,7 @@ $params = [
           <div class="euro"><span id="prix_max"><?php echo htmlspecialchars($maxPrix); ?></span> €</div>
           </p>
         </div>
-        <div class="line"></div>
+<div class="line"></div>
         <div class="note_game">
   <h1 class="note_item"><i class='bx bxs-star'></i>&nbsp;Notes:&nbsp;<i class='bx bxs-star'></i></h1>
   <div class="star-rating">
