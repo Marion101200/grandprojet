@@ -1,0 +1,61 @@
+.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    font-size: 20px;
+
+  }
+  .navbar-center li {
+    margin-right: 60px; /* Espacement entre chaque élément */
+  }
+  /* Augmenter la taille des éléments Panier et Login */
+.navbar-right li a {
+    font-size: 20px; /* Taille de police plus grande */
+    padding: 10px 15px; /* Plus d'espace autour du texte */
+  }
+  
+  /* Ajouter de l'espace entre chaque élément */
+  .navbar-right li {
+    margin-left: 30px; /* Espacement entre chaque lien à droite */
+  }
+  
+/* Agrandir le logo "L'UNIVERS DES JEUX" */
+.navbar-brand {
+    font-weight: bold; /* Rend le texte plus épais si besoin */
+  }
+  
+  /* Ajout d'un z-index plus élevé pour la barre de navigation */
+.navbar {
+    position: relative; /* Assure que le z-index fonctionne */
+    z-index: 1000; /* Augmente la priorité d'affichage par rapport aux autres éléments */
+  }
+  
+  /* Si tu utilises un menu déroulant */
+  .navbar .dropdown-menu {
+    position: absolute;
+    z-index: 1001; /* Assure que le menu déroulant reste au-dessus de tout */
+  }
+/* Centrer le contenu du dropdown */
+.navbar .dropdown-menu { 
+    background-color: #808080;
+    border-radius: 5px; 
+    padding: 10px 0; 
+  }
+  
+  /* Optionnel : styliser les éléments de menu à l'intérieur */
+  .navbar .dropdown-menu li a {
+    color: white; 
+    font-size: 16px; 
+    padding: 10px 20px;
+    text-decoration: none; 
+  }
+  
+  /* Ajout d'un effet au survol */
+  .navbar .dropdown-menu li a:hover {
+    background-color: #666666; /* Gris plus foncé lors du survol */
+  }
+    
+
+    
+  

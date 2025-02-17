@@ -14,8 +14,52 @@
 .next {
     right: -80px;
 }
+.navbar-form {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Alignement vertical */
+    margin-top: 20px;
+    gap: 20px; /* Ajoute un espace entre le champ et le bouton */
+}
 
-/* ---------- ANIMATION ---------- */
+
+.form-group {
+    width: 60%; /* Ajuste la largeur selon tes préférences */
+}
+
+/* Champ de recherche agrandi */
+/* Champ de recherche agrandi et plus épais */
+#products {
+    width: 100%; /* Prendre toute la largeur de .form-group */
+    padding: 25px; /* Augmenter l'épaisseur du champ */
+    font-size: 20px; /* Agrandir le texte */
+    border-radius: 8px; /* Arrondir les bords */
+    border: 2px solid #AE9576; /* Bordure avec une couleur douce */
+    box-sizing: border-box; /* Assurer que le padding n'affecte pas la largeur totale */
+}
+
+/* Espacement entre le champ de recherche et le bouton */
+.navbar-form .form-group {
+    margin-bottom: 30px; /* Ajouter un espace sous le champ */
+}
+
+.btn-default {
+    padding: 20px 20px; /* Augmente la taille du bouton */
+    color: #AE9576; /* Couleur du texte */
+    border: 3px solid #AE9576; /* Bordure plus épaisse */
+    border-radius: 8px; /* Coins arrondis */
+    font-weight: bold;
+    cursor: pointer;
+    display: flex; 
+    align-items: center; /* Centre le texte verticalement */
+    justify-content: center; /* Centre le texte horizontalement */
+    height: 50px; /* Ajuste la hauteur pour qu'il soit bien aligné avec l'input */
+}
+
+
+.bx-search-alt-2{
+    font-size: 30px;
+}
 @keyframes fade {
     from {opacity: .55}
     to {opacity: 1}
@@ -48,9 +92,17 @@ body{
     color: blue;
     font-size: 50px;
 }
-.welcome{
+.welcome {
     font-size: 60px;
     text-align: center;
     color: rgb(181, 3, 3);
     font-weight: bold;
+    transition: opacity 0.3s ease-in-out; /* Transition plus rapide */
+    margin-bottom: 20px;
+}
+
+#dynamic-text {
+    display: inline-block;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out; /* Réduction du délai */
 }
