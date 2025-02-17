@@ -60,3 +60,23 @@ form a {
 form a:hover{
     color: red;
 }
+.toggle {
+    display: flex;
+    align-items: center; /* Alignement vertical */
+    gap: 10px; /* Espacement entre les éléments */
+    width: 100%; /* Pour s'assurer que le champ prend toute la largeur disponible */
+}
+
+.toggle input {
+    flex-grow: 1; /* Permet à l'input de prendre tout l'espace disponible */
+}
+
+#togglePassword {
+    background-color: #4cae4c;
+    font-size: 20px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: auto; /* Empêche le bouton de s'étirer */
+}

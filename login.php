@@ -76,8 +76,10 @@
         <input type="text" id="login" name="login" required>
         <br>
         <label for="password">Mot de passe:</label>
+        <div class="toggle">
         <input type="password" id="password" name="password" required>
         <button type="button" id="togglePassword">👁️</button>
+        </div>
         <br>
         <a href="conn.php"><i class='bx bx-user'></i>&nbsp;Inscrivez-vous ici&nbsp;<i class='bx bx-user'></i></a>
         <br>
