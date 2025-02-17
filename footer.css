@@ -24,7 +24,18 @@ ul {
   width: 100%;
   padding: 1rem 0;
 }
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
 
+.footer {
+  background-color: #333;
+  color: white;
+  margin-top: auto; /* Permet au footer de rester en bas */
+}
 .container-one-footer h4 {
   font-family: inter sans-serif;
   font-size: 1.5rem;

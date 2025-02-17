@@ -104,3 +104,6 @@ $connexion = null;
 </body>
 
 </html>
+<?php
+include 'footer.php';
+?>
