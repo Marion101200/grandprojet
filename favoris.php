@@ -145,7 +145,7 @@ if (isset($_POST['remove-from-favorites'])) {
             $moyenneStmt = $connexion->prepare("SELECT AVG(note) as moyenne FROM avis WHERE jeux_titre = ?");
             $moyenneStmt->execute([$jeux['titre']]);
             $moyenne = $moyenneStmt->fetch(PDO::FETCH_ASSOC)['moyenne'];
-            $moyenne = round($moyenne, 1); // Arrondir à 1 chiffre après la virgule
+            $moyenne = isset($moyenne) && $moyenne !== null ? round((float)$moyenne, 1) : 0;// Arrondir à 1 chiffre après la virgule
   
   
   

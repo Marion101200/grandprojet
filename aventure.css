@@ -74,6 +74,14 @@ form{
     display: flex;
     justify-content: center;
 }
+.ajout-favori{
+    background-color:rgb(3, 194, 3) ;
+    font-size: 20px;
+}
+.favoris{
+    display: flex;
+    justify-content: space-around;
+}
 .ajout-panier{
     color:white;
     background-color: rgb(3, 194, 3);

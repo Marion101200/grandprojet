@@ -54,6 +54,55 @@ echo "<script>
 </script>";
 exit;
 }
+// Ajout aux favoris
+if (isset($_POST['add-to-favorites'])) {
+  if (!isset($_SESSION['nom'])) {
+    echo "<script>
+            alert('Vous devez être connecté pour ajouter des jeux à vos favoris.');
+            window.location.href = 'login.php';
+        </script>";
+    exit;
+  }
+
+  $favori_id = (int)$_POST['favori_id'];
+
+  try {
+    require_once("connexion.php");
+    $connexion = getConnexion();
+
+    // Récupérer l'ID du client connecté
+    $stmt = $connexion->prepare("SELECT id FROM clients WHERE nom = :nom");
+    $stmt->execute(['nom' => $_SESSION['nom']]);
+    $client = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$client) {
+      echo "<script>alert('Utilisateur non trouvé.');</script>";
+      exit;
+    }
+
+    $clients_id = $client['id'];
+
+    // Vérifier si le jeu est déjà dans les favoris
+    $stmt = $connexion->prepare("SELECT * FROM user_favorites WHERE clients_id = :clients_id AND jeux_id = :jeux_id");
+    $stmt->execute(['clients_id' => $clients_id, 'jeux_id' => $favori_id]);
+
+    if ($stmt->rowCount() == 0) {
+      // Ajouter le jeu aux favoris
+      $stmt = $connexion->prepare("INSERT INTO user_favorites (clients_id, jeux_id) VALUES (:clients_id, :jeux_id)");
+      $stmt->execute(['clients_id' => $clients_id, 'jeux_id' => $favori_id]);
+
+      echo "<script>
+                alert('Le jeu a été ajouté à vos favoris.');
+                window.location.href = 'favoris.php';
+            </script>";
+      exit;
+    } else {
+      echo "<script>alert('Ce jeu est déjà dans vos favoris.');</script>";
+    }
+  } catch (PDOException $e) {
+    echo "Erreur : " . $e->getMessage();
+  }
+}
 ?>
 <?php
 try {
@@ -115,9 +164,11 @@ echo str_repeat('☆', $emptyStars);
 
     </span>
 </div>
-                        <form method="post">
+                        <form method="post" class="favoris">
                             <input type="hidden" name="jeux_id" value="<?php echo htmlspecialchars($jeux['id']); ?>">
                             <button class="ajout-panier" type="submit" name="add-to-cart">Ajouter au panier</button>
+                            <input type="hidden" name="favori_id" value="<?= htmlspecialchars($jeux['id']) ?>">
+              <button class="ajout-favori" type="submit" name="add-to-favorites">❤️</button>
                         </form>
                     </div>
                 </div>
