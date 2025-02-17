@@ -30,7 +30,6 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
-    padding: 10px;
 }
 .jeux-item img{
     max-height: 200px;
@@ -69,7 +68,7 @@ form{
     justify-content: center;
 }
 .ajout-panier{
-    color: #d2efa9;
+    color: white;
     background-color: rgb(3, 194, 3);
 }
 .see_cart{
@@ -78,6 +77,16 @@ form{
     justify-content: center;
     font-size: 30px;
     text-decoration: none;
+}
+.filter_game{
+display: flex;
+}
+#filterForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    border: solid 1px  rgb(176, 71, 71);
+    width: 250px;
 }
 .categorie_titre{
     font-size: 20px;
@@ -88,15 +97,111 @@ form{
 .categorie_jeux{
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
-.prix_item{
-    color: rgb(181, 3, 3);
+    .prix_item{
+        color: rgb(181, 3, 3);
+        display: flex;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 20px;
+    }
+.titre_filter{
+    font-size: 23px;
+    color: blueviolet;
     display: flex;
     justify-content: center;
     font-weight: bold;
-    font-size: 20px;
+}
+/** Range Input Styles **/
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 150px;
+}
+input[type="range"]:focus {
+    outline: none;
+}
+ 
+/* // Chrome, Safari, Opera and Edge Chromium styles // */
+input[type="range"]::-webkit-slider-runnable-track {
+    background-color: rgb(167, 166, 166);
+    border-radius: 1rem;
+    height: 1rem;
+}
+input[type="range"]::-webkit-slider-thumb {
+   -webkit-appearance: none;
+    appearance: none;
+    margin-top: -3px;
+    background-color: black;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+}
+ 
+input[type="range"]:focus::-webkit-slider-thumb {
+    border: 1px solid black;
+    outline: 3px solid black;
+}
+ 
+/** Firefox styles **/
+input[type="range"]::-moz-range-track {
+    background-color: violet;
+    border-radius: 0.5rem;
+    height: 0.5rem;
+    
+}
+input[type="range"]::-moz-range-thumb {
+    border: none;
+    border-radius: 0;
+    background-color: red;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%;
+}
+input[type="range"]:focus::-moz-range-thumb {
+    border: 1px solid black;
+    outline: 3px solid black; 
+}
+.line{
+    width: 70%;
+    height: 1px;
+    background-color: black;
+    margin: 0 auto;
+}
+.price_values p{
+    display: flex;
+    justify-content: space-between;
+    color: black;
+}
+.min{
+    display: flex;
+flex-direction: column;
+align-items: center;
+gap: 10px;
+font-weight: bold;
 }
 
+.max{
+    display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 10px;
+   font-weight: bold;
+}
+.price_values{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.line2{
+    width: 10%;
+    height: 3px;
+    background-color:rgb(176, 71, 71);
+
+}
 .prix{
     text-align: center;
     font-size: 40px;
@@ -117,24 +222,61 @@ h2{
     display: flex;
     justify-content: space-around;
 }
+.moyenne-avis{
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+.star-rating{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    width: 250px;
+    font-size: 40px;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-top: 10px;
+    background: rgb(142, 138, 137, 0.8) ;
+    border: 2px solid  rgb(142, 138, 137);
+}
+.star{
+    font-size: 24px;
+    color: #ccc;
+    transition: color 0.2s;
+}
+.star:hover,
+.star.selected{
+    color: gold;
+
+}
+.note_item{
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(181, 3, 3);
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+.noteMin{
+    color: black;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+}
+.reset-button{
+    color: white;
+    background-color: rgb(3, 194, 3);
+    font-size: 20px;
+    margin-top: 30px;
+}
 .retour-accueil a{
     color: brown;
     font-size: 30px;
     display: flex;
     justify-content: center;
 }
-
 .retour-accueil a:hover{
     color: red;
-}
-.not_found p{
-    color: red;
-    font-size: 50px;
-    display: flex;
-    justify-content: center;
-}
-.moyenne-avis{
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 18px;
 }
