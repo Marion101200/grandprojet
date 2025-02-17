@@ -70,7 +70,17 @@ try {
     if ($jeu && count($jeu) > 0): ?>
         <!-- Liste des jeux -->
         <div class="jeux-listes">
-        <?php foreach ($jeu as $jeux): ?>
+        <?php foreach ($jeu as $jeux):
+          $moyenneStmt = $connexion->prepare("SELECT AVG(note) as moyenne FROM avis WHERE jeux_titre = ?");
+          $moyenneStmt->execute([$jeux['titre']]);
+          $moyenne = $moyenneStmt->fetch(PDO::FETCH_ASSOC)['moyenne'];
+          $moyenne = $moyenne !== null ? round($moyenne, 1) : 0; // Arrondir à 1 chiffre après la virgule
+  
+  
+  
+          $testStmt = $connexion->prepare("SELECT note FROM avis WHERE jeux_titre = ?");
+          $testStmt->execute([$jeux['titre']]);
+          $allNotes = $testStmt->fetchAll(PDO::FETCH_COLUMN); ?>
             <div class="jeux-item">
                 <img class="images_jeux"
                     src="<?php echo htmlspecialchars($jeux['images']); ?>"
@@ -89,6 +99,22 @@ try {
                     </p>
                     <div class="prix_ajout">
                         <h3 class="prix"><?php echo htmlspecialchars($jeux['prix']); ?> €</h3>
+                        <div class="moyenne-avis">
+<strong>Note moyenne : <?= htmlspecialchars($moyenne); ?>/5</strong><br>
+
+    <span>
+    <?php
+$fullStars = floor($moyenne);
+$halfStar = ($moyenne - $fullStars) >= 0.5 ? 1 : 0;
+$emptyStars = 5 - ($fullStars + $halfStar);
+
+echo str_repeat('⭐', $fullStars);
+if ($halfStar) echo '⭐️';
+echo str_repeat('☆', $emptyStars);
+?>
+
+    </span>
+</div>
                         <form method="post">
                             <input type="hidden" name="jeux_id" value="<?php echo htmlspecialchars($jeux['id']); ?>">
                             <button class="ajout-panier" type="submit" name="add-to-cart">Ajouter au panier</button>
@@ -108,7 +134,65 @@ try {
 <a href="panier.php" class="see_cart">
     <i class='bx bxs-cart'></i>&nbsp;Voir le panier&nbsp;<i class='bx bxs-cart'></i>
 </a>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+  const stars = document.querySelectorAll(".star");
+  const noteInput = document.getElementById("note_min_input");
+  const noteDisplay = document.getElementById("note_min");
 
+  stars.forEach(star => {
+    star.addEventListener("click", function() {
+      let value = this.getAttribute("data-value");
+      noteInput.value = value;
+      noteDisplay.textContent = value;
+
+      stars.forEach(s => s.classList.remove("selected"));
+      for (let i = 0; i < value; i++) {
+        stars[i].classList.add("selected");
+      }
+
+      // Soumettre automatiquement le formulaire après sélection
+      debounceSubmit();
+    });
+  });
+});
+      maxSlider.addEventListener('input', function() {
+        maxPrixLabel.textContent = maxSlider.value;
+        debounceSubmit();
+      });
+
+        </script>
+
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const stars = document.querySelectorAll(".star"); // Sélectionner les étoiles
+    const noteInput = document.getElementById("note_min_input"); // Le champ caché pour la note
+    const noteDisplay = document.getElementById("note_min"); // Afficher la note sélectionnée
+
+    stars.forEach(star => {
+        star.addEventListener("click", function() {
+            let value = this.getAttribute("data-value"); // Obtenir la valeur de la note (1-5)
+            noteInput.value = value;  // Mettre la valeur dans le champ caché
+            noteDisplay.textContent = `Note sélectionnée : ${value} étoiles`;  // Afficher la note
+
+            // Ajoutez ou supprimez la classe 'selected' sur les étoiles
+            stars.forEach(s => s.classList.remove("selected"));
+            for (let i = 0; i < value; i++) {
+                stars[i].classList.add("selected");
+            }
+
+            // Soumettre automatiquement le formulaire après sélection de la note exacte
+            document.getElementById('filterForm').submit();
+        });
+    });
+});
+
+
+
+
+
+
+  </script>
 
   </body>
 </html>
