@@ -51,7 +51,7 @@
         $_SESSION['nom'] = $clients['nom'];
         $_SESSION['id_client'] = $clients['id'];
 
-        header("Location: accueil.php");
+        header("Location: accueilLogin.php");
         exit();
       } else {
         echo "<p style='color: red; font-size: 25px; display: flex; justify-content: center;'>Le mot de passe est incorrect.</p>";

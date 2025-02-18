@@ -1,0 +1,62 @@
+@keyframes fade {
+    from {opacity: .55}
+    to {opacity: 1}
+}
+.carousel {
+    position: relative;
+    width: 1200px;
+    margin: auto;
+    box-shadow: 0 5px 80px #8b73651f;
+    background-color: black;
+}
+.carousel img {
+    width: 100%;
+    display: none;
+}
+
+/* ---------- IMAGE AFFICHEE ---------- */
+img.displaySlide {
+    display: block;
+    animation-name: fade;
+    animation-duration: 1.5s;
+    max-height: 660px;
+}
+body{
+    background: linear-gradient(rgba(247, 244, 244, 0.733), rgba(242, 241, 241, 0.696)), no-repeat, fixed
+                  url(img/DALL·E\ 2024-11-29\ 13.29.03\ -\ A\ vibrant\ and\ colorful\ image\ showcasing\ various\ video\ games\ integrated\ into\ a\ single\ scene.\ The\ image\ includes\ a\ retro\ arcade\ machine\ with\ a\ glowing\ s.webp);
+}
+.bienvenue{
+    text-align: center;
+    color: blue;
+    font-size: 50px;
+}
+.carousel button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 5px;
+    background-color: #f9eded;
+    color: #AE9576;
+    border: 1px solid #AE9576;
+    cursor: pointer;
+}
+.prev {
+    left: -80px;
+}
+.next {
+    right: -80px;
+}
+.welcome {
+    font-size: 60px;
+    text-align: center;
+    color: rgb(181, 3, 3);
+    font-weight: bold;
+    transition: opacity 0.3s ease-in-out; /* Transition plus rapide */
+    margin-bottom: 20px;
+}
+
+#dynamic-text {
+    display: inline-block;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out; /* Réduction du délai */
+}

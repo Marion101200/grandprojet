@@ -16,6 +16,8 @@
   <?php
   include 'pdo.php';
   // include 'ajouter_avis.php';
+
+  
   try {
     require_once("connexion.php");
     $connexion = getConnexion();

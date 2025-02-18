@@ -4,8 +4,7 @@
 <head>
   <title>Accueil</title>
   <meta charset="utf-8">
-  <link href="accueil.css" rel="stylesheet">
-  <link rel="stylesheet" href="accueil.css">
+  <link href="AccueilLogin.css" rel="stylesheet">
 
 </head>
 
@@ -21,12 +20,12 @@ if (session_status() == PHP_SESSION_NONE) {
   <div class="header-container">
 
     <?php
-     if (!isset($_SESSION['nom'])){
-      include 'headerAccueil.php';
-
-  } else{
-     include 'header.php';
-  }
+       if (!isset($_SESSION['nom'])){
+        include 'headerAccueil.php';
+  
+    } else{
+       include 'header.php';
+    }
     // Vérifier si l'utilisateur est connecté
     if (isset($_SESSION['nom'])) {
       echo " <h2 class='bienvenue'> <i class='bx bx-game' ></i>Bon retour parmis nous, " . $_SESSION['nom'] . "!<i class='bx bx-game' ></i> </h2>";
@@ -42,16 +41,6 @@ if (session_status() == PHP_SESSION_NONE) {
   </div>
   <div class="welcome"><i class='bx bx-game'></i>&nbsp; <span id="dynamic-text">Bienvenue à l'univers des jeux !</span> &nbsp;<i class='bx bx-game'></i></div>
 
-  <form class="navbar-form navbar-left" action="research.php" method="get">
-        <div class="form-group">
-        <input type="search" name="query" id="products" class="form-control" placeholder="Rechercher..." required list="datalist">
-<datalist id="datalist"></datalist>
-        </div>
-        <div class="buttonResearch">
-        <button type="submit" class="btn-default"><i class='bx bx-search-alt-2'></i>
-        </button>
-        </div>
-      </form>
   <div class="carousel">
     <div class="slides">
       <a href=""><img class="slide" src="img/shadow of the tomb raider.avif" alt="img1"></a>
