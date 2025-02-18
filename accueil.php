@@ -77,6 +77,30 @@ if (session_status() == PHP_SESSION_NONE) {
     <button class="next" onclick="nextSlide()">&#10097;</button>
 </div>
 
+
+<p class="nouveautés">Les nouveautés</p>
+<div class="nouveautes-container">
+    <?php
+    include 'pdo.php';
+    require_once("connexion.php");
+    $connexion = getConnexion();
+    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Connexion à la base de données
+
+    // Sélection des 3 jeux spécifiques
+    $stmt = $connexion->prepare("SELECT id, titre, images FROM jeux WHERE titre IN ('Indiana Jones ', 'God of war', 'Spyro Reignited Trilogy')");
+    $stmt->execute();
+    $jeux = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($jeux as $jeu) {
+        $imagePath = htmlspecialchars($jeu['images']);
+        echo '<a href="fiche_jeux.php?id=' . $jeu['id'] . '" class="jeu-card">
+                <img class="jeu-image" src="' . $imagePath . '" alt="' . htmlspecialchars($jeu['titre']) . '">
+              </a>';
+    }
+    ?>
+</div>
+
+
   <script src="accueil.js"></script>
   <script>
 $(document).ready(function() {

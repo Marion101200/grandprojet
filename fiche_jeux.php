@@ -71,7 +71,7 @@ $clients = $stmt->fetch(PDO::FETCH_ASSOC);
 $moyenneStmt = $connexion->prepare("SELECT AVG(note) as moyenne FROM avis WHERE jeux_titre = ?");
 $moyenneStmt->execute([$jeux['titre']]);
 $moyenne = $moyenneStmt->fetch(PDO::FETCH_ASSOC)['moyenne'];
-$moyenne = round($moyenne, 1);
+$moyenne = $moyenne !== null ? round($moyenne, 1) : 0;
 include 'header.php';
 ?>
 
