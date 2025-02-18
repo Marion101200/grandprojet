@@ -117,8 +117,25 @@ $chunks = !empty($categories) ? array_chunk($categories, 4) : [];
         <?php if (!empty($chunks)): ?>
             <?php foreach ($chunks as $chunk): ?>
                 <div class="carousel-section">
-                    <?php foreach ($chunk as $categorie): ?>
-                        <div class="category-card"><?= htmlspecialchars($categorie['categorie']) ?></div>
+                    <?php foreach ($chunk as $jeux): ?>
+                      <?php
+// Associer les catégories aux fichiers spécifiques
+$categoryPages = [
+    'Survie' => 'survie.php',
+    'Horreur' => 'horreur.php',
+    'RPG' => 'rpg.php',
+    'Action' => 'action.php',
+    // Ajoute d'autres catégories si besoin
+];
+
+$categorie = $jeux['categorie'];
+$page = isset($categoryPages[$categorie]) ? $categoryPages[$categorie] : 'categorie.php';
+?>
+
+<a href="<?= $page ?>?categorie=<?= urlencode($categorie) ?>" class="category-card">
+    <?= htmlspecialchars($categorie) ?>
+</a>
+
                     <?php endforeach; ?>
                 </div>
             <?php endforeach; ?>
