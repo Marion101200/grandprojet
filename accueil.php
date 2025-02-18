@@ -52,15 +52,30 @@ if (session_status() == PHP_SESSION_NONE) {
         </button>
         </div>
       </form>
-  <div class="carousel">
+      <div class="carousel">
     <div class="slides">
-      <a href=""><img class="slide" src="img/shadow of the tomb raider.avif" alt="img1"></a>
-      <a href=""><img class="slide" src="img/baldur's gate 3.avif" alt="img2"></a>
-      <a href=""><img class="slide" src="img/assassin's creed odyssey.jpg" alt="img3"></a>
+        <?php
+        include 'pdo.php';
+        require_once("connexion.php");
+    $connexion = getConnexion();
+    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Connexion à la base de données
+
+        // Sélection des 3 jeux spécifiques (avec leur titre ou leur ID)
+        $stmt = $connexion->prepare("SELECT id, titre, images FROM jeux WHERE titre IN ('Shadow of the Tomb Raider', 'Baldur\'s Gate 3', 'Assassin\'s Creed Odyssey')");
+        $stmt->execute();
+        $jeux = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($jeux as $jeu) {
+          $imagePath =  htmlspecialchars($jeu['images']);
+          echo '<a href="fiche_jeux.php?id=' . $jeu['id'] . '">
+                  <img class="slide" src="' . $imagePath . '" alt="' . htmlspecialchars($jeu['titre']) . '">
+                </a>';
+      }
+        ?>
     </div>
     <button class="prev" onclick="prevSlide()">&#10096;</button>
-    <button class="next" onclick="nextSlide()">&#10097;</i></button>
-  </div>
+    <button class="next" onclick="nextSlide()">&#10097;</button>
+</div>
 
   <script src="accueil.js"></script>
   <script>
