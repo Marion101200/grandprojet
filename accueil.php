@@ -125,6 +125,9 @@ $categoryPages = [
     'Horreur' => 'horreur.php',
     'RPG' => 'rpg.php',
     'Action' => 'action.php',
+    'Historique' => 'historique.php',
+    'Aventure' => 'aventure.php',
+    "Soulslike" => 'soulslike.php',
     // Ajoute d'autres catégories si besoin
 ];
 
