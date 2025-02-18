@@ -39,6 +39,17 @@ if (session_status() == PHP_SESSION_NONE) {
       exit();
     }
     ?>
+    <?php
+// Connexion à la base de données (assure-toi que $connexion est bien défini)
+$stmt = $connexion->prepare("SELECT DISTINCT categorie FROM jeux"); // DISTINCT pour éviter les doublons
+$stmt->execute();
+$categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Vérifier si des catégories existent avant de créer les groupes
+$chunks = !empty($categories) ? array_chunk($categories, 4) : [];
+
+?>
+
   </div>
   <div class="welcome"><i class='bx bx-game'></i>&nbsp; <span id="dynamic-text">Bienvenue à l'univers des jeux !</span> &nbsp;<i class='bx bx-game'></i></div>
 
@@ -99,6 +110,25 @@ if (session_status() == PHP_SESSION_NONE) {
     }
     ?>
 </div>
+
+<div class="carousel-containerCategories">
+    <button class="carousel-buttonCategories prev" onclick="moveCarouselCategories(-1)">❮</button>
+    <div class="carousel-wrapperCategories">
+        <?php if (!empty($chunks)): ?>
+            <?php foreach ($chunks as $chunk): ?>
+                <div class="carousel-section">
+                    <?php foreach ($chunk as $categorie): ?>
+                        <div class="category-card"><?= htmlspecialchars($categorie['categorie']) ?></div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Aucune catégorie disponible.</p>
+        <?php endif; ?>
+    </div>
+    <button class="carousel-buttonCategories next" onclick="moveCarouselCategories(1)">❯</button>
+</div>
+
 
 
   <script src="accueil.js"></script>
@@ -166,7 +196,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
   </script> 
   
+  <script>
+let currentIndexCategories = 0;
+const categorySections = document.querySelectorAll('.carousel-section');
+const totalPagesCategories = categorySections.length;
 
+function moveCarouselCategories(direction) {
+    currentIndexCategories += direction;
+
+    // Empêcher de dépasser les limites
+    if (currentIndexCategories < 0) {
+        currentIndexCategories = totalPagesCategories - 1;
+    } else if (currentIndexCategories >= totalPagesCategories) {
+        currentIndexCategories = 0;
+    }
+
+    document.querySelector('.carousel-wrapperCategories').style.transform =
+        `translateX(-${currentIndexCategories * 100}%)`;
+}
+
+
+  </script>
 </body>
 
 </html>
