@@ -17,6 +17,9 @@ try {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $columns = $_POST['columns'];
 
+            // Ajouter automatiquement la date d'ajout si elle n'est pas présente
+            $columns['date_ajout'] = date('Y-m-d H:i:s'); // Date et heure actuelle
+
             // Vérifier si une image a été téléchargée
             if (isset($_FILES['columns']['name']['images']) && $_FILES['columns']['name']['images'] !== '') {
                 $imageFile = $_FILES['columns']['tmp_name']['images'];
@@ -83,7 +86,7 @@ try {
     <form action="" method="post" enctype="multipart/form-data"> <!-- Modifié ici -->
         <?php if (!empty($row)): ?>
             <?php foreach ($row as $column => $value): ?>
-                <?php if ($column !== "password"): ?>
+                <?php if ($column !== "password" && $column !== "date_ajout"): ?> <!-- Ne pas afficher la colonne "date_ajout" dans le formulaire -->
                     <label for="<?php echo htmlspecialchars($column); ?>"><?php echo htmlspecialchars($column); ?>:</label>
                     <input type="text" name="columns[<?php echo htmlspecialchars($column); ?>]" value="<?php echo htmlspecialchars($value); ?>" id="<?php echo htmlspecialchars($column); ?>">
                     <br>
