@@ -110,7 +110,7 @@ $chunks = !empty($categories) ? array_chunk($categories, 4) : [];
     }
     ?>
 </div>
-
+<p class="catégories">Les catégories</p>
 <div class="carousel-containerCategories">
     <button class="carousel-buttonCategories prev" onclick="moveCarouselCategories(-1)">❮</button>
     <div class="carousel-wrapperCategories">
@@ -133,6 +133,7 @@ $categoryPages = [
 
 $categorie = $jeux['categorie'];
 $page = isset($categoryPages[$categorie]) ? $categoryPages[$categorie] : 'categorie.php';
+
 ?>
 
 <a href="<?= $page ?>?categorie=<?= urlencode($categorie) ?>" class="category-card">
@@ -148,6 +149,7 @@ $page = isset($categoryPages[$categorie]) ? $categoryPages[$categorie] : 'catego
     </div>
     <button class="carousel-buttonCategories next" onclick="moveCarouselCategories(1)">❯</button>
 </div>
+
 
 
 
