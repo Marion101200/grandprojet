@@ -37,21 +37,106 @@ if (session_status() == PHP_SESSION_NONE) {
       header("Location: logout.php");
       exit();
     }
+    // Connexion à la base de données (assure-toi que $connexion est bien défini)
+$stmt = $connexion->prepare("SELECT DISTINCT categorie FROM jeux"); // DISTINCT pour éviter les doublons
+$stmt->execute();
+$categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Vérifier si des catégories existent avant de créer les groupes
+$chunks = !empty($categories) ? array_chunk($categories, 4) : [];
+
     ?>
   </div>
   <div class="welcome"><i class='bx bx-game'></i>&nbsp; <span id="dynamic-text">Bienvenue à l'univers des jeux !</span> &nbsp;<i class='bx bx-game'></i></div>
 
   <div class="carousel">
     <div class="slides">
-      <a href=""><img class="slide" src="img/shadow of the tomb raider.avif" alt="img1"></a>
-      <a href=""><img class="slide" src="img/baldur's gate 3.avif" alt="img2"></a>
-      <a href=""><img class="slide" src="img/assassin's creed odyssey.jpg" alt="img3"></a>
+        <?php
+        require_once("connexion.php");
+    $connexion = getConnexion();
+    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Connexion à la base de données
+
+        // Sélection des 3 jeux spécifiques (avec leur titre ou leur ID)
+        $stmt = $connexion->prepare("SELECT id, titre, images FROM jeux WHERE titre IN ('Shadow of the Tomb Raider', 'Baldur\'s Gate 3', 'Assassin\'s Creed Odyssey')");
+        $stmt->execute();
+        $jeux = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($jeux as $jeu) {
+          $imagePath =  htmlspecialchars($jeu['images']);
+          echo '<a href="fiche_jeux.php?id=' . $jeu['id'] . '">
+                  <img class="slide" src="' . $imagePath . '" alt="' . htmlspecialchars($jeu['titre']) . '">
+                </a>';
+      }
+        ?>
     </div>
     <button class="prev" onclick="prevSlide()">&#10096;</button>
-    <button class="next" onclick="nextSlide()">&#10097;</i></button>
-  </div>
+    <button class="next" onclick="nextSlide()">&#10097;</button>
+</div>
 
-  <script src="accueil.js"></script>
+
+<p class="nouveautés">Les nouveautés</p>
+<div class="nouveautes-container">
+    <?php
+    include 'pdo.php';
+    require_once("connexion.php");
+    $connexion = getConnexion();
+    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Connexion à la base de données
+
+    // Sélectionner les jeux récents, triés par date d'ajout, pour afficher les nouveaux jeux
+    $stmt = $connexion->prepare("SELECT id, titre, images FROM jeux ORDER BY date_ajout DESC LIMIT 3");  // Tu peux ajuster le LIMIT pour le nombre d'images à afficher
+    $stmt->execute();
+    $jeux = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($jeux as $jeu) {
+        $imagePath = htmlspecialchars($jeu['images']);
+        echo '<a href="fiche_jeux.php?id=' . $jeu['id'] . '" class="jeu-card">
+                <img class="jeu-image" src="' . $imagePath . '" alt="' . htmlspecialchars($jeu['titre']) . '">
+              </a>';
+    }
+    ?>
+</div>
+<p class="catégories">Les catégories</p>
+<div class="carousel-containerCategories">
+    <button class="carousel-buttonCategories prev" onclick="moveCarouselCategories(-1)">❮</button>
+    <div class="carousel-wrapperCategories">
+        <?php if (!empty($chunks)): ?>
+            <?php foreach ($chunks as $chunk): ?>
+                <div class="carousel-section">
+                    <?php foreach ($chunk as $jeux): ?>
+                      <?php
+// Associer les catégories aux fichiers spécifiques
+$categoryPages = [
+    'Survie' => 'survie.php',
+    'Horreur' => 'horreur.php',
+    'RPG' => 'rpg.php',
+    'Action' => 'action.php',
+    'Historique' => 'historique.php',
+    'Aventure' => 'aventure.php',
+    "Soulslike" => 'soulslike.php',
+    // Ajoute d'autres catégories si besoin
+];
+
+$categorie = $jeux['categorie'];
+$page = isset($categoryPages[$categorie]) ? $categoryPages[$categorie] : 'categorie.php';
+
+?>
+
+<a href="<?= $page ?>?categorie=<?= urlencode($categorie) ?>" class="category-card">
+    <?= htmlspecialchars($categorie) ?>
+</a>
+
+                    <?php endforeach; ?>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Aucune catégorie disponible.</p>
+        <?php endif; ?>
+    </div>
+    <button class="carousel-buttonCategories next" onclick="moveCarouselCategories(1)">❯</button>
+</div>
+
+
+<script src="accueil.js"></script>
   <script>
 $(document).ready(function() {
     let inputRecherche = $('input[name="query"]');
@@ -116,6 +201,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
   </script> 
   
+  <script>
+let currentIndexCategories = 0;
+const categorySections = document.querySelectorAll('.carousel-section');
+const totalPagesCategories = categorySections.length;
+
+function moveCarouselCategories(direction) {
+    currentIndexCategories += direction;
+
+    // Empêcher de dépasser les limites
+    if (currentIndexCategories < 0) {
+        currentIndexCategories = totalPagesCategories - 1;
+    } else if (currentIndexCategories >= totalPagesCategories) {
+        currentIndexCategories = 0;
+    }
+
+    document.querySelector('.carousel-wrapperCategories').style.transform =
+        `translateX(-${currentIndexCategories * 100}%)`;
+}
+
+
+  </script>
 
 </body>
 
