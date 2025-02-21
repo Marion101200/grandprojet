@@ -15,7 +15,7 @@
                     <h4>Entreprise </h4>
                     <ul>
                         <li><a href="">Comment ça marche ?</a></li>
-                        <li><a href="">A propos</a></li>
+                        <li><a href="apropos.php">A propos</a></li>
                         <li><a href="">Application mobile</a></li>
                         <li><a href="">Blog</a></li>
                         <li><a href="mentionLegal.php">Mentions légales</a></li>
