@@ -18,7 +18,7 @@
                         <li><a href="">A propos</a></li>
                         <li><a href="">Application mobile</a></li>
                         <li><a href="">Blog</a></li>
-                        <li><a href="">Mentions légales</a></li>
+                        <li><a href="mentionLegal.php">Mentions légales</a></li>
                     </ul>
                 </div>
                 <div class="container-one-footer">
