@@ -42,7 +42,7 @@
             </div>
             <div class="container-mention-leg col-12">
                 <ul class="mention list-unstyled">
-                    <li class="mx-5 "><a class="text-decoration-none a-list" href="">Confidentialité</a></li>
+                    <li class="mx-5 "><a class="text-decoration-none a-list" href="confidentialité.php">Confidentialité</a></li>
                     <li class="mx-5"><a class="text-decoration-none a-list" href="">Conditions générales</a></li>
                     <li class="mx-4">@2024 Univers des jeux</li>
                 </ul>
