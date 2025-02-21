@@ -1,5 +1,4 @@
 <?php
-include 'header.php';
 include 'pdo.php';
 
 if (session_status() == PHP_SESSION_NONE) {
@@ -32,6 +31,29 @@ try {
 
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['delete_account'])) {
+            try {
+                $connexion->prepare("DELETE FROM commande WHERE id_clients = :id")->execute(['id' => $clients['id']]);
+                $connexion->prepare("DELETE FROM user_favorites WHERE clients_id = :id")->execute(['id' => $clients['id']]);
+
+                $stmt = $connexion->prepare("DELETE FROM clients WHERE id = :id");
+                $stmt->bindParam(':id', $clients['id']);
+                $stmt->execute();
+
+                // Détruit la session
+                session_unset();
+                session_destroy();
+
+                echo "<p style='color: red; font-size: 30px; text-align: center;'>Votre compte a été supprimé.</p>";
+
+                // Redirige vers la page d'accueil après suppression
+                header("Location: accueil.php");
+                exit();
+            } catch (PDOException $e) {
+                echo "Erreur lors de la suppression : " . $e->getMessage();
+            }
+        }
+
         $newClientsNom = htmlspecialchars(trim($_POST['nom']));
         $newEmail = htmlspecialchars(trim($_POST['email']));
         $newMdp = !empty($_POST['mdp']) ? password_hash($_POST['mdp'], PASSWORD_DEFAULT) : null;
@@ -66,6 +88,7 @@ try {
 }
 
 $connexion = null;
+include 'header.php';
 ?>
 
 <!DOCTYPE html>
@@ -97,10 +120,22 @@ $connexion = null;
                 <label for="password">Nouveau mot de passe :</label>
                 <input type="password" id="mdp" name="mdp">
                 <br>
-                <input type="submit" value="Mettre à jour">
             </form>
+            <form action="compte.php" method="POST" onsubmit="return confirmDelete();">
+                <input type="hidden" name="delete_account" value="1">
+                <button type="submit" class="delete_compte">Supprimer mon compte</button>
+            </form>
+
+            <input type="submit" value="Mettre à jour">
         </div>
     </div>
+
+    <script>
+        function confirmDelete() {
+            return confirm("Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible !");
+        }
+    </script>
+
 </body>
 
 </html>
