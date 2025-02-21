@@ -1,27 +1,23 @@
-
 body{
     background: linear-gradient(rgba(247, 244, 244, 0.733), rgba(242, 241, 241, 0.696)), no-repeat, fixed
                   url(img/DALL·E\ 2024-11-29\ 13.29.03\ -\ A\ vibrant\ and\ colorful\ image\ showcasing\ various\ video\ games\ integrated\ into\ a\ single\ scene.\ The\ image\ includes\ a\ retro\ arcade\ machine\ with\ a\ glowing\ s.webp);
 }
-.mention {
-    text-align: center;
-    font-weight: bold;
-    color: red;
-    margin-top: 40px;
-    text-transform: uppercase;
-}
-
-h2 {
-    font-size: 24px;
+.propos {
+    font-size: 40px;
     color: #B50303;
-    border-bottom: 2px solid #AE9576;
     padding-bottom: 5px;
     margin-bottom: 15px;
     text-align: center;
 }
-.legal {
-    font-size: 18px;
-    margin-bottom: 15px;
-    text-align: center;
+.apropos{
     color: black;
+    font-size: 25px;
+    text-align: center;
+    margin-top: 20px;
+
+}
+.pourquoi{
+    color: green;
+    text-align: center;
+    font-size: 20px;
 }

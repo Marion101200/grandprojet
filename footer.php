@@ -14,10 +14,10 @@
                 <div class="container-one-footer">
                     <h4>Entreprise </h4>
                     <ul>
-                        <li><a href="">Comment ça marche ?</a></li>
-                        <li><a href="">A propos</a></li>
-                        <li><a href="">Application mobile</a></li>
-                        <li><a href="">Blog</a></li>
+                        <li><a href="comment_sa_marche.php">Comment ça marche ?</a></li>
+                        <li><a href="apropos.php">A propos</a></li>
+                        <li><a href="application_mobile.php">Application mobile</a></li>
+                        <li><a href="blog.php">Blog</a></li>
                         <li><a href="mentionLegal.php">Mentions légales</a></li>
                     </ul>
                 </div>
@@ -42,8 +42,8 @@
             </div>
             <div class="container-mention-leg col-12">
                 <ul class="mention list-unstyled">
-                    <li class="mx-5 "><a class="text-decoration-none a-list" href="">Confidentialité</a></li>
-                    <li class="mx-5"><a class="text-decoration-none a-list" href="">Conditions générales</a></li>
+                    <li class="mx-5 "><a class="text-decoration-none a-list" href="confidentialité.php">Confidentialité</a></li>
+                    <li class="mx-5"><a class="text-decoration-none a-list" href="condition_generale.php">Conditions générales</a></li>
                     <li class="mx-4">@2024 Univers des jeux</li>
                 </ul>
             </div>

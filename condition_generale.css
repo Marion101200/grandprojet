@@ -1,0 +1,20 @@
+.titre_conditions{
+    color: red;
+    font-size: 60px;
+    text-align: center;
+}
+.conditions{
+    color: black;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+body{
+    background: linear-gradient(rgba(247, 244, 244, 0.733), rgba(242, 241, 241, 0.696)), no-repeat, fixed
+                  url(img/DALL·E\ 2024-11-29\ 13.29.03\ -\ A\ vibrant\ and\ colorful\ image\ showcasing\ various\ video\ games\ integrated\ into\ a\ single\ scene.\ The\ image\ includes\ a\ retro\ arcade\ machine\ with\ a\ glowing\ s.webp);
+}
+.soustitre_conditions{
+    color: blue;
+    font-size: 40px;
+    text-align: center;
+}
