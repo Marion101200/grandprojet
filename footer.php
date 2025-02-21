@@ -17,7 +17,7 @@
                         <li><a href="comment_sa_marche.php">Comment ça marche ?</a></li>
                         <li><a href="apropos.php">A propos</a></li>
                         <li><a href="">Application mobile</a></li>
-                        <li><a href="">Blog</a></li>
+                        <li><a href="blog.php">Blog</a></li>
                         <li><a href="mentionLegal.php">Mentions légales</a></li>
                     </ul>
                 </div>
