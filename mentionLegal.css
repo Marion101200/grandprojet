@@ -18,12 +18,13 @@ h2 {
     border-bottom: 2px solid #AE9576;
     padding-bottom: 5px;
     margin-bottom: 15px;
+    text-align: center;
 }
-
-p {
+.legal {
     font-size: 18px;
     margin-bottom: 15px;
-    text-align: justify;
+    text-align: center;
+    color: black;
 }
 
 /* Responsive */
