@@ -13,7 +13,7 @@ include 'header.php';
 ?>
 
 <h1 class="mention">Mentions Légales</h1>
-  <h2>  1. Éditeur du site: </h2>
+  <h2 class="titre_mention">  1. Éditeur du site: </h2>
   <p class="legal">
      L'Univers des Jeux <br>
      Forme juridique : Auto-entrepreneur
