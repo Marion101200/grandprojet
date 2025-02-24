@@ -21,12 +21,16 @@ form#payment-form {
 
 
 #card-element {
-    flex: 1; 
-    border: 1px solid grey;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 5px;
+    width: 100%; /* Prend toute la largeur du parent */
+    max-width: 400px; /* Limite la taille si besoin */
+    height: 50px; /* Ajuste la hauteur */
+    font-size: 18px; /* Agrandir la taille du texte */
+    padding: 15px; /* Ajoute du padding interne */
+    border: 2px solid #5cb85c; /* Épaisseur et couleur de bordure */
+    border-radius: 8px; /* Coins arrondis */
+    background-color: #f8f8f8; /* Arrière-plan léger */
 }
+
 
 button#bouttonpayer {
     background-color: #5cb85c;
