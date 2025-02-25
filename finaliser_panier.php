@@ -78,7 +78,7 @@ $adresses = $sql->fetchAll(PDO::FETCH_COLUMN);
         <?php endforeach; ?>
     </select>
 </div>
-
+<input type="hidden"id="adresse">
     <div>
         <div>
 
@@ -91,7 +91,9 @@ $adresses = $sql->fetchAll(PDO::FETCH_COLUMN);
     </div>
     <div id="card-element"></div>
     <div id="payment-result"></div>
+    <input type="hidden">
     <button type="submit" id="button-payer">Payer</button>
+        </input>
 </form>
 
 <script>
@@ -141,6 +143,7 @@ card.mount('#card-element');
         document.getElementById('payment-result').innerText = result.error 
             ? 'Erreur : ' + result.error.message 
             : 'Paiement réussi!';
+            window.location.href = "commandes.php";
     });
     
 </script>
