@@ -55,9 +55,14 @@ $adresses = $sql->fetchAll(PDO::FETCH_COLUMN);
 
 <!-- Formulaire pour ajouter une nouvelle adresse -->
 <form id="adresse-form" method="POST">
+<div class="adresse-container">
     <label for="adresse">Ajouter une nouvelle adresse :</label>
-    <input type="text" id="adresse" name="adresse" required>
-    <button type="submit">Ajouter</button>
+    <div class="adresse-input-group">
+        <input type="text" id="adresse" name="adresse" required>
+        <button type="submit" id="button-ajouter">Ajouter</button>
+    </div>
+</div>
+
 </form>
 
 <!-- Liste déroulante pour sélectionner une adresse existante -->
@@ -67,12 +72,15 @@ $adresses = $sql->fetchAll(PDO::FETCH_COLUMN);
 
         </div>
     </div>
+    <div class="select-container">
     <label for="selected-adresse">Sélectionner une adresse :</label>
     <select id="selected-adresse" name="selected-adresse" required>
         <?php foreach ($adresses as $adresse) : ?>
             <option value="<?= htmlspecialchars($adresse) ?>"><?= htmlspecialchars($adresse) ?></option>
         <?php endforeach; ?>
     </select>
+</div>
+
     <div>
         <div>
 
@@ -85,7 +93,7 @@ $adresses = $sql->fetchAll(PDO::FETCH_COLUMN);
     </div>
     <div id="card-element"></div>
     <div id="payment-result"></div>
-    <button type="submit">Payer</button>
+    <button type="submit" id="button-payer">Payer</button>
 </form>
 
 <script>

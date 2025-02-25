@@ -50,3 +50,97 @@ button#bouttonpayer {
     font-size: 16px;
     text-align: center;
 }
+#selected-adresse {
+    width: 100%;
+    max-width: 400px;
+    font-size: 18px; /* Agrandir la taille du texte */
+    padding: 10px; /* Ajouter du padding */
+    border: 2px solid #5cb85c; /* Bordure verte */
+    border-radius: 8px; /* Coins arrondis */
+    background-color: #f8f8f8; /* Arrière-plan léger */
+    display: block; /* Pour s'assurer qu'il prenne toute la largeur définie */
+    margin-top: 5px; /* Espacement entre le label et le select */
+}
+
+label[for="selected-adresse"] {
+    display: block; /* Met le label au-dessus */
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+/* Style du bouton Payer */
+/* Style spécifique du bouton "Payer" */
+/* Style spécifique pour le bouton Payer */
+#button-payer {
+    width: 100%;
+    max-width: 250px; /* Ajuste la largeur */
+    height: 50px; /* Augmente la hauteur */
+    background-color: #28a745; /* Vert */
+    color: white; /* Texte en blanc */
+    font-size: 20px; /* Texte plus gros */
+    font-weight: bold;
+    border: none;
+    border-radius: 8px; /* Coins arrondis */
+    cursor: pointer;
+    display: block; /* Permet d’occuper toute la largeur disponible */
+    margin: 30px auto 0; /* Centrer le bouton et ajouter un espace en haut */
+    transition: background-color 0.3s ease;
+}
+
+/* Effet au survol */
+#button-payer:hover {
+    background-color: #218838; /* Vert plus foncé */
+}
+/* Conteneur général pour centrer */
+.adresse-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Conteneur pour input + bouton */
+.adresse-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espace entre l'input et le bouton */
+    width: 100%;
+    max-width: 500px;
+}
+
+/* Agrandir l'input */
+#adresse {
+    flex: 1; /* Prend toute la place disponible */
+    padding: 12px;
+    font-size: 18px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Styliser le bouton "Ajouter" */
+#button-ajouter {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Effet hover */
+#button-ajouter:hover {
+    background-color: #0056b3;
+}
+/* Augmenter la taille du texte "Ajouter une nouvelle adresse" */
+.adresse-container label {
+    font-size: 20px; /* Augmente la taille du texte */
+    font-weight: bold; /* Rend le texte plus visible */
+    margin-bottom: 10px; /* Ajoute un petit espace en bas */
+    text-align: center; /* Centre le texte */
+}
+
+
+
