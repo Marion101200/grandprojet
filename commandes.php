@@ -22,6 +22,9 @@ if (!isset($_SESSION['id_client'])) {
     echo "Erreur : ID client non défini.";
     exit;
 }
+$adresse['id_adresse'];
+var_dump($adresse['id_adresse']);
+
 
 $connexion = getConnexion();
 $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -42,12 +45,13 @@ try {
 
 
 
-    $sqlDetails = $connexion->prepare("INSERT INTO details_commande (id_commande, id_jeu) VALUES (:id_commande, :id_jeu)");
+    $sqlDetails = $connexion->prepare("INSERT INTO details_commande (id_commande, id_jeu, id_adresse) VALUES (:id_commande, :id_jeu, :id_adresse)");
 
     foreach ($_SESSION['cart'] as $id_jeu) {
         $sqlDetails->execute([
             'id_commande' => $id_commande,
-            'id_jeu' => $id_jeu
+            'id_jeu' => $id_jeu,
+            'id_adresse' => $id_adresse
         ]);
     }
 } catch (Exception $e) {
