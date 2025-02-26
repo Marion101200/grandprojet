@@ -22,18 +22,16 @@ if (!isset($_SESSION['id_client'])) {
     echo "Erreur : ID client non défini.";
     exit;
 }
-$adresse['id_adresse'];
-var_dump($adresse['id_adresse']);
 
 
 $connexion = getConnexion();
 $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 $id = $_SESSION['id_client']; 
-$cart_items = $_SESSION['cart'];
+$cart = $_SESSION['cart'];
 $total_prix = $_SESSION['total_prix'];
 
-
+print_r($cart);
 try {
     $sql = $connexion->prepare("INSERT INTO commande (id_clients, montant) VALUES (:id_clients, :montant)");
     $sql->execute([
@@ -45,13 +43,14 @@ try {
 
 
 
-    $sqlDetails = $connexion->prepare("INSERT INTO details_commande (id_commande, id_jeu, id_adresse) VALUES (:id_commande, :id_jeu, :id_adresse)");
+    $sqlDetails = $connexion->prepare("INSERT INTO details_commande (id_commande, id_jeu) VALUES (:id_commande, :id_jeu)");
 
-    foreach ($_SESSION['cart'] as $id_jeu) {
+    foreach ($cart as $id_jeu => $quantite) {
+        // $id_jeu = is_array($id_jeu) ? $id_jeu[0] : $id_jeu; 
+    
         $sqlDetails->execute([
             'id_commande' => $id_commande,
             'id_jeu' => $id_jeu,
-            'id_adresse' => $id_adresse
         ]);
     }
 } catch (Exception $e) {
@@ -68,6 +67,6 @@ try {
 //     echo json_encode(['error' => $e->getMessage()]);
 // }
 ?>
-</body>
-</html>
-<?php include 'footer.php'; ?>
+ </body>
+ </html>
+ <?php include 'footer.php'; ?>
