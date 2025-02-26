@@ -22,9 +22,9 @@ if (!isset($_SESSION['id_client'])) {
     echo "Erreur : ID client non défini.";
     exit;
 }
-$adresse['id_adresse'];
-var_dump($adresse['id_adresse']);
 
+$id_adresse = $_SESSION['id_adresse'];
+var_dump($id_adresse);
 
 $connexion = getConnexion();
 $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -32,7 +32,6 @@ $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $id = $_SESSION['id_client']; 
 $cart_items = $_SESSION['cart'];
 $total_prix = $_SESSION['total_prix'];
-
 
 try {
     $sql = $connexion->prepare("INSERT INTO commande (id_clients, montant) VALUES (:id_clients, :montant)");
@@ -67,7 +66,7 @@ try {
 // } catch (Exception $e) {
 //     echo json_encode(['error' => $e->getMessage()]);
 // }
-?>
-</body>
-</html>
+// ?>
+ </body>
+ </html>
 <?php include 'footer.php'; ?>
