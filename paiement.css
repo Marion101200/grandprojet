@@ -49,6 +49,26 @@ button#bouttonpayer {
     font-size: 16px;
     text-align: center;
 }
+#selected-adresse:focus {
+    border-color: #007bff; /* Changer la bordure lorsque le select est sélectionné */
+}
+.select-container {
+    display: flex;
+    flex-direction: column; /* Arrange les éléments en colonne */
+    align-items: flex-start; /* Aligne les éléments sur la gauche */
+    gap: 15px; /* Ajoute de l'espace entre les éléments */
+    max-width: 500px; /* Limite la largeur du conteneur */
+    margin: 0 auto; /* Centrer le conteneur horizontalement */
+    padding: 20px; 
+    
+}
+
+.select-container label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px; /* Espace entre le label et le select */
+    color: #333; /* Couleur du texte */
+}
 #selected-adresse {
     width: 100%;
     max-width: 400px;
@@ -82,11 +102,8 @@ label[for="selected-adresse"] {
     border-radius: 8px; /* Coins arrondis */
     cursor: pointer;
     display: block; /* Permet d’occuper toute la largeur disponible */
-    margin: 30px auto 0; /* Centrer le bouton et ajouter un espace en haut */
     transition: background-color 0.3s ease;
-    width: 100%;
-    max-width: 250px;
-    margin-top: 20px;
+    margin-bottom: 20px;
     
 }
 
@@ -152,4 +169,33 @@ label[for="selected-adresse"] {
     font-weight: bold; /* Rend le texte plus visible */
     margin-bottom: 10px; /* Ajoute un petit espace en bas */
     text-align: center; /* Centre le texte */
+}
+#newadresse{
+    font-size: 20px;
+    color: blue;
+    text-decoration: none;
+}
+#newadresse:hover{
+    color: red;
+}
+/* Style du bouton "Valider mon adresse" */
+#button-valider-adresse {
+    background-color: #007bff; /* Bleu comme le bouton "Ajouter" */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: block; /* Le bouton devient un bloc, ce qui le fait passer sur une nouvelle ligne */
+    margin-top: 10px;
+    width: 100%;
+}
+
+/* Effet hover */
+#button-valider-adresse:hover {
+    background-color: #0056b3; /* Bleu plus foncé au survol */
 }

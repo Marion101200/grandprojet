@@ -25,8 +25,7 @@ if (!isset($_SESSION['id_client'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected-adresse'])) {
     $_SESSION['idAdresse'] = $_POST['selected-adresse'];
 }
-var_dump($_POST);
-var_dump($_SESSION['idAdresse']);
+
 
 $connexion = getConnexion();
 $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -61,29 +60,25 @@ $adresses = $sql->fetchAll(PDO::FETCH_ASSOC);
 </h2>
 
 <div class="payment-container">
-    <form method="POST" action="">
-        <div class="select-container">
-            <label for="selected-adresse">Sélectionner une adresse :</label>
-            <select id="selected-adresse" name="selected-adresse" required>
-                <?php foreach ($adresses as $adresse) : ?>
-                    <option value="<?= htmlspecialchars($adresse['id']) ?>">
-                        <?= htmlspecialchars($adresse['adresse']) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <button type="submit">Valider mon adresse</button>
-        </div>
-    </form>
+<form method="POST" action="">
+    <div class="select-container">
+        <label for="selected-adresse">Sélectionner une adresse :</label>
+        <select id="selected-adresse" name="selected-adresse" required>
+            <?php foreach ($adresses as $adresse) : ?>
+                <option value="<?= htmlspecialchars($adresse['id']) ?>"
+                    <?php if (isset($_SESSION['idAdresse']) && $_SESSION['idAdresse'] == $adresse['id']) : ?>
+                        selected
+                    <?php endif; ?>
+                >
+                    <?= htmlspecialchars($adresse['adresse']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <a href="ajouterAdresse.php" id="newadresse">Ajouter une nouvelle adresse</a>
+        <button type="submit" id="button-valider-adresse">Valider mon adresse</button>
+    </div>
+</form>
 
-    <form method="POST">
-        <div class="adresse-container">
-            <label for="adresse">Ajouter une nouvelle adresse :</label>
-            <div class="adresse-input-group">
-                <input type="text" id="adresse" name="adresse" required>
-                <button type="submit" id="button-ajouter">Ajouter</button>
-            </div>
-        </div>
-    </form>
 
     <form id="payment-form" method="POST">
         <div id="card-element"></div>

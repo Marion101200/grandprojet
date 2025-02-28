@@ -1,0 +1,76 @@
+#button-ajouter:hover {
+    background-color: #0056b3;
+}
+/* Augmenter la taille du texte "Ajouter une nouvelle adresse" */
+    .adresse-container label {
+        font-size: 20px; /* Augmente la taille du texte */
+        font-weight: bold; /* Rend le texte plus visible */
+        margin-bottom: 10px; /* Ajoute un petit espace en bas */
+        text-align: center; /* Centre le texte */
+        display: inline-block; /* Affiche le label en ligne avec l'input */
+        width: 100%; /* Si vous voulez que le label prenne toute la largeur disponible */
+        margin-right: 10px; /* Espace entre le label et l'input */
+    }
+
+.adresse-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espace entre l'input et le bouton */
+    width: 100%;
+    max-width: 500px;
+}
+
+#adresse {
+    flex: 1; /* Prend toute la place disponible */
+    padding: 15px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px; /* Ajustez l'espacement si nécessaire */
+}
+/* Style du bouton "Valider mon adresse" */
+#button-valider-adresse {
+    background-color: #007bff; /* Bleu comme le bouton "Ajouter" */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+body{
+    background: linear-gradient(rgba(247, 244, 244, 0.733), rgba(242, 241, 241, 0.696)), no-repeat, fixed
+                  url(img/DALL·E\ 2024-11-29\ 13.29.03\ -\ A\ vibrant\ and\ colorful\ image\ showcasing\ various\ video\ games\ integrated\ into\ a\ single\ scene.\ The\ image\ includes\ a\ retro\ arcade\ machine\ with\ a\ glowing\ s.webp);
+}
+
+.adresse-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    translate: -50% -50%;
+}
+
+
+
+/* Effet hover */
+#button-valider-adresse:hover {
+    background-color: #0056b3; /* Bleu plus foncé au survol */
+}
+/* Styliser le bouton "Ajouter" */
+#button-ajouter {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
