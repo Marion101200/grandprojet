@@ -71,6 +71,7 @@
     left: 50%;
     translate: -50% -50%;">
         <i class='bx bxs-credit-card-alt'></i> &nbsp;Paiement et commande réussi &nbsp; <i class='bx bxs-credit-card-alt'></i>
+        <a href="historique_commandes.php" class="seehistorique"><i class='bx bx-right-arrow-circle'></i>&nbsp;Voir mes historiques de commandes</a>
     </h2>
 </body>
 
