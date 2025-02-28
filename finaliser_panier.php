@@ -166,4 +166,4 @@ card.mount('#card-element');
 
 </body>
 
-</html>
+</html
