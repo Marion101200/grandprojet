@@ -13,6 +13,15 @@
 <body>
 
 <?php
+session_start();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected-adresse'])) {
+    $_SESSION['idAdresse'] = $_POST['selected-adresse'];
+}
+var_dump($_POST);
+var_dump($_SESSION['idAdresse']);
+
+$idadresse = $_SESSION['idAdresse'];
 
 include 'header.php';
 include 'pdo.php';
@@ -22,6 +31,7 @@ if (!isset($_SESSION['id_client'])) {
     echo "Erreur : ID client non défini.";
     exit;
 }
+
 
 
 $connexion = getConnexion();
@@ -43,7 +53,7 @@ try {
 
 
 
-    $sqlDetails = $connexion->prepare("INSERT INTO details_commande (id_commande, id_jeu) VALUES (:id_commande, :id_jeu)");
+    $sqlDetails = $connexion->prepare("INSERT INTO details_commande (id_commande, id_jeu, id_adresse) VALUES (:id_commande, :id_jeu, :idadresse)");
 
     foreach ($cart as $id_jeu => $quantite) {
         // $id_jeu = is_array($id_jeu) ? $id_jeu[0] : $id_jeu; 
@@ -51,6 +61,7 @@ try {
         $sqlDetails->execute([
             'id_commande' => $id_commande,
             'id_jeu' => $id_jeu,
+            'idadresse' => $idadresse,
         ]);
     }
 } catch (Exception $e) {
@@ -66,7 +77,7 @@ try {
 // } catch (Exception $e) {
 //     echo json_encode(['error' => $e->getMessage()]);
 // }
-?>
- </body>
+// ?>
+  </body>
  </html>
  <?php include 'footer.php'; ?>

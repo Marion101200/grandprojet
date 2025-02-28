@@ -21,6 +21,13 @@ if (!isset($_SESSION['id_client'])) {
     exit;
 }
 
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected-adresse'])) {
+    $_SESSION['idAdresse'] = $_POST['selected-adresse'];
+}
+var_dump($_POST);
+var_dump($_SESSION['idAdresse']);
+
 $connexion = getConnexion();
 $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -44,14 +51,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['adresse'])) {
 }
 
 // Récupérer les adresses uniques pour ce client
-$sql = $connexion->prepare("SELECT DISTINCT adresse FROM adresse WHERE id_clients = :id_client");
+$sql = $connexion->prepare("SELECT DISTINCT id, adresse FROM adresse WHERE id_clients = :id_client");
 $sql->execute(['id_client' => $id]);
-$adresses = $sql->fetchAll(PDO::FETCH_COLUMN);
+$adresses = $sql->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <h2 style="color: rgb(181, 3, 3); margin-bottom: 60px; font-size: 50px;text-align:center;"> 
     <i class='bx bxs-credit-card-alt'></i> &nbsp;Paiement &nbsp; <i class='bx bxs-credit-card-alt'></i>
 </h2>
+
+<form method="POST" action="">
+<div class="select-container">
+    <label for="selected-adresse">Sélectionner une adresse :</label>
+    <select id="selected-adresse" name="selected-adresse" required>
+            <?php foreach ($adresses as $adresse) : ?>
+                <option value="<?= htmlspecialchars($adresse['id']) ?>">
+                    <?= htmlspecialchars($adresse['adresse']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <button type="submit">valider mon adresse</button>
+</div>
+            </form>
 
 <!-- Formulaire pour ajouter une nouvelle adresse -->
 <form method="POST">
@@ -64,21 +85,14 @@ $adresses = $sql->fetchAll(PDO::FETCH_COLUMN);
 </div>
 </form>
 <!-- Liste déroulante pour sélectionner une adresse existante -->
-<form id="payment-form">
+<form id="payment-form" method="POST">
 <div>
         <div>
 
         </div>
     </div>
-<div class="select-container">
-    <label for="selected-adresse">Sélectionner une adresse :</label>
-    <select id="selected-adresse" name="selected-adresse" required>
-        <?php foreach ($adresses as $adresse) : ?>
-            <option value="<?= htmlspecialchars($adresse) ?>"><?= htmlspecialchars($adresse) ?></option>
-        <?php endforeach; ?>
-    </select>
-</div>
-<input type="hidden"id="adresse">
+
+
     <div>
         <div>
 
