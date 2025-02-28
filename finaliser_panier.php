@@ -60,55 +60,38 @@ $adresses = $sql->fetchAll(PDO::FETCH_ASSOC);
     <i class='bx bxs-credit-card-alt'></i> &nbsp;Paiement &nbsp; <i class='bx bxs-credit-card-alt'></i>
 </h2>
 
-<form method="POST" action="">
-<div class="select-container">
-    <label for="selected-adresse">Sélectionner une adresse :</label>
-    <select id="selected-adresse" name="selected-adresse" required>
-            <?php foreach ($adresses as $adresse) : ?>
-                <option value="<?= htmlspecialchars($adresse['id']) ?>">
-                    <?= htmlspecialchars($adresse['adresse']) ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-        <button type="submit">valider mon adresse</button>
+<div class="payment-container">
+    <form method="POST" action="">
+        <div class="select-container">
+            <label for="selected-adresse">Sélectionner une adresse :</label>
+            <select id="selected-adresse" name="selected-adresse" required>
+                <?php foreach ($adresses as $adresse) : ?>
+                    <option value="<?= htmlspecialchars($adresse['id']) ?>">
+                        <?= htmlspecialchars($adresse['adresse']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <button type="submit">Valider mon adresse</button>
+        </div>
+    </form>
+
+    <form method="POST">
+        <div class="adresse-container">
+            <label for="adresse">Ajouter une nouvelle adresse :</label>
+            <div class="adresse-input-group">
+                <input type="text" id="adresse" name="adresse" required>
+                <button type="submit" id="button-ajouter">Ajouter</button>
+            </div>
+        </div>
+    </form>
+
+    <form id="payment-form" method="POST">
+        <div id="card-element"></div>
+        <div id="payment-result"></div>
+        <button type="submit" id="button-payer">Payer</button>
+    </form>
 </div>
-            </form>
 
-<!-- Formulaire pour ajouter une nouvelle adresse -->
-<form method="POST">
-<div class="adresse-container">
-    <label for="adresse">Ajouter une nouvelle adresse :</label>
-    <div class="adresse-input-group">
-        <input type="text" id="adresse" name="adresse" required>
-        <button type="submit" id="button-ajouter">Ajouter</button>
-    </div>
-</div>
-</form>
-<!-- Liste déroulante pour sélectionner une adresse existante -->
-<form id="payment-form" method="POST">
-<div>
-        <div>
-
-        </div>
-    </div>
-
-
-    <div>
-        <div>
-
-        </div>
-    </div>
-    <div>
-        <div>
-
-        </div>
-    </div>
-    <div id="card-element"></div>
-    <div id="payment-result"></div>
-    <input type="hidden">
-    <button type="submit" id="button-payer">Payer</button>
-        </input>
-</form>
 
 <script>
     const stripe = Stripe('pk_test_51QDpTaFohOKPT3SHLePEYKmV0KmSSEwZCJUhHg52iHHXaD2Wtd1m7lGVdNpOKaMSJa15MPw8lUXz1Q8SaekWgcHM00HDPO8Fic');
