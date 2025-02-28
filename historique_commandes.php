@@ -32,38 +32,44 @@ include 'pdo.php';
         $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Récupérer uniquement les commandes du client connecté
-        $sql = "SELECT c.id_commande, cl.nom, cl.email,c.adresse, c.montant 
-                FROM commande c
-                JOIN clients cl ON c.id_clients = cl.id
-                WHERE c.id_clients = :id_client";
+        $sql = "SELECT c.id_commande, cl.nom, cl.email, a.adresse, c.montant, j.titre AS titre_jeu
+        FROM commande c
+        JOIN clients cl ON c.id_clients = cl.id
+        JOIN details_commande dc ON c.id_commande = dc.id_commande
+        JOIN jeux j ON dc.id_jeu = j.id
+        LEFT JOIN adresse a ON dc.id_adresse = a.id
+        WHERE c.id_clients = :id_client";
         $stmt = $connexion->prepare($sql);
         $stmt->bindParam(':id_client', $_SESSION['id_client'], PDO::PARAM_INT);
         $stmt->execute();
         $commandes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         ?> 
 
-        <table>
+<table>
+    <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Adresse</th>
+        <th>Jeu</th>
+        <th>Montant</th>
+    </tr>
+    <?php if (count($commandes) > 0): ?>
+        <?php foreach ($commandes as $commande) : ?>
             <tr>
-                <th>Nom pour la commande</th>
-                <th>Email</th>
-                <th>Adresse</th>
-                <th>Montant</th>
+                <td><?= htmlspecialchars($commande['nom']) ?></td>
+                <td><?= htmlspecialchars($commande['email']) ?></td>
+                <td><?= htmlspecialchars($commande['adresse'] ?? 'Non spécifiée') ?></td>
+                <td><?= htmlspecialchars($commande['titre_jeu']) ?></td>
+                <td><?= htmlspecialchars($commande['montant']) ?> €</td>
             </tr>
-            <?php if (count($commandes) > 0): ?>
-                <?php foreach ($commandes as $commande) : ?>
-                    <tr>
-                        <td><?= htmlspecialchars($commande['nom']) ?></td>
-                        <td><?= htmlspecialchars($commande['email']) ?></td>
-                        <td><?= htmlspecialchars($commande['adresse'])?></td>
-                        <td><?= htmlspecialchars($commande['montant']) ?> €</td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="4" style="text-align: center;">Aucune commande trouvée.</td>
-                </tr>
-            <?php endif; ?>
-        </table>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="5" style="text-align: center;">Aucune commande trouvée.</td>
+        </tr>
+    <?php endif; ?>
+</table>
+
     </div>
 </body>
 
