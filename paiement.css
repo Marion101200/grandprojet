@@ -21,8 +21,7 @@ form#payment-form {
 
 
 #card-element {
-    width: 100%; /* Prend toute la largeur du parent */
-    max-width: 400px; /* Limite la taille si besoin */
+    width: 100%; /* Prend toute la largeur du parent */ /* Limite la taille si besoin */
     height: 50px; /* Ajuste la hauteur */
     font-size: 18px; /* Agrandir la taille du texte */
     padding: 15px; /* Ajoute du padding interne */
