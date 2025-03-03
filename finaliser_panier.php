@@ -14,7 +14,6 @@
 <?php
 include 'header.php';
 include 'pdo.php';
-require_once("connexion.php");
 
 if (!isset($_SESSION['id_client'])) {
     echo "Erreur : ID client non défini.";
@@ -26,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selected-adresse'])) 
     $_SESSION['idAdresse'] = $_POST['selected-adresse'];
 }
 
-
+require_once("connexion.php");
 $connexion = getConnexion();
 $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
