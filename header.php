@@ -67,7 +67,7 @@ if (session_status() == PHP_SESSION_NONE) {
         </ul>
         <form class="navbar-form navbar-left" action="research.php" method="get">
             <div class="form-group">
-                <input type="search" name="query" id="products" class="form-control" placeholder="rechercher..." required style="width: 440px" list="datalist">
+                <input type="search" name="query" id="products" class="form-control" placeholder="rechercher..." required style="width: 347px" list="datalist">
                 <datalist id="datalist"></datalist>
             </div>
             <button type="submit" class="btn btn-default"><i class='bx bx-search-alt-2'></i>
