@@ -191,7 +191,7 @@ echo str_repeat('☆', $emptyStars);
         document.addEventListener('DOMContentLoaded', function() {
   const stars = document.querySelectorAll(".star");
   const noteInput = document.getElementById("note_min_input");
-  const noteDisplay = document.getElementById("note_min");
+  const nollllteDisplay = document.getElementById("note_min");
 
   stars.forEach(star => {
     star.addEventListener("click", function() {

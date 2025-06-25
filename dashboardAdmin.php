@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'pdo.php';
+include 'pdo.php';  
   include 'header_admin.php';
 
 if (session_status() == PHP_SESSION_NONE) {
@@ -67,7 +67,7 @@ $jeuxParCategorie = $query4->fetchAll();
 
     <div class="card">
         <h2>💰 Chiffre d'affaires total :</h2>
-        <p><?= number_format($totalCA, 2, ',', ' ') ?> €</p>
+        <p><?= number_format($totalCA / 10, 2, ',', ' ') ?> €</p>
         <canvas id="caPie" width="250" height="250"></canvas>
     </div>
 
