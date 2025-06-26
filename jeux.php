@@ -17,7 +17,7 @@
   include 'pdo.php';
   // include 'ajouter_avis.php';
 
-  
+
   try {
     require_once("connexion.php");
     $connexion = getConnexion();
@@ -37,55 +37,56 @@
     $maxPrix = $_GET['prix_max'] ?? $maxPrixGlobal;
 
     $noteSelectionnee = isset($_GET['note']) ? (int)$_GET['note'] : null;
-    $sql = "SELECT j.id, j.titre, j.categorie, j.prix, j.images, j.description, j.date, 
+    $sql = "SELECT j.id, j.titre, j.categorie, j.prix, j.stock, j.images, j.description, j.date,
     COALESCE(AVG(a.note), 0) AS moyenne_note
     FROM jeux j 
     LEFT JOIN avis a ON j.titre = a.jeux_titre
     WHERE j.prix BETWEEN :minPrix AND :maxPrix";
-    
-
-// Ajout des filtres de catégories dynamiquement
-$filterConditions = [];
-$categories = [
-  'RPG',
-  'Aventure',
-  'Horreur',
-  'Survie',
-  'Soulslike',
-  'Action',
-  'Historique'
-];
-foreach ($categories as $category) {
-if (isset($_GET["filter_$category"])) {
-    $filterConditions[] = "categorie = :cat_$category";
-    $params[":cat_$category"] = $category;
-}
-}
-
-if (!empty($filterConditions)) {
-$sql .= " AND (" . implode(" OR ", $filterConditions) . ")";
-}
-
-$sql .= " GROUP BY j.id, j.titre, j.categorie, j.prix, j.images, j.description, j.date";
-
-if ($minNote !== null) {
-  $sql .= " HAVING moyenne_note >= :minNote";
-  $params[':minNote'] = $minNote;
-} 
-if ($noteSelectionnee !== null) {
-  $sql .= " AND moyenne_note = :noteSelectionnee";
-  $params[':noteSelectionnee'] = $noteSelectionnee;
-} 
 
 
 
-// Ajouter le paramètre de note minimale
-$params = [
-    ':minPrix' => $minPrix,
-    ':maxPrix' => $maxPrix,
-    ':minNote' => $minNote,
-    ':noteSelectionnee' => $noteSelectionnee  // Assurez-vous que 'minNote' est bien défini en PHP
-];
+    // Ajout des filtres de catégories dynamiquement
+    $filterConditions = [];
+    $categories = [
+      'RPG',
+      'Aventure',
+      'Horreur',
+      'Survie',
+      'Soulslike',
+      'Action',
+      'Historique'
+    ];
+    foreach ($categories as $category) {
+      if (isset($_GET["filter_$category"])) {
+        $filterConditions[] = "categorie = :cat_$category";
+        $params[":cat_$category"] = $category;
+      }
+    }
+
+    if (!empty($filterConditions)) {
+      $sql .= " AND (" . implode(" OR ", $filterConditions) . ")";
+    }
+
+    $sql .= " GROUP BY j.id, j.titre, j.categorie, j.prix, j.images, j.description, j.date";
+
+    if ($minNote !== null) {
+      $sql .= " HAVING moyenne_note >= :minNote";
+      $params[':minNote'] = $minNote;
+    }
+    if ($noteSelectionnee !== null) {
+      $sql .= " AND moyenne_note = :noteSelectionnee";
+      $params[':noteSelectionnee'] = $noteSelectionnee;
+    }
+
+
+
+    // Ajouter le paramètre de note minimale
+    $params = [
+      ':minPrix' => $minPrix,
+      ':maxPrix' => $maxPrix,
+      ':minNote' => $minNote,
+      ':noteSelectionnee' => $noteSelectionnee  // Assurez-vous que 'minNote' est bien défini en PHP
+    ];
 
     // Filtres des catégories
     $categories = [
@@ -106,14 +107,14 @@ $params = [
     }
 
     // Ajout des conditions des catégories
-// Ajouter les conditions des catégories
-// Ajouter les conditions des catégories
-if (!empty($filterConditions)) {
-  $sql .= " AND (" . implode(" OR ", $filterConditions) . ")";
-} else {
-  // Assurez-vous que si aucun filtre n'est sélectionné, tous les jeux sont affichés
-  $sql .= "";
-} // Affiche tous les paramètres GET pour vérifier les filtres
+    // Ajouter les conditions des catégories
+    // Ajouter les conditions des catégories
+    if (!empty($filterConditions)) {
+      $sql .= " AND (" . implode(" OR ", $filterConditions) . ")";
+    } else {
+      // Assurez-vous que si aucun filtre n'est sélectionné, tous les jeux sont affichés
+      $sql .= "";
+    } // Affiche tous les paramètres GET pour vérifier les filtres
 
 
     // Ajout des conditions de prix
@@ -269,23 +270,23 @@ if (!empty($filterConditions)) {
           <div class="euro"><span id="prix_max"><?php echo htmlspecialchars($maxPrix); ?></span> €</div>
           </p>
         </div>
-<div class="line"></div>
+        <div class="line"></div>
         <div class="note_game">
-  <h1 class="note_item"><i class='bx bxs-star'></i>&nbsp;Notes:&nbsp;<i class='bx bxs-star'></i></h1>
-  <div class="star-rating">
-    <span class="star" data-value="1">★</span>
-    <span class="star" data-value="2">★</span>
-    <span class="star" data-value="3">★</span>
-    <span class="star" data-value="4">★</span>
-    <span class="star" data-value="5">★</span>
-  </div>
-  <input type="hidden" name="note_min" id="note_min_input" value="<?php echo htmlspecialchars($minNote); ?>">
-  <p class="noteMin">Note minimale: &nbsp; <span id="note_min"><?php echo htmlspecialchars($minNote); ?></span>/5</p>
-</div>
+          <h1 class="note_item"><i class='bx bxs-star'></i>&nbsp;Notes:&nbsp;<i class='bx bxs-star'></i></h1>
+          <div class="star-rating">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <input type="hidden" name="note_min" id="note_min_input" value="<?php echo htmlspecialchars($minNote); ?>">
+          <p class="noteMin">Note minimale: &nbsp; <span id="note_min"><?php echo htmlspecialchars($minNote); ?></span>/5</p>
+        </div>
       </div>
 
       <!-- Bouton de réinitialisation des filtres -->
-<button type="reset" class="reset-button" onclick="resetFilters()">Réinitialiser les filtres</button>
+      <button type="reset" class="reset-button" onclick="resetFilters()">Réinitialiser les filtres</button>
 
     </form>
 
@@ -343,7 +344,19 @@ if (!empty($filterConditions)) {
 
               <form class="favoris" method="post">
                 <input type="hidden" name="jeux_id" value="<?php echo htmlspecialchars($jeux['id']); ?>">
-                <button class="ajout-panier" type="submit" name="add-to-cart">Ajouter au panier</button>
+                <p class="stock">
+                  <?php if ($jeux['stock'] > 0): ?>
+                    <strong>En stock :</strong> <?= $jeux['stock']; ?> exemplaire(s)
+                  <?php else: ?>
+                    <strong style="color:red;">Rupture de stock</strong>
+                  <?php endif; ?>
+                </p>
+
+                <?php if ($jeux['stock'] > 0): ?>
+                  <button class="ajout-panier" type="submit" name="add-to-cart">Ajouter au panier</button>
+                <?php else: ?>
+                  <button class="ajout-panier" type="button" disabled style="background-color: gray;">Indisponible</button>
+                <?php endif; ?>
                 <input type="hidden" name="favori_id" value="<?php echo htmlspecialchars($jeux['id']); ?>">
                 <button class="ajout-favori" type="submit" name="add-to-favorites">
                   ❤️
@@ -375,26 +388,26 @@ if (!empty($filterConditions)) {
         debounceSubmit();
       });
       document.addEventListener('DOMContentLoaded', function() {
-  const stars = document.querySelectorAll(".star");
-  const noteInput = document.getElementById("note_min_input");
-  const noteDisplay = document.getElementById("note_min");
+        const stars = document.querySelectorAll(".star");
+        const noteInput = document.getElementById("note_min_input");
+        const noteDisplay = document.getElementById("note_min");
 
-  stars.forEach(star => {
-    star.addEventListener("click", function() {
-      let value = this.getAttribute("data-value");
-      noteInput.value = value;
-      noteDisplay.textContent = value;
+        stars.forEach(star => {
+          star.addEventListener("click", function() {
+            let value = this.getAttribute("data-value");
+            noteInput.value = value;
+            noteDisplay.textContent = value;
 
-      stars.forEach(s => s.classList.remove("selected"));
-      for (let i = 0; i < value; i++) {
-        stars[i].classList.add("selected");
-      }
+            stars.forEach(s => s.classList.remove("selected"));
+            for (let i = 0; i < value; i++) {
+              stars[i].classList.add("selected");
+            }
 
-      // Soumettre automatiquement le formulaire après sélection
-      debounceSubmit();
-    });
-  });
-});
+            // Soumettre automatiquement le formulaire après sélection
+            debounceSubmit();
+          });
+        });
+      });
       maxSlider.addEventListener('input', function() {
         maxPrixLabel.textContent = maxSlider.value;
         debounceSubmit();
@@ -414,65 +427,55 @@ if (!empty($filterConditions)) {
       clearTimeout(timer);
       timer = setTimeout(() => filterForm.submit(), 300);
     }
-
   </script>
   <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const stars = document.querySelectorAll(".star"); // Sélectionner les étoiles
-    const noteInput = document.getElementById("note_min_input"); // Le champ caché pour la note
-    const noteDisplay = document.getElementById("note_min"); // Afficher la note sélectionnée
+    document.addEventListener('DOMContentLoaded', function() {
+      const stars = document.querySelectorAll(".star"); // Sélectionner les étoiles
+      const noteInput = document.getElementById("note_min_input"); // Le champ caché pour la note
+      const noteDisplay = document.getElementById("note_min"); // Afficher la note sélectionnée
 
-    stars.forEach(star => {
+      stars.forEach(star => {
         star.addEventListener("click", function() {
-            let value = this.getAttribute("data-value"); // Obtenir la valeur de la note (1-5)
-            noteInput.value = value;  // Mettre la valeur dans le champ caché
-            noteDisplay.textContent = `Note sélectionnée : ${value} étoiles`;  // Afficher la note
+          let value = this.getAttribute("data-value"); // Obtenir la valeur de la note (1-5)
+          noteInput.value = value; // Mettre la valeur dans le champ caché
+          noteDisplay.textContent = `Note sélectionnée : ${value} étoiles`; // Afficher la note
 
-            // Ajoutez ou supprimez la classe 'selected' sur les étoiles
-            stars.forEach(s => s.classList.remove("selected"));
-            for (let i = 0; i < value; i++) {
-                stars[i].classList.add("selected");
-            }
+          // Ajoutez ou supprimez la classe 'selected' sur les étoiles
+          stars.forEach(s => s.classList.remove("selected"));
+          for (let i = 0; i < value; i++) {
+            stars[i].classList.add("selected");
+          }
 
-            // Soumettre automatiquement le formulaire après sélection de la note exacte
-            document.getElementById('filterForm').submit();
+          // Soumettre automatiquement le formulaire après sélection de la note exacte
+          document.getElementById('filterForm').submit();
         });
+      });
     });
-});
-
-
-
-
-
-
   </script>
   <script>
-function resetFilters() {
-  // Réinitialiser les valeurs des sliders
-  document.getElementById('minPrix').value = <?php echo $minPrixGlobal; ?>;
-  document.getElementById('maxPrix').value = <?php echo $maxPrixGlobal; ?>;
-  document.getElementById('prix_min').textContent = <?php echo $minPrixGlobal; ?>;
-  document.getElementById('prix_max').textContent = <?php echo $maxPrixGlobal; ?>;
+    function resetFilters() {
+      // Réinitialiser les valeurs des sliders
+      document.getElementById('minPrix').value = <?php echo $minPrixGlobal; ?>;
+      document.getElementById('maxPrix').value = <?php echo $maxPrixGlobal; ?>;
+      document.getElementById('prix_min').textContent = <?php echo $minPrixGlobal; ?>;
+      document.getElementById('prix_max').textContent = <?php echo $maxPrixGlobal; ?>;
 
-  // Réinitialiser les étoiles
-  const stars = document.querySelectorAll(".star");
-  stars.forEach(star => star.classList.remove("selected"));
-  document.getElementById('note_min').textContent = 0;
+      // Réinitialiser les étoiles
+      const stars = document.querySelectorAll(".star");
+      stars.forEach(star => star.classList.remove("selected"));
+      document.getElementById('note_min').textContent = 0;
 
-  // Réinitialiser le champ caché pour la note
-  document.getElementById('note_min_input').value = 0;
+      // Réinitialiser le champ caché pour la note
+      document.getElementById('note_min_input').value = 0;
 
-  // Désélectionner les catégories
-  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach(checkbox => checkbox.checked = false);
+      // Désélectionner les catégories
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(checkbox => checkbox.checked = false);
 
-  // Soumettre le formulaire pour réinitialiser la page
-  document.getElementById('filterForm').submit();
-}
-
-
-
-    </script>
+      // Soumettre le formulaire pour réinitialiser la page
+      document.getElementById('filterForm').submit();
+    }
+  </script>
 </body>
 
 </html>

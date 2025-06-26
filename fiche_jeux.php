@@ -62,11 +62,11 @@ $avisStmt = $connexion->prepare("SELECT * FROM avis WHERE jeux_titre = ? ORDER B
 $avisStmt->execute([$jeux['titre']]);
 $avis = $avisStmt->fetchAll();
 
-if(isset($_SESSION['email'])){
+if (isset($_SESSION['email'])) {
     $email = $_SESSION['email'];
     $stmt = $connexion->prepare("SELECT * FROM clients WHERE email = ?");
-$stmt->execute([$email]);
-$clients = $stmt->fetch(PDO::FETCH_ASSOC);   
+    $stmt->execute([$email]);
+    $clients = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 $moyenneStmt = $connexion->prepare("SELECT AVG(note) as moyenne FROM avis WHERE jeux_titre = ?");
 $moyenneStmt->execute([$jeux['titre']]);
@@ -103,7 +103,20 @@ include 'header.php';
 
                 <form class="favoris" method="post">
                     <input type="hidden" name="jeux_id" value="<?php echo htmlspecialchars($jeux['id']); ?>">
-                    <button class="ajout-panier" type="submit" name="add-to-cart">Ajouter au panier</button>
+                    <p class="stock">
+                        <?php if ($jeux['stock'] > 0): ?>
+                            <strong>En stock :</strong> <?= $jeux['stock']; ?> exemplaire(s)
+                        <?php else: ?>
+                            <strong style="color:red;">Rupture de stock</strong>
+                        <?php endif; ?>
+                    </p>
+
+                    <?php if ($jeux['stock'] > 0): ?>
+                        <button class="ajout-panier" type="submit" name="add-to-cart">Ajouter au panier</button>
+                    <?php else: ?>
+                        <button class="ajout-panier" type="button" disabled style="background-color: gray;">Indisponible</button>
+                    <?php endif; ?>
+
                     <input type="hidden" name="favori_id" value="<?php echo htmlspecialchars($jeux['id']); ?>">
                     <button class="ajout-favori" type="submit" name="add-to-favorites">
                         ❤️
@@ -116,20 +129,20 @@ include 'header.php';
 
     <h2><i class='bx bxs-star'></i>&nbsp;Avis des utilisateurs &nbsp;<i class='bx bxs-star'></i></h2>
 
-<div class="moyenne-avis">
-    <strong>Note moyenne : <?= $moyenne; ?>/5</strong><br>
-    <span>
-        <?php
-        $fullStars = floor($moyenne); // Étoiles pleines
-        $halfStar = ($moyenne - $fullStars) >= 0.5 ? 1 : 0; // Étoile demi pleine
-        $emptyStars = 5 - ($fullStars + $halfStar); // Étoiles vides
+    <div class="moyenne-avis">
+        <strong>Note moyenne : <?= $moyenne; ?>/5</strong><br>
+        <span>
+            <?php
+            $fullStars = floor($moyenne); // Étoiles pleines
+            $halfStar = ($moyenne - $fullStars) >= 0.5 ? 1 : 0; // Étoile demi pleine
+            $emptyStars = 5 - ($fullStars + $halfStar); // Étoiles vides
 
-        echo str_repeat('⭐', $fullStars); // Affichage des étoiles pleines
-        if ($halfStar) echo '⭐️'; // Affichage de l'étoile demi pleine
-        echo str_repeat('☆', $emptyStars); // Affichage des étoiles vides
-        ?>
-    </span>
-</div>
+            echo str_repeat('⭐', $fullStars); // Affichage des étoiles pleines
+            if ($halfStar) echo '⭐️'; // Affichage de l'étoile demi pleine
+            echo str_repeat('☆', $emptyStars); // Affichage des étoiles vides
+            ?>
+        </span>
+    </div>
 
     <h2 class="donner_avis"><i class='bx bxs-message-dots'></i>&nbsp;Donnez votre avis&nbsp;<i class='bx bxs-message-dots'></i></h2>
     <?php if (isset($_SESSION['nom'])): ?>
@@ -146,9 +159,9 @@ include 'header.php';
 
                 <?php endfor; ?>
             </div>
-                <button id="button_avis" type="submit">Envoyer</button>
+            <button id="button_avis" type="submit">Envoyer</button>
         </form>
-        
+
     <?php else: ?>
         <p class="avis_connexion"><a class="avis_connexion" href="login.php"><i class='bx bx-user'></i>&nbsp;Connectez-vous</a> pour laisser un avis.&nbsp;<i class='bx bx-user'></i></p>
     <?php endif; ?>
